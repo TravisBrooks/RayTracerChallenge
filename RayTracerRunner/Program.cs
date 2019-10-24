@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace RayTracerRunner
+﻿namespace RayTracerRunner
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Chapter2Demo.Run();
         }
     }
 }
