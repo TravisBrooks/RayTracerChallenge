@@ -24,7 +24,7 @@ namespace RayTracerChallenge
         public double Green { get; }
         public double Blue { get; }
 
-        private int _ToRgbComponent(double colorPart)
+        private int _ToRgbComponent(in double colorPart)
         {
             var ppmPart = (int)Math.Round(255 * colorPart);
             if (ppmPart < 0)
@@ -45,38 +45,6 @@ namespace RayTracerChallenge
             var b = _ToRgbComponent(Blue);
             var color = (red: r, green: g, blue: b);
             return color;
-        }
-
-        public FColor Add(FColor rhs)
-        {
-            var r = Red + rhs.Red;
-            var g = Green + rhs.Green;
-            var b = Blue + rhs.Blue;
-            return new FColor(r, g, b);
-        }
-
-        public FColor Subtract(FColor rhs)
-        {
-            var r = Red - rhs.Red;
-            var g = Green - rhs.Green;
-            var b = Blue - rhs.Blue;
-            return new FColor(r, g, b);
-        }
-
-        public FColor Multiply(double scalar)
-        {
-            var r = Red * scalar;
-            var g = Green * scalar;
-            var b = Blue * scalar;
-            return new FColor(r, g, b);
-        }
-
-        public FColor Multiply(FColor rhs)
-        {
-            var r = Red * rhs.Red;
-            var g = Green * rhs.Green;
-            var b = Blue * rhs.Blue;
-            return new FColor(r, g, b);
         }
 
         public FColor ComplementaryColor()
@@ -100,7 +68,7 @@ namespace RayTracerChallenge
             return Equals(other);
         }
 
-        public bool Equals(FColor other)
+        public bool Equals(in FColor other)
         {
             return Red.AboutEqual(other.Red) && Green.AboutEqual(other.Green) && Blue.AboutEqual(other.Blue);
         }
@@ -121,34 +89,46 @@ namespace RayTracerChallenge
             }
         }
 
-        public static bool operator ==(FColor left, FColor right)
+        public static bool operator ==(in FColor left, in FColor right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(FColor left, FColor right)
+        public static bool operator !=(in FColor left, in FColor right)
         {
             return !left.Equals(right);
         }
 
-        public static FColor operator +(FColor lhs, FColor rhs)
+        public static FColor operator +(in FColor lhs, in FColor rhs)
         {
-            return lhs.Add(rhs);
+            var r = lhs.Red + rhs.Red;
+            var g = lhs.Green + rhs.Green;
+            var b = lhs.Blue + rhs.Blue;
+            return new FColor(r, g, b);
         }
 
-        public static FColor operator -(FColor lhs, FColor rhs)
+        public static FColor operator -(in FColor lhs, in FColor rhs)
         {
-            return lhs.Subtract(rhs);
+            var r = lhs.Red - rhs.Red;
+            var g = lhs.Green - rhs.Green;
+            var b = lhs.Blue - rhs.Blue;
+            return new FColor(r, g, b);
         }
 
-        public static FColor operator *(FColor c, double scalar)
+        public static FColor operator *(in FColor c, in double scalar)
         {
-            return c.Multiply(scalar);
+            var r = c.Red * scalar;
+            var g = c.Green * scalar;
+            var b = c.Blue * scalar;
+            return new FColor(r, g, b);
         }
 
-        public static FColor operator *(FColor lhs, FColor rhs)
+        public static FColor operator *(in FColor lhs, in FColor rhs)
         {
-            return lhs.Multiply(rhs);
+            var r = lhs.Red * rhs.Red;
+            var g = lhs.Green * rhs.Green;
+            var b = lhs.Blue * rhs.Blue;
+            return new FColor(r, g, b);
         }
     }
 }

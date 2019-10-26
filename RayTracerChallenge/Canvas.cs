@@ -8,13 +8,12 @@ namespace RayTracerChallenge
 
         public Canvas(int width, int height)
         {
-            Width = width;
-            Height = height;
             _colorArr = new FColor[width, height];
         }
 
-        public int Width { get; }
-        public int Height { get; }
+        public int Width => _colorArr.GetLength(0);
+
+        public int Height => _colorArr.GetLength(1);
 
         public void WritePixel(int xIndex, int yIndex, FColor color)
         {
@@ -27,7 +26,7 @@ namespace RayTracerChallenge
             return c;
         }
 
-        public void SetEveryPixel(FColor color)
+        public void SetEveryPixel(in FColor color)
         {
             for (var x = 0; x < Width; x++)
             {

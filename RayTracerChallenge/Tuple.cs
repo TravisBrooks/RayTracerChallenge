@@ -44,62 +44,6 @@ namespace RayTracerChallenge
 
         public bool IsVector => W.AboutEqual(WVect);
 
-        public Tuple Add(Tuple other)
-        {
-            if (
-                IsPoint && other.IsVector
-                ||
-                IsVector && other.IsPoint
-               )
-            {
-                return Point(X + other.X, Y + other.Y, Z + other.Z);
-            }
-
-            if (this.IsVector && other.IsVector)
-            {
-                return Vector(X + other.X, Y + other.Y, Z + other.Z);
-            }
-            throw new ArgumentException("Addition undefined, this IsPoint: {IsPoint} and other IsPoint {other.IsPoint}");
-        }
-
-        public Tuple Subtract(Tuple other)
-        {
-            if (
-                IsPoint && other.IsPoint
-                ||
-                IsVector && other.IsVector
-               )
-            {
-                var v = Vector(X - other.X, Y - other.Y, Z - other.Z);
-                return v;
-            }
-
-            if (this.IsPoint && other.IsVector)
-            {
-                var p = Point(X - other.X, Y - other.Y, Z - other.Z);
-                return p;
-            }
-            throw new ArgumentException("Subtraction undefined, this IsVector: {IsVector} and other IsPoint {other.IsPoint}");
-        }
-
-        public Tuple Negate()
-        {
-            var tpl = new Tuple(-X, -Y, -Z, -W);
-            return tpl;
-        }
-
-        public Tuple Multiply(double scalar)
-        {
-            var product = new Tuple(X * scalar, Y * scalar, Z * scalar, W * scalar);
-            return product;
-        }
-
-        public Tuple Divide(double scalar)
-        {
-            var product = new Tuple(X / scalar, Y / scalar, Z / scalar, W / scalar);
-            return product;
-        }
-
         public double Magnitude()
         {
             var mag = _lazyMagnitude.Value;
@@ -117,7 +61,7 @@ namespace RayTracerChallenge
         /// </summary>
         /// <param name="otherVector"></param>
         /// <returns></returns>
-        public double DotProduct(Tuple otherVector)
+        public double DotProduct(in Tuple otherVector)
         {
             if (this.IsVector == false || otherVector.IsVector == false)
             {
@@ -135,7 +79,7 @@ namespace RayTracerChallenge
         /// </summary>
         /// <param name="otherVector"></param>
         /// <returns></returns>
-        public Tuple CrossProduct(Tuple otherVector)
+        public Tuple CrossProduct(in Tuple otherVector)
         {
             if (this.IsVector == false || otherVector.IsVector == false)
             {
@@ -180,39 +124,66 @@ namespace RayTracerChallenge
             }
         }
 
-        public static bool operator ==(Tuple left, Tuple right)
+        public static bool operator ==(in Tuple left, in Tuple right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Tuple left, Tuple right)
+        public static bool operator !=(in Tuple left, in Tuple right)
         {
             return !left.Equals(right);
         }
 
-        public static Tuple operator +(Tuple left, Tuple right)
+        public static Tuple operator +(in Tuple left, in Tuple right)
         {
-            return left.Add(right);
+            if (left.IsPoint && right.IsVector
+                || left.IsVector && right.IsPoint
+            )
+            {
+                return Point(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
+            }
+
+            if (left.IsVector && right.IsVector)
+            {
+                return Vector(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
+            }
+            throw new ArgumentException("Addition undefined, this IsPoint: {IsPoint} and other IsPoint {other.IsPoint}");
         }
 
-        public static Tuple operator -(Tuple left, Tuple right)
+        public static Tuple operator -(in Tuple left, in Tuple right)
         {
-            return left.Subtract(right);
+            if (left.IsPoint && right.IsPoint
+                || left.IsVector && right.IsVector
+            )
+            {
+                var v = Vector(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
+                return v;
+            }
+
+            if (left.IsPoint && right.IsVector)
+            {
+                var p = Point(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
+                return p;
+            }
+            throw new ArgumentException("Subtraction undefined, this IsVector: {IsVector} and other IsPoint {other.IsPoint}");
         }
 
-        public static Tuple operator -(Tuple tpl)
+        public static Tuple operator -(in Tuple tpl)
         {
-            return tpl.Negate();
+            var tpl1 = new Tuple(-tpl.X, -tpl.Y, -tpl.Z, -tpl.W);
+            return tpl1;
         }
 
-        public static Tuple operator *(Tuple left, double scalar)
+        public static Tuple operator *(in Tuple left, in double scalar)
         {
-            return left.Multiply(scalar);
+            var product = new Tuple(left.X * scalar, left.Y * scalar, left.Z * scalar, left.W * scalar);
+            return product;
         }
 
-        public static Tuple operator /(Tuple left, double scalar)
+        public static Tuple operator /(in Tuple left, in double scalar)
         {
-            return left.Divide(scalar);
+            var quotient = new Tuple(left.X / scalar, left.Y / scalar, left.Z / scalar, left.W / scalar);
+            return quotient;
         }
     }
 }
