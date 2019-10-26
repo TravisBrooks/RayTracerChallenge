@@ -56,6 +56,18 @@ namespace RayTracerChallenge
             return n;
         }
 
+        public Matrix AsMatrix()
+        {
+            var m = new Matrix(new double[,]
+            {
+                { X },
+                { Y },
+                { Z },
+                { W },
+            });
+            return m;
+        }
+
         /// <summary>
         /// The DotProduct of 2 Normalized vectors is the cosine of the angle between the vectors
         /// </summary>
