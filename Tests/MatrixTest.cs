@@ -104,7 +104,7 @@ namespace Tests
         [Test]
         public void MatrixMultIdentityMatrix()
         {
-            var idM = Matrix.Identity(4, 4);
+            var idM = Matrix.Identity();
             var matrixA = new Matrix(new double[,]
             {
                 { 0, 1,  2,  4 },
@@ -120,7 +120,7 @@ namespace Tests
         [Test]
         public void MatrixMultIdentityTuple()
         {
-            var idM = Matrix.Identity(4, 4);
+            var idM = Matrix.Identity();
             var tplA = new Tuple(1, 2, 3, 4);
             var mult = idM * tplA;
 
@@ -153,7 +153,7 @@ namespace Tests
         [Test]
         public void TransposeIdentity()
         {
-            var identity = Matrix.Identity(4, 4);
+            var identity = Matrix.Identity();
             var transpose = identity.Transpose();
             Assert.That(transpose, Is.EqualTo(identity));
         }

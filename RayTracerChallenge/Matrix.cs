@@ -27,16 +27,14 @@ namespace RayTracerChallenge
             set => _matrix[x, y] = value;
         }
 
-        public static Matrix Identity(int width, int height)
+        public static Matrix Identity(int dimensions = 4)
         {
-            var m = new Matrix(width, height);
-            for (var w = 0; w < width; w++)
+            var m = new Matrix(dimensions, dimensions);
+            for(var d=0; d < dimensions; d++)
             {
-                for (var h = 0; h < height; h++)
-                {
-                    m[w, h] = w == h ? 1.0 : 0.0;
-                }
+                m[d, d] = 1;
             }
+
             return m;
         }
 
