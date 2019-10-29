@@ -5,4 +5,5 @@ I'm following along with the book [The Ray Tracer Challenge by Jamis Buck](https
 1. Tuples, Point, and Vectors
 2. Drawing on a Canvas
 3. Matrices
+
    In progress, up to the Inversion function.
