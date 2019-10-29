@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using RayTracerChallenge;
 
 namespace Tests
@@ -157,5 +156,137 @@ namespace Tests
             var transpose = identity.Transpose();
             Assert.That(transpose, Is.EqualTo(identity));
         }
+
+        [Test]
+        public void Determinant2x2()
+        {
+            var matrix = new Matrix(new double[,]
+            {
+                { 1, 5 },
+                { -3, 2 }
+            });
+            var dt = matrix.Determinant();
+            Assert.That(dt, Is.EqualTo(17));
+        }
+
+        [Test]
+        public void Submatrix3x3()
+        {
+            var matrix = new Matrix(new double[,]
+            {
+                { 1, 5, 0 },
+                { -3, 2, 7 },
+                { 0, 6, -3 }
+            });
+            var subMatrix = matrix.SubMatrix(0, 2);
+            var expected = new Matrix(new double[,]
+            {
+                { -3, 2 },
+                { 0, 6 }
+            });
+
+            Assert.That(subMatrix, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void Submatrix4x4()
+        {
+            var matrix = new Matrix(new double[,]
+            {
+                { -6, 1, 1, 6 },
+                { -8, 5, 8, 6 },
+                { -1, 0, 8, 2 },
+                { -7, 1, -1, 1 }
+            });
+            var subMatrix = matrix.SubMatrix(2, 1);
+            var expected = new Matrix(new double[,]
+            {
+                { -6, 1, 6 },
+                { -8, 8, 6 },
+                { -7, -1, 1 }
+            });
+
+            Assert.That(subMatrix, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void Minor3x3()
+        {
+            var matrix = new Matrix(new double[,]
+            {
+                { 3, 5, 0 },
+                { 2, -1, -7 },
+                { 6, -1, 5 }
+            });
+            var submatrix = matrix.SubMatrix(1, 0);
+            var determinant = submatrix.Determinant();
+            var minor = matrix.Minor(1, 0);
+            Assert.That(determinant, Is.EqualTo(25), "determinant");
+            Assert.That(minor, Is.EqualTo(25), "minor");
+        }
+
+        [Test]
+        public void Cofactor3x3()
+        {
+            var matrix = new Matrix(new double[,]
+            {
+                { 3, 5, 0 },
+                { 2, -1, -7 },
+                { 6, -1, 5 }
+            });
+            var minorOne = matrix.Minor(0, 0);
+            var cofactorOne = matrix.Cofactor(0, 0);
+            var minorTwo = matrix.Minor(1, 0);
+            var cofactorTwo = matrix.Cofactor(1, 0);
+
+            Assert.That(minorOne, Is.EqualTo(-12), "minorOne");
+            Assert.That(cofactorOne, Is.EqualTo(-12), "cofactorOne");
+            Assert.That(minorTwo, Is.EqualTo(25), "minorTwo");
+            Assert.That(cofactorTwo, Is.EqualTo(-25), "cofactorTwo");
+        }
+
+        [Test]
+        public void Determinant3x3()
+        {
+            var matrix = new Matrix(new double[,]
+            {
+                { 1, 2, 6 },
+                { -5, 8, -4 },
+                { 2, 6, 4 }
+            });
+            var cofactor_0_0 = matrix.Cofactor(0, 0);
+            var cofactor_0_1 = matrix.Cofactor(0, 1);
+            var cofactor_0_2 = matrix.Cofactor(0, 2);
+            var determinant = matrix.Determinant();
+
+            Assert.That(cofactor_0_0, Is.EqualTo(56), "cofactor_0_0");
+            Assert.That(cofactor_0_1, Is.EqualTo(12), "cofactor_0_1");
+            Assert.That(cofactor_0_2, Is.EqualTo(-46), "cofactor_0_2");
+            Assert.That(determinant, Is.EqualTo(-196), "determinant");
+        }
+
+        [Test]
+        public void Determinant4x4()
+        {
+            var matrix = new Matrix(new double[,]
+            {
+                { -2, -8, 3, 5 },
+                { -3, 1, 7, 3 },
+                { 1, 2, -9, 6 },
+                { -6, 7, 7, -9 }
+            });
+            var cofactor_0_0 = matrix.Cofactor(0, 0);
+            var cofactor_0_1 = matrix.Cofactor(0, 1);
+            var cofactor_0_2 = matrix.Cofactor(0, 2);
+            var cofactor_0_3 = matrix.Cofactor(0, 3);
+            var determinant = matrix.Determinant();
+
+            Assert.That(cofactor_0_0, Is.EqualTo(690), "cofactor_0_0");
+            Assert.That(cofactor_0_1, Is.EqualTo(447), "cofactor_0_1");
+            Assert.That(cofactor_0_2, Is.EqualTo(210), "cofactor_0_2");
+            Assert.That(cofactor_0_3, Is.EqualTo(51), "cofactor_0_3");
+            Assert.That(determinant, Is.EqualTo(-4071), "determinant");
+        }
+
     }
 }

@@ -52,6 +52,73 @@ namespace RayTracerChallenge
             return transpose;
         }
 
+        public double Determinant()
+        {
+            double determinant;
+            if (Width == Height && Height == 2)
+            {
+                var a = this[0, 0];
+                var b = this[0, 1];
+                var c = this[1, 0];
+                var d = this[1, 1];
+                determinant = (a * d) - (b * c);
+            }
+            else
+            {
+                determinant = 0.0;
+                for (var h = 0; h < Height; h++)
+                {
+                    var cofactor = Cofactor(0, h);
+                    var cofactorProd = this[0, h] * cofactor;
+                    determinant += cofactorProd;
+                }
+            }
+
+            return determinant;
+        }
+
+        public Matrix SubMatrix(int rowIdx, int colIdx)
+        {
+            var subM = new Matrix(Width - 1, Height - 1);
+            for (int w = 0, subW = 0; w < Width; w++)
+            {
+                if (w == rowIdx)
+                {
+                    continue;
+                }
+                for (int h = 0, subH = 0; h < Height; h++)
+                {
+                    if (h == colIdx)
+                    {
+                        continue;
+                    }
+                    subM[subW, subH] = this[w, h];
+                    subH++;
+                }
+                subW++;
+            }
+
+            return subM;
+        }
+
+        public double Minor(int rowIdx, int colIdx)
+        {
+            var subMatrix = SubMatrix(rowIdx, colIdx);
+            var subDeterminant = subMatrix.Determinant();
+            return subDeterminant;
+        }
+
+        public double Cofactor(int rowIdx, int colIdx)
+        {
+            var even = (rowIdx + colIdx) % 2 == 0;
+            var minor = Minor(rowIdx, colIdx);
+            if (even)
+            {
+                return minor;
+            }
+            return -minor;
+        }
+
         public bool Equals(Matrix other)
         {
             if (ReferenceEquals(null, other)) return false;
