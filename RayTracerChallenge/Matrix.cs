@@ -119,6 +119,34 @@ namespace RayTracerChallenge
             return -minor;
         }
 
+        public bool IsInvertible()
+        {
+            var d = Determinant();
+            var aboutZero = d.AboutEqual(0);
+            return !aboutZero;
+        }
+
+        public Matrix Inverse()
+        {
+            if (IsInvertible() == false)
+            {
+                throw new Exception("This matrix is not invertible");
+            }
+
+            var inversion = new Matrix(Width, Height);
+            var determinant = Determinant();
+            for (var w = 0; w < Width; w++)
+            {
+                for (var h = 0; h < Height; h++)
+                {
+                    var cofactor = Cofactor(w, h);
+                    inversion[h, w] = cofactor / determinant;
+                }
+            }
+
+            return inversion;
+        }
+
         public bool Equals(Matrix other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -140,6 +168,16 @@ namespace RayTracerChallenge
             }
 
             return true;
+        }
+
+        bool IEquatable<Matrix>.Equals(Matrix other)
+        {
+            return Equals(other);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
         }
 
         public override bool Equals(object obj)
