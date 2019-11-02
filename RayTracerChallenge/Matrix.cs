@@ -1,19 +1,20 @@
 ﻿using System;
+using System.Text;
 
 namespace RayTracerChallenge
 {
     public class Matrix : IEquatable<Matrix>
     {
-        private double[,] _matrix;
+        private readonly double[,] _matrix;
 
         public Matrix(int width, int height)
         {
             _matrix = new double[width, height];
         }
 
-        public Matrix(double[,] data)
+        public Matrix(double[,] data) 
+            : this(data.GetLength(0), data.GetLength(1))
         {
-            _matrix = new double[data.GetLength(0), data.GetLength(1)];
             Array.Copy(data, _matrix, data.Length);
         }
 
@@ -177,7 +178,22 @@ namespace RayTracerChallenge
 
         public override string ToString()
         {
-            return base.ToString();
+            var sb = new StringBuilder();
+            sb.AppendLine("{");
+            for (var x = 0; x < Width; x++)
+            {
+                sb.Append("\t{ ");
+                var sep = "";
+                for (var y = 0; y < Height; y++)
+                {
+                    sb.Append(sep);
+                    sb.Append(this[x, y]);
+                    sep = ", ";
+                }
+                sb.AppendLine(" }");
+            }
+            sb.AppendLine("}");
+            return sb.ToString();
         }
 
         public override bool Equals(object obj)

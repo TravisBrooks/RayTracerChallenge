@@ -10,5 +10,11 @@ namespace RayTracerChallenge
             var aboutEqual = Math.Abs(lhs - rhs) < tolerance;
             return aboutEqual;
         }
+
+        private const double ToRadiansConversion = Math.PI / 180;
+        public static double ToRadians(this double degrees)
+        {
+            return ToRadiansConversion * degrees;
+        }
     }
 }
