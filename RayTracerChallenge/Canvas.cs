@@ -17,7 +17,10 @@ namespace RayTracerChallenge
 
         public void WritePixel(int xIndex, int yIndex, FColor color)
         {
-            _colorArr[xIndex, yIndex] = color;
+            if (xIndex >= 0 && xIndex < Width && yIndex >= 0 && yIndex < Height)
+            {
+                _colorArr[xIndex, yIndex] = color;
+            }
         }
 
         public FColor PixelAt(int xIndex, int yIndex)

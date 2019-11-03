@@ -59,5 +59,25 @@ namespace RayTracerChallenge
             transform[1, 1] = cos;
             return transform;
         }
+
+        public static Matrix Shearing
+        (
+            double x_y,
+            double x_z,
+            double y_x,
+            double y_z,
+            double z_x,
+            double z_y
+        )
+        {
+            var transform = Matrix.Identity();
+            transform[0, 1] = x_y;
+            transform[0, 2] = x_z;
+            transform[1, 0] = y_x;
+            transform[1, 2] = y_z;
+            transform[2, 0] = z_x;
+            transform[2, 1] = z_y;
+            return transform;
+        }
     }
 }

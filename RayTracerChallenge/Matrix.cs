@@ -148,6 +148,85 @@ namespace RayTracerChallenge
             return inversion;
         }
 
+        /// <summary>
+        /// Does not change this matrix, returns a new matrix with transformation applied
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
+        /// <returns></returns>
+        public Matrix Translate(double x, double y, double z)
+        {
+            var transform = Transformation.Translation(x, y, z);
+            var retVal = transform * this;
+            return retVal;
+        }
+
+        /// <summary>
+        /// Does not change this matrix, returns a new matrix with transformation applied
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
+        /// <returns></returns>
+        public Matrix Scale(double x, double y, double z)
+        {
+            var transform = Transformation.Scaling(x, y, z);
+            var retVal = transform * this;
+            return retVal;
+        }
+
+        /// <summary>
+        /// Does not change this matrix, returns a new matrix with transformation applied
+        /// </summary>
+        /// <param name="radians"></param>
+        /// <returns></returns>
+        public Matrix RotateX(double radians)
+        {
+            var transform = Transformation.RotationX(radians);
+            var retVal = transform * this;
+            return retVal;
+        }
+
+        /// <summary>
+        /// Does not change this matrix, returns a new matrix with transformation applied
+        /// </summary>
+        /// <param name="radians"></param>
+        /// <returns></returns>
+        public Matrix RotateY(double radians)
+        {
+            var transform = Transformation.RotationY(radians);
+            var retVal = transform * this;
+            return retVal;
+        }
+
+        /// <summary>
+        /// Does not change this matrix, returns a new matrix with transformation applied
+        /// </summary>
+        /// <param name="radians"></param>
+        /// <returns></returns>
+        public Matrix RotateZ(double radians)
+        {
+            var transform = Transformation.RotationZ(radians);
+            var retVal = transform * this;
+            return retVal;
+        }
+
+        public Matrix Shear
+        (
+            double x_y,
+            double x_z,
+            double y_x,
+            double y_z,
+            double z_x,
+            double z_y
+        )
+        {
+            var transform = Transformation.Shearing(x_y, x_z, y_x, y_z, z_x, z_y);
+            var retVal = transform * this;
+            return retVal;
+        }
+
         public bool Equals(Matrix other)
         {
             if (ReferenceEquals(null, other)) return false;

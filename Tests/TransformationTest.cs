@@ -140,5 +140,94 @@ namespace Tests
             Assert.That(actualHalfQtr, Is.EqualTo(expectedHalfQtr), "half qtr");
             Assert.That(actualFullQtr, Is.EqualTo(expectedFullQtr), "full qtr");
         }
+
+        [Test]
+        public void ShearingMovesXProportionY()
+        {
+            var transform = Transformation.Shearing(1, 0, 0, 0, 0, 0);
+            var p = Tuple.Point(2, 3, 4);
+            var expected = Tuple.Point(5, 3, 4);
+            var actual = transform * p;
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void ShearingMovesXProportionZ()
+        {
+            var transform = Transformation.Shearing(0, 1, 0, 0, 0, 0);
+            var p = Tuple.Point(2, 3, 4);
+            var expected = Tuple.Point(6, 3, 4);
+            var actual = transform * p;
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void ShearingMovesYProportionX()
+        {
+            var transform = Transformation.Shearing(0, 0, 1, 0, 0, 0);
+            var p = Tuple.Point(2, 3, 4);
+            var expected = Tuple.Point(2, 5, 4);
+            var actual = transform * p;
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void ShearingMovesYProportionZ()
+        {
+            var transform = Transformation.Shearing(0, 0, 0, 1, 0, 0);
+            var p = Tuple.Point(2, 3, 4);
+            var expected = Tuple.Point(2, 7, 4);
+            var actual = transform * p;
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void ShearingMovesZProportionX()
+        {
+            var transform = Transformation.Shearing(0, 0, 0, 0, 1, 0);
+            var p = Tuple.Point(2, 3, 4);
+            var expected = Tuple.Point(2, 3, 6);
+            var actual = transform * p;
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void ShearingMovesZProportionY()
+        {
+            var transform = Transformation.Shearing(0, 0, 0, 0, 0, 1);
+            var p = Tuple.Point(2, 3, 4);
+            var expected = Tuple.Point(2, 3, 7);
+            var actual = transform * p;
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void TransformationsAppliedInSequence()
+        {
+            var A = Transformation.RotationX(Math.PI / 2);
+            var B = Transformation.Scaling(5, 5, 5);
+            var C = Transformation.Translation(10, 5, 7);
+            var p = Tuple.Point(1, 0, 1);
+            var p2 = A * p;
+            Assert.That(p2, Is.EqualTo(Tuple.Point(1, -1, 0)), "p2");
+            var p3 = B * p2;
+            Assert.That(p3, Is.EqualTo(Tuple.Point(5, -5, 0)), "p3");
+            var p4 = C * p3;
+            Assert.That(p4, Is.EqualTo(Tuple.Point(15, 0, 7)), "p4");
+        }
+
+        [Test]
+        public void ChainedTransformations()
+        {
+            var transform = Matrix.Identity()
+                                  .RotateX(Math.PI / 2)
+                                  .Scale(5, 5, 5)
+                                  .Translate(10, 5, 7);
+            var p = Tuple.Point(1, 0, 1);
+            var expected = Tuple.Point(15, 0, 7);
+            var actual = transform * p;
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
     }
 }
