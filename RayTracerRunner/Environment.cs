@@ -1,11 +1,11 @@
 ﻿using System;
-using Tuple = RayTracerChallenge.Tuple;
+using RayTracerChallenge;
 
 namespace RayTracerRunner
 {
     public class Environment
     {
-        public Environment(Tuple gravity, Tuple wind)
+        public Environment(Tuple3D gravity, Tuple3D wind)
         {
             if (gravity.IsVector == false)
             {
@@ -19,7 +19,7 @@ namespace RayTracerRunner
             Wind = wind;
         }
 
-        public Tuple Gravity { get; }
-        public Tuple Wind { get; }
+        public Tuple3D Gravity { get; }
+        public Tuple3D Wind { get; }
     }
 }

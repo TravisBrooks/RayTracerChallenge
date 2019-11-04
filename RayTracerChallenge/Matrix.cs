@@ -327,16 +327,16 @@ namespace RayTracerChallenge
             return c;
         }
 
-        public static Tuple operator *(Matrix a, in Tuple t)
+        public static Tuple3D operator *(Matrix a, in Tuple3D t)
         {
             if (a.Height != 4)
             {
-                throw new ArgumentException("To multiply Matrix*Tuple the matrix must have a Height==4.");
+                throw new ArgumentException("To multiply Matrix*Tuple3D the matrix must have a Height==4.");
             }
 
             var tAsMatrix = t.AsMatrix();
             var m = a * tAsMatrix;
-            var mAsTuple = new Tuple(m[0, 0], m[1, 0], m[2, 0], m[3, 0]);
+            var mAsTuple = new Tuple3D(m[0, 0], m[1, 0], m[2, 0], m[3, 0]);
             return mAsTuple;
         }
 

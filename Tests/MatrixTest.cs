@@ -120,7 +120,7 @@ namespace Tests
         public void MatrixMultIdentityTuple()
         {
             var idM = Matrix.Identity();
-            var tplA = new Tuple(1, 2, 3, 4);
+            var tplA = new Tuple3D(1, 2, 3, 4);
             var mult = idM * tplA;
 
             Assert.That(tplA, Is.EqualTo(mult));

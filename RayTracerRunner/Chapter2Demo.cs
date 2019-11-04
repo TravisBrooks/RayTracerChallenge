@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using RayTracerChallenge;
-using Tuple = RayTracerChallenge.Tuple;
 
 namespace RayTracerRunner
 {
@@ -18,11 +17,11 @@ namespace RayTracerRunner
 
         public static void Run()
         {
-            var position = Tuple.Point(0, 1, 0);
-            var velocity = Tuple.Vector(1, 1.8, 0).Normalize() * 11.25;
+            var position = Tuple3D.Point(0, 1, 0);
+            var velocity = Tuple3D.Vector(1, 1.8, 0).Normalize() * 11.25;
             var proj = new Projectile(position, velocity);
-            var gravity = Tuple.Vector(0, -0.1, 0);
-            var wind = Tuple.Vector(-0.01, 0, 0);
+            var gravity = Tuple3D.Vector(0, -0.1, 0);
+            var wind = Tuple3D.Vector(-0.01, 0, 0);
             var env = new Environment(gravity, wind);
 
             var width = 900;

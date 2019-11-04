@@ -1,11 +1,11 @@
 ﻿using System;
-using Tuple = RayTracerChallenge.Tuple;
+using RayTracerChallenge;
 
 namespace RayTracerRunner
 {
     public class Projectile
     {
-        public Projectile(Tuple position, Tuple velocity)
+        public Projectile(Tuple3D position, Tuple3D velocity)
         {
             if (position.IsPoint == false)
             {
@@ -21,7 +21,7 @@ namespace RayTracerRunner
             Velocity = velocity;
         }
 
-        public Tuple Position { get; }
-        public Tuple Velocity { get; }
+        public Tuple3D Position { get; }
+        public Tuple3D Velocity { get; }
     }
 }

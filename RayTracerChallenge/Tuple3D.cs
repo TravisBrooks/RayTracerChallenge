@@ -2,13 +2,13 @@
 
 namespace RayTracerChallenge
 {
-    public readonly struct Tuple : IEquatable<Tuple>
+    public readonly struct Tuple3D : IEquatable<Tuple3D>
     {
         private const double WPoint = 1;
         private const double WVect = 0;
         private readonly Lazy<double> _lazyMagnitude;
 
-        public Tuple(double x, double y, double z, double w)
+        public Tuple3D(double x, double y, double z, double w)
         {
             X = x;
             Y = y;
@@ -23,15 +23,15 @@ namespace RayTracerChallenge
             });
         }
 
-        public static Tuple Point(double x, double y, double z)
+        public static Tuple3D Point(double x, double y, double z)
         {
-            var pt = new Tuple(x, y, z, WPoint);
+            var pt = new Tuple3D(x, y, z, WPoint);
             return pt;
         }
 
-        public static Tuple Vector(double x, double y, double z)
+        public static Tuple3D Vector(double x, double y, double z)
         {
-            var pt = new Tuple(x, y, z, WVect);
+            var pt = new Tuple3D(x, y, z, WVect);
             return pt;
         }
 
@@ -50,7 +50,7 @@ namespace RayTracerChallenge
             return mag;
         }
 
-        public Tuple Normalize()
+        public Tuple3D Normalize()
         {
             var n = this / Magnitude();
             return n;
@@ -58,7 +58,7 @@ namespace RayTracerChallenge
 
         public Matrix AsMatrix()
         {
-            var m = new Matrix(new double[,]
+            var m = new Matrix(new[,]
             {
                 { X },
                 { Y },
@@ -73,7 +73,7 @@ namespace RayTracerChallenge
         /// </summary>
         /// <param name="otherVector"></param>
         /// <returns></returns>
-        public double DotProduct(in Tuple otherVector)
+        public double DotProduct(in Tuple3D otherVector)
         {
             if (this.IsVector == false || otherVector.IsVector == false)
             {
@@ -91,7 +91,7 @@ namespace RayTracerChallenge
         /// </summary>
         /// <param name="otherVector"></param>
         /// <returns></returns>
-        public Tuple CrossProduct(in Tuple otherVector)
+        public Tuple3D CrossProduct(in Tuple3D otherVector)
         {
             if (this.IsVector == false || otherVector.IsVector == false)
             {
@@ -109,19 +109,19 @@ namespace RayTracerChallenge
             return $"(X:{X}, Y:{Y}, Z:{Z}, W:{W})";
         }
 
-        bool IEquatable<Tuple>.Equals(Tuple other)
+        bool IEquatable<Tuple3D>.Equals(Tuple3D other)
         {
             return Equals(other);
         }
 
-        public bool Equals(Tuple other)
+        public bool Equals(Tuple3D other)
         {
             return X.AboutEqual(other.X) && Y.AboutEqual(other.Y) && Z.AboutEqual(other.Z) && W.AboutEqual(other.W);
         }
 
         public override bool Equals(object obj)
         {
-            return obj is Tuple other && Equals(other);
+            return obj is Tuple3D other && Equals(other);
         }
 
         public override int GetHashCode()
@@ -136,17 +136,17 @@ namespace RayTracerChallenge
             }
         }
 
-        public static bool operator ==(in Tuple left, in Tuple right)
+        public static bool operator ==(in Tuple3D left, in Tuple3D right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(in Tuple left, in Tuple right)
+        public static bool operator !=(in Tuple3D left, in Tuple3D right)
         {
             return !left.Equals(right);
         }
 
-        public static Tuple operator +(in Tuple left, in Tuple right)
+        public static Tuple3D operator +(in Tuple3D left, in Tuple3D right)
         {
             if (left.IsPoint && right.IsVector
                 || left.IsVector && right.IsPoint
@@ -162,7 +162,7 @@ namespace RayTracerChallenge
             throw new ArgumentException("Addition undefined, this IsPoint: {IsPoint} and other IsPoint {other.IsPoint}");
         }
 
-        public static Tuple operator -(in Tuple left, in Tuple right)
+        public static Tuple3D operator -(in Tuple3D left, in Tuple3D right)
         {
             if (left.IsPoint && right.IsPoint
                 || left.IsVector && right.IsVector
@@ -180,21 +180,21 @@ namespace RayTracerChallenge
             throw new ArgumentException("Subtraction undefined, this IsVector: {IsVector} and other IsPoint {other.IsPoint}");
         }
 
-        public static Tuple operator -(in Tuple tpl)
+        public static Tuple3D operator -(in Tuple3D tpl)
         {
-            var tpl1 = new Tuple(-tpl.X, -tpl.Y, -tpl.Z, -tpl.W);
+            var tpl1 = new Tuple3D(-tpl.X, -tpl.Y, -tpl.Z, -tpl.W);
             return tpl1;
         }
 
-        public static Tuple operator *(in Tuple left, in double scalar)
+        public static Tuple3D operator *(in Tuple3D left, in double scalar)
         {
-            var product = new Tuple(left.X * scalar, left.Y * scalar, left.Z * scalar, left.W * scalar);
+            var product = new Tuple3D(left.X * scalar, left.Y * scalar, left.Z * scalar, left.W * scalar);
             return product;
         }
 
-        public static Tuple operator /(in Tuple left, in double scalar)
+        public static Tuple3D operator /(in Tuple3D left, in double scalar)
         {
-            var quotient = new Tuple(left.X / scalar, left.Y / scalar, left.Z / scalar, left.W / scalar);
+            var quotient = new Tuple3D(left.X / scalar, left.Y / scalar, left.Z / scalar, left.W / scalar);
             return quotient;
         }
     }

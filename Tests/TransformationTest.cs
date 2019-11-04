@@ -1,7 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
 using RayTracerChallenge;
-using Tuple = RayTracerChallenge.Tuple;
 
 namespace Tests
 {
@@ -12,8 +11,8 @@ namespace Tests
         public void MultiplyByTranslationMatrix()
         {
             var transform = Transformation.Translation(5, -3, 2);
-            var p = Tuple.Point(-3, 4, 5);
-            var expected = Tuple.Point(2, 1, 7);
+            var p = Tuple3D.Point(-3, 4, 5);
+            var expected = Tuple3D.Point(2, 1, 7);
             var actual = transform * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -23,8 +22,8 @@ namespace Tests
         {
             var transform = Transformation.Translation(5, -3, 2);
             var inv = transform.Inverse();
-            var p = Tuple.Point(-3, 4, 5);
-            var expected = Tuple.Point(-8, 7, 3);
+            var p = Tuple3D.Point(-3, 4, 5);
+            var expected = Tuple3D.Point(-8, 7, 3);
             var actual = inv * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -33,7 +32,7 @@ namespace Tests
         public void TranslationDoesNotAffectVectors()
         {
             var transform = Transformation.Translation(5, -3, 2);
-            var v = Tuple.Vector(-3, 4, 5);
+            var v = Tuple3D.Vector(-3, 4, 5);
             var actual = transform * v;
             Assert.That(actual, Is.EqualTo(v));
         }
@@ -42,8 +41,8 @@ namespace Tests
         public void ScalingPoint()
         {
             var transform = Transformation.Scaling(2, 3, 4);
-            var p = Tuple.Point(-4, 6, 8);
-            var expected = Tuple.Point(-8, 18, 32);
+            var p = Tuple3D.Point(-4, 6, 8);
+            var expected = Tuple3D.Point(-8, 18, 32);
             var actual = transform * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -52,8 +51,8 @@ namespace Tests
         public void ScalingVector()
         {
             var transform = Transformation.Scaling(2, 3, 4);
-            var v = Tuple.Vector(-4, 6, 8);
-            var expected = Tuple.Vector(-8, 18, 32);
+            var v = Tuple3D.Vector(-4, 6, 8);
+            var expected = Tuple3D.Vector(-8, 18, 32);
             var actual = transform * v;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -63,8 +62,8 @@ namespace Tests
         {
             var transform = Transformation.Scaling(2, 3, 4);
             var inv = transform.Inverse();
-            var v = Tuple.Vector(-4, 6, 8);
-            var expected = Tuple.Vector(-2, 2, 2);
+            var v = Tuple3D.Vector(-4, 6, 8);
+            var expected = Tuple3D.Vector(-2, 2, 2);
             var actual = inv * v;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -73,8 +72,8 @@ namespace Tests
         public void ReflectionIsScalingByNegativeValue()
         {
             var transform = Transformation.Scaling(-1, 1, 1);
-            var p = Tuple.Point(2, 3, 4);
-            var expected = Tuple.Point(-2, 3, 4);
+            var p = Tuple3D.Point(2, 3, 4);
+            var expected = Tuple3D.Point(-2, 3, 4);
             var actual = transform * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -82,12 +81,12 @@ namespace Tests
         [Test]
         public void RotatePointAroundXAxis()
         {
-            var p = Tuple.Point(0, 1, 0);
+            var p = Tuple3D.Point(0, 1, 0);
             var halfQuarter = Transformation.RotationX(45d.ToRadians());
             var fullQuarter = Transformation.RotationX(90d.ToRadians());
 
-            var expectedHalfQtr = Tuple.Point(0, Math.Sqrt(2)/2.0, Math.Sqrt(2) / 2.0);
-            var expectedFullQtr = Tuple.Point(0, 0, 1);
+            var expectedHalfQtr = Tuple3D.Point(0, Math.Sqrt(2)/2.0, Math.Sqrt(2) / 2.0);
+            var expectedFullQtr = Tuple3D.Point(0, 0, 1);
 
             var actualHalfQtr = halfQuarter * p;
             var actualFullQtr = fullQuarter * p;
@@ -99,10 +98,10 @@ namespace Tests
         [Test]
         public void InverseOfXRotationGoesInOppositeDirection()
         {
-            var p = Tuple.Point(0, 1, 0);
+            var p = Tuple3D.Point(0, 1, 0);
             var halfQuarter = Transformation.RotationX(45d.ToRadians());
             var inv = halfQuarter.Inverse();
-            var expected = Tuple.Point(0, Math.Sqrt(2) / 2.0, -Math.Sqrt(2) / 2.0);
+            var expected = Tuple3D.Point(0, Math.Sqrt(2) / 2.0, -Math.Sqrt(2) / 2.0);
             var actual = inv * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -110,12 +109,12 @@ namespace Tests
         [Test]
         public void RotatePointAroundYAxis()
         {
-            var p = Tuple.Point(0, 0, 1);
+            var p = Tuple3D.Point(0, 0, 1);
             var halfQuarter = Transformation.RotationY(45d.ToRadians());
             var fullQuarter = Transformation.RotationY(90d.ToRadians());
 
-            var expectedHalfQtr = Tuple.Point(Math.Sqrt(2) / 2.0, 0, Math.Sqrt(2) / 2.0);
-            var expectedFullQtr = Tuple.Point(1, 0, 0);
+            var expectedHalfQtr = Tuple3D.Point(Math.Sqrt(2) / 2.0, 0, Math.Sqrt(2) / 2.0);
+            var expectedFullQtr = Tuple3D.Point(1, 0, 0);
 
             var actualHalfQtr = halfQuarter * p;
             var actualFullQtr = fullQuarter * p;
@@ -127,12 +126,12 @@ namespace Tests
         [Test]
         public void RotatePointAroundZAxis()
         {
-            var p = Tuple.Point(0, 1, 0);
+            var p = Tuple3D.Point(0, 1, 0);
             var halfQuarter = Transformation.RotationZ(45d.ToRadians());
             var fullQuarter = Transformation.RotationZ(90d.ToRadians());
 
-            var expectedHalfQtr = Tuple.Point(-Math.Sqrt(2) / 2.0, Math.Sqrt(2) / 2.0, 0);
-            var expectedFullQtr = Tuple.Point(-1, 0, 0);
+            var expectedHalfQtr = Tuple3D.Point(-Math.Sqrt(2) / 2.0, Math.Sqrt(2) / 2.0, 0);
+            var expectedFullQtr = Tuple3D.Point(-1, 0, 0);
 
             var actualHalfQtr = halfQuarter * p;
             var actualFullQtr = fullQuarter * p;
@@ -145,8 +144,8 @@ namespace Tests
         public void ShearingMovesXProportionY()
         {
             var transform = Transformation.Shearing(1, 0, 0, 0, 0, 0);
-            var p = Tuple.Point(2, 3, 4);
-            var expected = Tuple.Point(5, 3, 4);
+            var p = Tuple3D.Point(2, 3, 4);
+            var expected = Tuple3D.Point(5, 3, 4);
             var actual = transform * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -155,8 +154,8 @@ namespace Tests
         public void ShearingMovesXProportionZ()
         {
             var transform = Transformation.Shearing(0, 1, 0, 0, 0, 0);
-            var p = Tuple.Point(2, 3, 4);
-            var expected = Tuple.Point(6, 3, 4);
+            var p = Tuple3D.Point(2, 3, 4);
+            var expected = Tuple3D.Point(6, 3, 4);
             var actual = transform * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -165,8 +164,8 @@ namespace Tests
         public void ShearingMovesYProportionX()
         {
             var transform = Transformation.Shearing(0, 0, 1, 0, 0, 0);
-            var p = Tuple.Point(2, 3, 4);
-            var expected = Tuple.Point(2, 5, 4);
+            var p = Tuple3D.Point(2, 3, 4);
+            var expected = Tuple3D.Point(2, 5, 4);
             var actual = transform * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -175,8 +174,8 @@ namespace Tests
         public void ShearingMovesYProportionZ()
         {
             var transform = Transformation.Shearing(0, 0, 0, 1, 0, 0);
-            var p = Tuple.Point(2, 3, 4);
-            var expected = Tuple.Point(2, 7, 4);
+            var p = Tuple3D.Point(2, 3, 4);
+            var expected = Tuple3D.Point(2, 7, 4);
             var actual = transform * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -185,8 +184,8 @@ namespace Tests
         public void ShearingMovesZProportionX()
         {
             var transform = Transformation.Shearing(0, 0, 0, 0, 1, 0);
-            var p = Tuple.Point(2, 3, 4);
-            var expected = Tuple.Point(2, 3, 6);
+            var p = Tuple3D.Point(2, 3, 4);
+            var expected = Tuple3D.Point(2, 3, 6);
             var actual = transform * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -195,8 +194,8 @@ namespace Tests
         public void ShearingMovesZProportionY()
         {
             var transform = Transformation.Shearing(0, 0, 0, 0, 0, 1);
-            var p = Tuple.Point(2, 3, 4);
-            var expected = Tuple.Point(2, 3, 7);
+            var p = Tuple3D.Point(2, 3, 4);
+            var expected = Tuple3D.Point(2, 3, 7);
             var actual = transform * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
@@ -207,13 +206,13 @@ namespace Tests
             var A = Transformation.RotationX(Math.PI / 2);
             var B = Transformation.Scaling(5, 5, 5);
             var C = Transformation.Translation(10, 5, 7);
-            var p = Tuple.Point(1, 0, 1);
+            var p = Tuple3D.Point(1, 0, 1);
             var p2 = A * p;
-            Assert.That(p2, Is.EqualTo(Tuple.Point(1, -1, 0)), "p2");
+            Assert.That(p2, Is.EqualTo(Tuple3D.Point(1, -1, 0)), "p2");
             var p3 = B * p2;
-            Assert.That(p3, Is.EqualTo(Tuple.Point(5, -5, 0)), "p3");
+            Assert.That(p3, Is.EqualTo(Tuple3D.Point(5, -5, 0)), "p3");
             var p4 = C * p3;
-            Assert.That(p4, Is.EqualTo(Tuple.Point(15, 0, 7)), "p4");
+            Assert.That(p4, Is.EqualTo(Tuple3D.Point(15, 0, 7)), "p4");
         }
 
         [Test]
@@ -223,8 +222,8 @@ namespace Tests
                                   .RotateX(Math.PI / 2)
                                   .Scale(5, 5, 5)
                                   .Translate(10, 5, 7);
-            var p = Tuple.Point(1, 0, 1);
-            var expected = Tuple.Point(15, 0, 7);
+            var p = Tuple3D.Point(1, 0, 1);
+            var expected = Tuple3D.Point(15, 0, 7);
             var actual = transform * p;
             Assert.That(actual, Is.EqualTo(expected));
         }
