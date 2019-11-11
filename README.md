@@ -8,4 +8,4 @@ I'm following along with the book [The Ray Tracer Challenge by Jamis Buck](https
 4. Matrix Transformations
 5. Ray-Sphere Intersections
 
-   In progress, up to Tracking Intersections
+   In progress, up to Putting It Together chapter demo

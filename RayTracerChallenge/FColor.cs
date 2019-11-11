@@ -14,7 +14,7 @@ namespace RayTracerChallenge
             Blue = blue;
         }
 
-        public static FColor FromRGB(int r, int g, int b)
+        public static FColor FromRgb(int r, int g, int b)
         {
             var c = new FColor(r/255.0, g/255.0, b/255.0);
             return c;

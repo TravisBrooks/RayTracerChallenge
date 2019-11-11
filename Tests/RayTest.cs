@@ -31,5 +31,29 @@ namespace Tests
             Assert.That(posNeg1, Is.EqualTo(Tuple3D.Point(1, 3, 4)), "posNeg1");
             Assert.That(pos2pt5, Is.EqualTo(Tuple3D.Point(4.5, 3, 4)), "pos2pt5");
         }
+
+        [Test]
+        public void TranslatingRay()
+        {
+            var ray = new Ray(Tuple3D.Point(1, 2, 3), Tuple3D.Vector(0, 1, 0));
+            var matrix = Transformation.Translation(3, 4, 5);
+            var ray2 = ray.Transform(matrix);
+            var expectedOrigin = Tuple3D.Point(4, 6, 8);
+            var expectedVector = Tuple3D.Vector(0, 1, 0);
+            Assert.That(ray2.OriginPoint, Is.EqualTo(expectedOrigin), "origin");
+            Assert.That(ray2.DirectionVector, Is.EqualTo(expectedVector), "vector");
+        }
+
+        [Test]
+        public void ScalingRay()
+        {
+            var ray = new Ray(Tuple3D.Point(1, 2, 3), Tuple3D.Vector(0, 1, 0));
+            var matrix = Transformation.Scaling(2, 3, 4);
+            var ray2 = ray.Transform(matrix);
+            var expectedOrigin = Tuple3D.Point(2, 6, 12);
+            var expectedVector = Tuple3D.Vector(0, 3, 0);
+            Assert.That(ray2.OriginPoint, Is.EqualTo(expectedOrigin), "origin");
+            Assert.That(ray2.DirectionVector, Is.EqualTo(expectedVector), "vector");
+        }
     }
 }

@@ -12,10 +12,12 @@ namespace RayTracerRunner
 
         private static void DrawPixel(Canvas canvas, FColor pixelColor, Tuple3D point)
         {
-            var translateToCanvasCoordinates = Transformation.Translation(width * 0.5, height * 0.5, 0);
+            // the screen coordinates are the lower right of the logical coordinate so need to shift to right and invert x
+            var translateToCanvasCoordinates = Transformation.RotationX(Math.PI)
+                                                             .Translate(width * 0.5, height * 0.5, 0);
             var translatedPt = translateToCanvasCoordinates * point;
             var xRounded = (int)Math.Ceiling(translatedPt.X);
-            var yRounded = (int)Math.Ceiling(height - translatedPt.Y);
+            var yRounded = (int)Math.Ceiling(translatedPt.Y);
             foreach (var x in Enumerable.Range(xRounded - 3, 7))
             {
                 foreach (var y in Enumerable.Range(yRounded - 3, 7))

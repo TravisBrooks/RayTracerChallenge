@@ -6,8 +6,7 @@ namespace RayTracerRunner
 {
     public static class Chapter2Demo
     {
-
-        public static Projectile Tick(Environment env, Projectile proj)
+        private static Projectile Tick(Environment env, Projectile proj)
         {
             var pos = proj.Position + proj.Velocity;
             var vel = proj.Velocity + env.Gravity + env.Wind;
@@ -29,8 +28,8 @@ namespace RayTracerRunner
             var canvas = new Canvas(width, height);
 
             //var skyBlue = new FColor(0.529, 0.808, 0.922);
-            var supermanBlue = FColor.FromRGB(72, 164, 214);
-            var supermanRed = FColor.FromRGB(200, 0, 0);
+            var supermanBlue = FColor.FromRgb(72, 164, 214);
+            var supermanRed = FColor.FromRgb(200, 0, 0);
             var projectileColor = supermanRed;
             var backgroundColor = supermanBlue;
             var blendColor = projectileColor * backgroundColor;

@@ -14,8 +14,8 @@ namespace Tests
 
             var xs = sphere.Intersect(ray);
             Assert.That(xs.Count, Is.EqualTo(2), "intersection point count");
-            Assert.That(xs[0], Is.EqualTo(4), "xs[0]");
-            Assert.That(xs[1], Is.EqualTo(6), "xs[1]");
+            Assert.That(xs[0].Time, Is.EqualTo(4), "xs[0]");
+            Assert.That(xs[1].Time, Is.EqualTo(6), "xs[1]");
         }
 
         [Test]
@@ -26,8 +26,8 @@ namespace Tests
 
             var xs = sphere.Intersect(ray);
             Assert.That(xs.Count, Is.EqualTo(2), "intersection point count");
-            Assert.That(xs[0], Is.EqualTo(5), "xs[0]");
-            Assert.That(xs[1], Is.EqualTo(5), "xs[1]");
+            Assert.That(xs[0].Time, Is.EqualTo(5), "xs[0]");
+            Assert.That(xs[1].Time, Is.EqualTo(5), "xs[1]");
         }
 
         [Test]
@@ -48,8 +48,8 @@ namespace Tests
 
             var xs = sphere.Intersect(ray);
             Assert.That(xs.Count, Is.EqualTo(2), "intersection point count");
-            Assert.That(xs[0], Is.EqualTo(-1), "xs[0]");
-            Assert.That(xs[1], Is.EqualTo(1), "xs[1]");
+            Assert.That(xs[0].Time, Is.EqualTo(-1), "xs[0]");
+            Assert.That(xs[1].Time, Is.EqualTo(1), "xs[1]");
         }
 
         [Test]
@@ -60,8 +60,59 @@ namespace Tests
 
             var xs = sphere.Intersect(ray);
             Assert.That(xs.Count, Is.EqualTo(2), "intersection point count");
-            Assert.That(xs[0], Is.EqualTo(-6), "xs[0]");
-            Assert.That(xs[1], Is.EqualTo(-4), "xs[1]");
+            Assert.That(xs[0].Time, Is.EqualTo(-6), "xs[0]");
+            Assert.That(xs[1].Time, Is.EqualTo(-4), "xs[1]");
+        }
+
+        [Test]
+        public void IntersectSetsObjectOnIntersection()
+        {
+            var r = new Ray(Tuple3D.Point(0, 0, -5), Tuple3D.Vector(0, 0, 1));
+            var s = new Sphere();
+            var xs = s.Intersect(r);
+            Assert.That(xs.Count, Is.EqualTo(2), "list count");
+            Assert.That(xs[0].TheObject, Is.EqualTo(s), "intersection 1");
+            Assert.That(xs[1].TheObject, Is.EqualTo(s), "intersection 2");
+        }
+
+        [Test]
+        public void SphereDefaultTransformation()
+        {
+            var s = new Sphere();
+            Assert.That(s.Transform, Is.EqualTo(Matrix.Identity()));
+        }
+
+        [Test]
+        public void ChangingSphereTransformation()
+        {
+            var s = new Sphere();
+            var t = Transformation.Translation(2, 3, 4);
+            s.Transform = t;
+            Assert.That(s.Transform, Is.EqualTo(t));
+        }
+
+        [Test]
+        public void IntersectScaledSphereWithRay()
+        {
+            var ray = new Ray(Tuple3D.Point(0, 0, -5), Tuple3D.Vector(0, 0, 1));
+            var sphere = new Sphere
+            {
+                Transform = Transformation.Scaling(2, 2, 2)
+            };
+            var xs = sphere.Intersect(ray);
+            Assert.That(xs.Count, Is.EqualTo(2), "intersection point count");
+            Assert.That(xs[0].Time, Is.EqualTo(3), "xs[0]");
+            Assert.That(xs[1].Time, Is.EqualTo(7), "xs[1]");
+        }
+
+        [Test]
+        public void IntersectTranslatedSphereWithRay()
+        {
+            var ray = new Ray(Tuple3D.Point(0, 0, -5), Tuple3D.Vector(0, 0, 1));
+            var sphere = new Sphere();
+            sphere.Transform = Transformation.Translation(5, 0, 0);
+            var xs = sphere.Intersect(ray);
+            Assert.That(xs.Count, Is.EqualTo(0), "intersection point count");
         }
     }
 }

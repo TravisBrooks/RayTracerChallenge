@@ -19,6 +19,13 @@ namespace RayTracerChallenge
             return p;
         }
 
+        public readonly Ray Transform(Matrix transMatrix)
+        {
+            var tPt = transMatrix * OriginPoint;
+            var tVct = transMatrix * DirectionVector;
+            return new Ray(tPt, tVct);
+        }
+
         public bool Equals(Ray other)
         {
             return OriginPoint.Equals(other.OriginPoint) && DirectionVector.Equals(other.DirectionVector);
