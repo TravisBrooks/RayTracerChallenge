@@ -7,5 +7,3 @@ I'm following along with the book [The Ray Tracer Challenge by Jamis Buck](https
 3. Matrices
 4. Matrix Transformations
 5. Ray-Sphere Intersections
-
-   In progress, up to Putting It Together chapter demo
