@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using RayTracerChallenge;
 
 namespace RayTracerRunner
@@ -7,7 +11,7 @@ namespace RayTracerRunner
     {
         public static void Run()
         {
-            var canvasPixels = 400;
+            var canvasPixels = 500;
             var canvas = new Canvas(canvasPixels, canvasPixels);
 
             var backgroundColor = new FColor(0, 0, 0);
@@ -21,11 +25,16 @@ namespace RayTracerRunner
             var wallSize = 7.0;
             var pixelSize = wallSize / canvasPixels;
             var sphere1 = new Sphere();
-            var sphere2 = new Sphere();
-            // shrink and skew
-            sphere2.Transform = Transformation.Shearing(2, 0, 0, 0, 0, 0).Scale(0.5, 1, 1);
+            var sphere2 = new Sphere
+            {
+                // shrink and skew
+                Transform = Transformation.Shearing(2, 0, 0, 0, 0, 0).Scale(0.5, 1, 1)
+            };
 
-            for (var x=0; x < canvasPixels; x++) 
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var xrange = Enumerable.Range(0, canvasPixels);
+            Parallel.ForEach(xrange, x =>
             {
                 for (var y = 0; y < canvasPixels; y++)
                 {
@@ -36,12 +45,20 @@ namespace RayTracerRunner
                     {
                         canvas.WritePixel(x, y, canvas.PixelAt(x, y) + shadowColor);
                     }
+
                     if (sphere2.Intersect(ray).Hit() != null)
                     {
                         canvas.WritePixel(x, y, canvas.PixelAt(x, y) + otherColor);
                     }
                 }
-            }
+            });
+            stopwatch.Stop();
+            // 400x400, not parallel, for loops: Elapsed seconds: 11.3051724
+            // 400x400, not parallel, foreach loops: Elapsed seconds: 11.2183499
+            // 400x400, parallel, foreach x loop: Elapsed seconds: 3.4199165999999996
+            // 400x400, parallel, foreach both loops: Elapsed seconds: 3.5285884
+            // conclusion: making the xrange parallel worked fine, trying both in parallel was pointless.
+            Console.WriteLine($"Elapsed seconds: {stopwatch.Elapsed.TotalSeconds}");
 
             var ppm = canvas.ToPpm();
             File.WriteAllText("../../../Chapter5Demo.ppm", ppm);
