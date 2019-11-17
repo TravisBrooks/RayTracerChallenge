@@ -34,5 +34,16 @@ namespace RayTracerChallenge
             );
             return list;
         }
+
+        public Tuple3D NormalAt(Tuple3D worldPoint)
+        {
+            var inverse = Transform.Inverse();
+            var objectPt = inverse * worldPoint;
+            var objectNormal = objectPt - Tuple3D.Point(0, 0, 0);
+            var worldNormal = inverse.Transpose() * objectNormal;
+            worldNormal  = Tuple3D.Vector(worldNormal.X, worldNormal.Y, worldNormal.Z);
+            var nrml = worldNormal.Normalize();
+            return nrml;
+        }
     }
 }

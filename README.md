@@ -7,3 +7,6 @@ I'm following along with the book [The Ray Tracer Challenge by Jamis Buck](https
 3. Matrices
 4. Matrix Transformations
 5. Ray-Sphere Intersections
+6. Light and Shading
+
+   In progress, up to Reflecting Vectors

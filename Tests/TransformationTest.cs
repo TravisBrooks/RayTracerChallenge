@@ -218,10 +218,9 @@ namespace Tests
         [Test]
         public void ChainedTransformations()
         {
-            var transform = Matrix.Identity()
-                                  .RotateX(Math.PI / 2)
-                                  .Scale(5, 5, 5)
-                                  .Translate(10, 5, 7);
+            var transform = Transformation.Translation(10, 5, 7)
+                                          .Scale(5, 5, 5)
+                                          .RotateX(Math.PI / 2.0);
             var p = Tuple3D.Point(1, 0, 1);
             var expected = Tuple3D.Point(15, 0, 7);
             var actual = transform * p;

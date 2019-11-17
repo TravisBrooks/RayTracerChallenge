@@ -158,7 +158,8 @@ namespace RayTracerChallenge
         public Matrix Translate(double x, double y, double z)
         {
             var transform = Transformation.Translation(x, y, z);
-            var retVal = transform * this;
+            //var retVal = transform * this;
+            var retVal = this * transform;
             return retVal;
         }
 
@@ -172,7 +173,8 @@ namespace RayTracerChallenge
         public Matrix Scale(double x, double y, double z)
         {
             var transform = Transformation.Scaling(x, y, z);
-            var retVal = transform * this;
+            //var retVal = transform * this;
+            var retVal = this * transform;
             return retVal;
         }
 
@@ -184,7 +186,8 @@ namespace RayTracerChallenge
         public Matrix RotateX(double radians)
         {
             var transform = Transformation.RotationX(radians);
-            var retVal = transform * this;
+            //var retVal = transform * this;
+            var retVal = this * transform;
             return retVal;
         }
 
@@ -196,7 +199,8 @@ namespace RayTracerChallenge
         public Matrix RotateY(double radians)
         {
             var transform = Transformation.RotationY(radians);
-            var retVal = transform * this;
+            //var retVal = transform * this;
+            var retVal = this * transform;
             return retVal;
         }
 
@@ -208,7 +212,8 @@ namespace RayTracerChallenge
         public Matrix RotateZ(double radians)
         {
             var transform = Transformation.RotationZ(radians);
-            var retVal = transform * this;
+            //var retVal = transform * this;
+            var retVal = this * transform;
             return retVal;
         }
 
@@ -223,7 +228,8 @@ namespace RayTracerChallenge
         )
         {
             var transform = Transformation.Shearing(x_y, x_z, y_x, y_z, z_x, z_y);
-            var retVal = transform * this;
+            //var retVal = transform * this;
+            var retVal = this * transform;
             return retVal;
         }
 

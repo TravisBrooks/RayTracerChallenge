@@ -28,7 +28,8 @@ namespace RayTracerRunner
             var sphere2 = new Sphere
             {
                 // shrink and skew
-                Transform = Transformation.Shearing(2, 0, 0, 0, 0, 0).Scale(0.5, 1, 1)
+                Transform = Transformation.Scaling(0.5, 1, 1)
+                                          .Shear(2, 0, 0, 0, 0, 0)
             };
 
             var stopwatch = new Stopwatch();
