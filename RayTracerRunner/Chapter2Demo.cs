@@ -4,7 +4,7 @@ using RayTracerChallenge;
 
 namespace RayTracerRunner
 {
-    public static class Chapter2Demo
+    public class Chapter2Demo : DemoRunner
     {
         private static Projectile Tick(Environment env, Projectile proj)
         {
@@ -14,7 +14,7 @@ namespace RayTracerRunner
             return newProj;
         }
 
-        public static void Run()
+        protected override void RunImpl()
         {
             var position = Tuple3D.Point(0, 1, 0);
             var velocity = Tuple3D.Vector(1, 1.8, 0).Normalize() * 11.25;

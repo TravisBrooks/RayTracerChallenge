@@ -1,15 +1,13 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using RayTracerChallenge;
 
 namespace RayTracerRunner
 {
-    public static class Chapter5Demo
+    public class Chapter5Demo : DemoRunner
     {
-        public static void Run()
+        protected override void RunImpl()
         {
             var canvasPixels = 500;
             var canvas = new Canvas(canvasPixels, canvasPixels);
@@ -32,8 +30,6 @@ namespace RayTracerRunner
                                           .Shear(2, 0, 0, 0, 0, 0)
             };
 
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
             var xrange = Enumerable.Range(0, canvasPixels);
             Parallel.ForEach(xrange, x =>
             {
@@ -53,13 +49,11 @@ namespace RayTracerRunner
                     }
                 }
             });
-            stopwatch.Stop();
             // 400x400, not parallel, for loops: Elapsed seconds: 11.3051724
             // 400x400, not parallel, foreach loops: Elapsed seconds: 11.2183499
             // 400x400, parallel, foreach x loop: Elapsed seconds: 3.4199165999999996
             // 400x400, parallel, foreach both loops: Elapsed seconds: 3.5285884
             // conclusion: making the xrange parallel worked fine, trying both in parallel was pointless.
-            Console.WriteLine($"Elapsed seconds: {stopwatch.Elapsed.TotalSeconds}");
 
             var ppm = canvas.ToPpm();
             File.WriteAllText("../../../Chapter5Demo.ppm", ppm);

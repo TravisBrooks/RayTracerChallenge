@@ -5,7 +5,7 @@ using RayTracerChallenge;
 
 namespace RayTracerRunner
 {
-    public static class Chapter4Demo
+    public class Chapter4Demo : DemoRunner
     {
         private static readonly int width = 850;
         private static readonly int height = 850;
@@ -27,7 +27,7 @@ namespace RayTracerRunner
             }
         }
 
-        public static void Run()
+        protected override void RunImpl()
         {
             var canvas = new Canvas(width, height);
 

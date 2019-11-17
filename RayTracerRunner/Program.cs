@@ -4,9 +4,9 @@
     {
         static void Main(string[] args)
         {
-            //Chapter2Demo.Run();
-            //Chapter4Demo.Run();
-            Chapter5Demo.Run();
+            //new Chapter2Demo().Run();
+            //new Chapter4Demo().Run();
+            new Chapter5Demo().Run();
         }
     }
 }
