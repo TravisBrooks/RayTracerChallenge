@@ -21,9 +21,9 @@ namespace Tests
                 for (var y = 0; y < height; y++)
                 {
                     var color = canvas.PixelAt(x, y);
-                    Assert.That(color, Is.EqualTo(black), "Unexpected color at ({0}, {1})", x, y);
+                    Assert.That(color, Is.EqualTo(black), $"Unexpected color at ({x}, {y})");
                 }
-            }
+			}
         }
 
         [Test]

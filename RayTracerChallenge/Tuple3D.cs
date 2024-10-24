@@ -8,7 +8,14 @@ namespace RayTracerChallenge
         private const double WVect = 0;
         private readonly Lazy<double> _lazyMagnitude;
 
-        public Tuple3D(double x, double y, double z, double w)
+		/// <summary>
+		/// You probably want to use Tuple3D.Point or Tuple3D.Vector methods instead of this ctor 
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="z"></param>
+		/// <param name="w">1 means point, 0 means vector</param>
+		public Tuple3D(double x, double y, double z, double w)
         {
             X = x;
             Y = y;

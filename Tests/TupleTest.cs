@@ -191,8 +191,8 @@ namespace Tests
             var cross1 = Tuple3D.Vector(-1, 2, -1);
             var cross2 = Tuple3D.Vector(1, -2, 1);
 
-            Assert.That(a.CrossProduct(b), Is.EqualTo(cross1), "Cross({0}, {1}) should be {2}", a, b, cross1);
-            Assert.That(b.CrossProduct(a), Is.EqualTo(cross2), "Cross({0}, {1}) should be {2}", b, a, cross2);
-        }
-    }
+			Assert.That(a.CrossProduct(b), Is.EqualTo(cross1), $"Cross({a}, {b}) should be {cross1}");
+			Assert.That(b.CrossProduct(a), Is.EqualTo(cross2), $"Cross({b}, {a}) should be {cross2}");
+		}
+	}
 }
