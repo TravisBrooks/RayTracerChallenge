@@ -5,6 +5,18 @@ namespace RayTracerChallenge
 	{
 		public float W => 1f;
 
+		public bool Equals(Point other)
+		{
+			return X.AboutEqual(other.X) &&
+			       Y.AboutEqual(other.Y) &&
+			       Z.AboutEqual(other.Z);
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(X, Y, Z);
+		}
+
 		public static Point operator +(Point p, Vector v)
 		{
 			var newP = new Point(p.X + v.X, p.Y + v.Y, p.Z + v.Z);

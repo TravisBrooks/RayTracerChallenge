@@ -4,6 +4,18 @@
 	{
 		public float W => 0f;
 
+		public bool Equals(Vector other)
+		{
+			return X.AboutEqual(other.X) &&
+			       Y.AboutEqual(other.Y) &&
+			       Z.AboutEqual(other.Z);
+		}
+
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(X, Y, Z);
+		}
+
 		public static Point operator +(Vector v1, Point v2)
 		{
 			var p = new Point(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);
