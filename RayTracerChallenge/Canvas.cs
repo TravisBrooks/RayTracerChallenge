@@ -37,55 +37,34 @@ namespace RayTracerChallenge
 		{
 			for (var y = 0; y < Height; y++)
 			{
-				var rowOfColors = new Color[Width];
+				var rowBuffer = new StringBuilder();
 				for (var x = 0; x < Width; x++)
 				{
-					rowOfColors[x] = _pixels[x, y];
+					var color = _pixels[x, y];
+					var rgb = color.ToRgb();
+					rowBuffer.Append(rgb.red).Append(Space)
+						.Append(rgb.green).Append(Space)
+						.Append(rgb.blue).Append(Space);
 				}
-				_PpmColorRow(sb, rowOfColors);
+				var rowStr = rowBuffer.ToString().Trim();
+				_SplitLongLine(sb, rowStr);
 			}
-		}
-
-		private void _PpmColorRow(StringBuilder sb, Color[] rowOfColors)
-		{
-			var rowBuffer = new StringBuilder();
-			foreach (var cRow in rowOfColors)
-			{
-				var rgb = cRow.ToRgb();
-				rowBuffer.Append(rgb.red);
-				rowBuffer.Append(Space);
-				rowBuffer.Append(rgb.green);
-				rowBuffer.Append(Space);
-				rowBuffer.Append(rgb.blue);
-				rowBuffer.Append(Space);
-			}
-
-			var rowStr = rowBuffer.ToString();
-			_SplitLongLine(sb, rowStr);
 		}
 
 		private static void _SplitLongLine(StringBuilder sb, string line)
 		{
-			line = line.Trim();
 			const int maxLineLen = 70;
-			if (line.Length <= maxLineLen)
+			while (line.Length > maxLineLen)
 			{
-				sb.AppendLine(line);
-			}
-			else
-			{
-				for (var cutoff = maxLineLen; cutoff >= 0; cutoff--)
+				var cutoff = maxLineLen;
+				while (cutoff > 0 && line[cutoff] != Space)
 				{
-					if (line[cutoff] == Space)
-					{
-						var subLhs = line[..cutoff];
-						var subRhs = line[cutoff..];
-						sb.AppendLine(subLhs);
-						_SplitLongLine(sb, subRhs);
-						break;
-					}
+					cutoff--;
 				}
+				sb.AppendLine(line[..cutoff]);
+				line = line[(cutoff + 1)..];
 			}
+			sb.AppendLine(line);
 		}
 	}
 }
