@@ -1,13 +1,12 @@
 ﻿using RayTracerRunner.Chapter2;
 
-namespace RayTracerChallenge
+namespace RayTracerRunner
 {
-    internal class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+	    private static void Main(string[] args)
         {
-	        var chpt2 = new Chapter2Demo();
-            chpt2.Run();
+	        new Chapter2Demo().Run();
 		}
     }
 }

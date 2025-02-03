@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace RayTracerChallenge
+﻿namespace RayTracerChallenge
 {
 	public readonly record struct Color(float Red, float Green, float Blue)
 	{
@@ -14,12 +12,6 @@ namespace RayTracerChallenge
 		public override int GetHashCode()
 		{
 			return HashCode.Combine(Red, Green, Blue);
-		}
-
-		public static Color FromRgb(int r, int g, int b)
-		{
-			var c = new Color(r / 255f, g / 255f, b / 255f);
-			return c;
 		}
 
 		public static Color operator +(Color c1, Color c2)
@@ -46,6 +38,18 @@ namespace RayTracerChallenge
 			return cProd;
 		}
 
+		public static Color FromRgb(int r, int g, int b)
+		{
+			var c = new Color(r / 255f, g / 255f, b / 255f);
+			return c;
+		}
+
+		public (int red, int green, int blue) ToRgb()
+		{
+			var ppmColor = (red: _ToRgbComponent(Red), green: _ToRgbComponent(Green), blue: _ToRgbComponent(Blue));
+			return ppmColor;
+		}
+
 		private static int _ToRgbComponent(float colorPart)
 		{
 			var ppmPart = (int)Math.Round(255 * colorPart);
@@ -58,12 +62,6 @@ namespace RayTracerChallenge
 				ppmPart = 255;
 			}
 			return ppmPart;
-		}
-
-		public (int red, int green, int blue) ToPpmColor()
-		{
-			var ppmColor = (red: _ToRgbComponent(Red), green: _ToRgbComponent(Green), blue: _ToRgbComponent(Blue));
-			return ppmColor;
 		}
 	}
 }

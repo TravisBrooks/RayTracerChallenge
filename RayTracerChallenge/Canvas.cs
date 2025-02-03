@@ -1,10 +1,10 @@
-﻿using System.Drawing;
-using System.Text;
+﻿using System.Text;
 
 namespace RayTracerChallenge
 {
 	public class Canvas(int width, int height)
 	{
+		private const char Space = ' ';
 		private readonly Color[,] _pixels = new Color[width, height];
 
 		public int Width { get; } = width;
@@ -24,11 +24,12 @@ namespace RayTracerChallenge
 			return sb.ToString();
 		}
 
-		private StringBuilder WritePpmHeader(StringBuilder sb)
+		private void WritePpmHeader(StringBuilder sb)
 		{
 			// Magic number, then width and height, then max color value
-			return sb.AppendLine("P3")
-				.AppendLine($"{Width} {Height}")
+			sb.AppendLine("P3")
+				.Append(Width).Append(Space).Append(Height)
+				.AppendLine()
 				.AppendLine("255");
 		}
 
@@ -50,20 +51,20 @@ namespace RayTracerChallenge
 			var rowBuffer = new StringBuilder();
 			foreach (var cRow in rowOfColors)
 			{
-				var rgb = cRow.ToPpmColor();
+				var rgb = cRow.ToRgb();
 				rowBuffer.Append(rgb.red);
-				rowBuffer.Append(" ");
+				rowBuffer.Append(Space);
 				rowBuffer.Append(rgb.green);
-				rowBuffer.Append(" ");
+				rowBuffer.Append(Space);
 				rowBuffer.Append(rgb.blue);
-				rowBuffer.Append(" ");
+				rowBuffer.Append(Space);
 			}
 
 			var rowStr = rowBuffer.ToString();
 			_SplitLongLine(sb, rowStr);
 		}
 
-		private void _SplitLongLine(StringBuilder sb, string line)
+		private static void _SplitLongLine(StringBuilder sb, string line)
 		{
 			line = line.Trim();
 			const int maxLineLen = 70;
@@ -73,13 +74,12 @@ namespace RayTracerChallenge
 			}
 			else
 			{
-				var sp = ' ';
 				for (var cutoff = maxLineLen; cutoff >= 0; cutoff--)
 				{
-					if (line[cutoff] == sp)
+					if (line[cutoff] == Space)
 					{
-						var subLhs = line.Substring(0, cutoff);
-						var subRhs = line.Substring(cutoff);
+						var subLhs = line[..cutoff];
+						var subRhs = line[cutoff..];
 						sb.AppendLine(subLhs);
 						_SplitLongLine(sb, subRhs);
 						break;

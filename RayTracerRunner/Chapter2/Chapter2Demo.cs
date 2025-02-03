@@ -6,22 +6,21 @@ namespace RayTracerRunner.Chapter2
 	{
 		protected override Canvas RunCanvasRender()
 		{
-			var start = new Point(0, 1, 0);
 			var velocity = new Vector(1, 1.8f, 0).Normalize() * 11.25f;
-			//var red = Color.FromRgb(200, 0, 0);
-			var red = new Color(1, 0, 0);
-			var projectile = new Projectile(start, velocity, red);
 			var gravity = new Vector(0, -0.1f, 0);
 			var wind = new Vector(-0.01f, 0, 0);
-
 			var environment = new Environment(gravity, wind);
 			var canvas = new Canvas(900, 550);
 
-			while (projectile.Position.Y > 0)
+			var start = new Point(0, 0, 0);
+			var red = Color.FromRgb(200, 0, 0);
+			var projectile = new Projectile(start, velocity, red);
+
+			while (projectile.Position.Y >= 0)
 			{
-				var x = (int)projectile.Position.X;
+				var x = (int)Math.Round(projectile.Position.X);
 				// inverting the y coordinate to draw on canvas
-				var y = canvas.Height - (int)projectile.Position.Y;
+				var y = canvas.Height - (int)Math.Round(projectile.Position.Y);
 				if (x >= 0 && x < canvas.Width && y >= 0 && y < canvas.Height)
 				{
 					projectile.Draw(canvas);
@@ -31,24 +30,34 @@ namespace RayTracerRunner.Chapter2
 			return canvas;
 		}
 
-		protected override void WritePpm(Canvas canvas)
-		{
-			var ppm = canvas.ToPpm();
-			string projectFolder = AppDomain.CurrentDomain.BaseDirectory;
-			while (Directory.GetParent(projectFolder)!.Name != "bin")
-			{
-				projectFolder = Directory.GetParent(projectFolder)!.FullName;
-			}
-			projectFolder = Directory.GetParent(projectFolder)!.Parent!.FullName;
-			File.WriteAllText(Path.Combine(projectFolder, "Chapter2Demo.ppm") , ppm);
-		}
-
 		private static Projectile Tick(Environment env, Projectile proj)
 		{
 			var pos = proj.Position + proj.Velocity;
 			var vel = proj.Velocity + env.Gravity + env.Wind;
 			var newProj = new Projectile(pos, vel, proj.Color);
 			return newProj;
+		}
+
+		protected override string BuildPpm(Canvas canvas)
+		{
+			var ppm = canvas.ToPpm();
+			return ppm;
+		}
+
+		protected override void WritePpm(string ppmString)
+		{
+			var projectDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+			while (!string.Equals(projectDir?.Name, "bin", StringComparison.OrdinalIgnoreCase))
+			{
+				projectDir = projectDir?.Parent;
+			}
+			var finalDestination = projectDir?.Parent;
+			if (finalDestination is null)
+			{
+				throw new DirectoryNotFoundException("Could not find the project directory");
+			}
+
+			File.WriteAllText(Path.Combine(finalDestination.FullName, "Chapter2Demo.ppm"), ppmString);
 		}
 
 	}
