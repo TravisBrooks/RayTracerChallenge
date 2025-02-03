@@ -66,5 +66,16 @@ namespace RayTracerChallenge
 			}
 			sb.AppendLine(line);
 		}
+
+		public void SetAllPixels(Color color)
+		{
+			for (var y = 0; y < Height; y++)
+			{
+				for (var x = 0; x < Width; x++)
+				{
+					_pixels[x, y] = color;
+				}
+			}	
+		}
 	}
 }

@@ -11,10 +11,11 @@ namespace RayTracerRunner.Chapter2
 			var wind = new Vector(-0.01f, 0, 0);
 			var environment = new Environment(gravity, wind);
 			var canvas = new Canvas(900, 550);
+			canvas.SetAllPixels(new Color(1, 1, 1));
 
 			var start = new Point(0, 0, 0);
-			var red = Color.FromRgb(200, 0, 0);
-			var projectile = new Projectile(start, velocity, red);
+			var projectileColor = Color.FromRgb(72, 164, 214);
+			var projectile = new Projectile(start, velocity, projectileColor);
 
 			while (projectile.Position.Y >= 0)
 			{
