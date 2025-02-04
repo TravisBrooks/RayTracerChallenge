@@ -91,6 +91,100 @@
 			return m;
 		}
 
+		public Matrix Transpose()
+		{
+			var transpose = new Matrix(Columns, Rows);
+			for (var r = 0; r < Rows; r++)
+			{
+				for (var c = 0; c < Columns; c++)
+				{
+					transpose[c, r] = this[r, c];
+				}
+			}
+
+			return transpose;
+		}
+
+		public float Determinant()
+		{
+			if (Rows == 2 && Columns == 2)
+			{
+				// |a b|
+				// |c d|
+				// det = ad - bc
+				return this[0, 0] * this[1, 1] - this[0, 1] * this[1, 0];
+			}
+			float det = 0;
+			for (var c = 0; c < Columns; c++)
+			{
+				det += this[0, c] * Cofactor(0, c);
+			}
+			return det;
+		}
+
+		public Matrix Submatrix(int rowToRemove, int columnToRemove)
+		{
+			var m = new Matrix(Rows - 1, Columns - 1);
+			var mr = 0;
+			for (var r = 0; r < Rows; r++)
+			{
+				if (r == rowToRemove)
+				{
+					continue;
+				}
+				var mc = 0;
+				for (var c = 0; c < Columns; c++)
+				{
+					if (c == columnToRemove)
+					{
+						continue;
+					}
+					m[mr, mc] = this[r, c];
+					mc++;
+				}
+				mr++;
+			}
+
+			return m;
+		}
+
+		public float Minor(int row, int col)
+		{
+			var sub = Submatrix(row, col);
+			return sub.Determinant();
+		}
+
+		public float Cofactor(int row, int col)
+		{
+			var sign = (row + col) % 2 == 0 ? 1f : -1f;
+			return Minor(row, col) * sign;
+		}
+
+		public bool IsInvertible()
+		{
+			var det = Determinant();
+			return !det.AboutEqual(0);
+		}
+
+		public Matrix Inverse()
+		{
+			var det = Determinant();
+			if (det.AboutEqual(0))
+			{
+				throw new InvalidOperationException("Matrix is not invertible");
+			}
+			var m2 = new Matrix(Rows, Columns);
+			for (var r = 0; r < Rows; r++)
+			{
+				for (var c = 0; c < Columns; c++)
+				{
+					var cof = Cofactor(r, c);
+					m2[c, r] = cof / det;
+				}
+			}
+			return m2;
+		}
+
 		#region Equality stuff
 
 		public bool Equals(Matrix? other)

@@ -4,7 +4,7 @@
 	{
 		public static bool AboutEqual(this float lhs, float rhs)
 		{
-			const float tolerance = 0.000001f;
+			const float tolerance = 0.00001f;
 			var aboutEqual = Math.Abs(lhs - rhs) < tolerance;
 			return aboutEqual;
 		}
