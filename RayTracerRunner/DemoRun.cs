@@ -33,17 +33,24 @@ namespace RayTracerRunner
 
 		private void WritePpm(string ppmString, string ppmFileName)
 		{
-			var projectDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
-			while (!string.Equals(projectDir?.Name, "bin", StringComparison.OrdinalIgnoreCase))
+			var baseDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+			while (!string.Equals(baseDir?.Name, "bin", StringComparison.OrdinalIgnoreCase))
 			{
-				projectDir = projectDir?.Parent;
+				baseDir = baseDir?.Parent;
 			}
-			var finalDestination = projectDir?.Parent;
-			if (finalDestination is null)
+
+			var projectDir = baseDir?.Parent;
+			if (projectDir is null)
 			{
 				throw new DirectoryNotFoundException("Could not find the project directory");
 			}
-			File.WriteAllText(Path.Combine(finalDestination.FullName, ppmFileName), ppmString);
+
+			// a pretty hacky way to move the ppm files into the chapter directories
+			var instanceNamespace = GetType().Namespace!.Split('.');
+			var topLevelNamespace = typeof(DemoRun).Namespace;
+			var toChapterNamespace = string.Join(Path.DirectorySeparatorChar, instanceNamespace.SkipWhile(s => s.Equals(topLevelNamespace)));
+			var chapterPath = Path.Combine(projectDir.FullName, toChapterNamespace);
+			File.WriteAllText(Path.Combine(chapterPath, ppmFileName), ppmString);
 		}
 
 		private string BuildPpm(Canvas canvas)
