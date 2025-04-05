@@ -190,8 +190,10 @@ namespace RayTracerTest
 			var expected = new Vector(14, 22, 32);
 			var maybeVorP = m * v;
 
-			maybeVorP.HandleResult(vector => { Assert.Equal(expected, vector); },
-				point => { Assert.Fail($"Was not expecting a point result: {point}"); });
+			maybeVorP.HandleResult(
+				vector => { Assert.Equal(expected, vector); },
+				point => { Assert.Fail($"Was not expecting a point result: {point}"); }
+			);
 		}
 
 		[Fact]
@@ -214,8 +216,10 @@ namespace RayTracerTest
 		{
 			var p = new Point(1, 2, 3);
 			var maybeVectorOrPoint = Matrix.Identity() * p;
-			maybeVectorOrPoint.HandleResult(vector => { Assert.Fail($"Was not expecting a vector result: {vector}"); },
-				point => { Assert.Equal(p, point); });
+			maybeVectorOrPoint.HandleResult(
+				vector => { Assert.Fail($"Was not expecting a vector result: {vector}"); },
+				point => { Assert.Equal(p, point); }
+			);
 		}
 
 		[Fact]
@@ -223,8 +227,10 @@ namespace RayTracerTest
 		{
 			var v = new Vector(1, 2, 3);
 			var maybeVectorOrPoint = Matrix.Identity() * v;
-			maybeVectorOrPoint.HandleResult(vector => { Assert.Equal(v, vector); },
-				point => { Assert.Fail($"Was not expecting a point result: {point}"); });
+			maybeVectorOrPoint.HandleResult(
+				vector => { Assert.Equal(v, vector); },
+				point => { Assert.Fail($"Was not expecting a point result: {point}"); }
+			);
 		}
 
 		[Fact]
@@ -476,6 +482,7 @@ namespace RayTracerTest
 				{ 6, -2, 0, 5 }
 			});
 			var mC = mA * mB;
+			// if you multiply some matrix A by another matrix B, producing C, you can multiply C by the inverse of B to get A again
 			Assert.Equal(mA, mC * mB.Inverse());
 		}
 	}

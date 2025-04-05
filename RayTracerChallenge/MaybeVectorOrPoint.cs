@@ -27,7 +27,9 @@
 		/// </summary>
 		/// <param name="vectorHandler">Do something if the value is a vector</param>
 		/// <param name="pointHandler">Do something if the value is a point</param>
-		public void HandleResult(Action<Vector> vectorHandler, Action<Point> pointHandler)
+		public void HandleResult(
+			Action<Vector> vectorHandler,
+			Action<Point> pointHandler)
 		{
 			if (_isVector)
 			{
