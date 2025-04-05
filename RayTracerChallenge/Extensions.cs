@@ -8,12 +8,6 @@
 			var aboutEqual = Math.Abs(lhs - rhs) < tolerance;
 			return aboutEqual;
 		}
-
-		private const float ToRadiansConversion = (float)Math.PI / 180f;
-		public static float ToRadians(this float degrees)
-		{
-			return ToRadiansConversion * degrees;
-		}
 	}
 
 	public static class PublicExtensions
@@ -26,6 +20,12 @@
 		public static string[] SplitByLines(this string str)
 		{
 			return str.Split(["\r\n", "\n"], StringSplitOptions.RemoveEmptyEntries);
+		}
+
+		private const float ToRadiansConversion = (float)Math.PI / 180f;
+		public static float ToRadians(this float degrees)
+		{
+			return ToRadiansConversion * degrees;
 		}
 	}
 }

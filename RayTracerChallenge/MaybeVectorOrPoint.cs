@@ -40,5 +40,24 @@
 				pointHandler((Point)_tuple);
 			}
 		}
+
+		public Point AssumePoint()
+		{
+			if (_isVector)
+			{
+				throw new InvalidOperationException("This is a vector, not a point");
+			}
+			return (Point)_tuple;
+		}
+
+		public Vector AssumeVector()
+		{
+			if (!_isVector)
+			{
+				throw new InvalidOperationException("This is a point, not a vector");
+			}
+			return (Vector)_tuple;
+		}
+
 	}
 }

@@ -39,27 +39,5 @@ namespace RayTracerRunner.Chapter2
 			return newProj;
 		}
 
-		protected override string BuildPpm(Canvas canvas)
-		{
-			var ppm = canvas.ToPpm();
-			return ppm;
-		}
-
-		protected override void WritePpm(string ppmString)
-		{
-			var projectDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
-			while (!string.Equals(projectDir?.Name, "bin", StringComparison.OrdinalIgnoreCase))
-			{
-				projectDir = projectDir?.Parent;
-			}
-			var finalDestination = projectDir?.Parent;
-			if (finalDestination is null)
-			{
-				throw new DirectoryNotFoundException("Could not find the project directory");
-			}
-
-			File.WriteAllText(Path.Combine(finalDestination.FullName, "Chapter2Demo.ppm"), ppmString);
-		}
-
 	}
 }

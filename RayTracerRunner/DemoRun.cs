@@ -6,8 +6,6 @@ namespace RayTracerRunner
 	public abstract class DemoRun
 	{
 		protected abstract Canvas RunCanvasRender();
-		protected abstract string BuildPpm(Canvas canvas);
-		protected abstract void WritePpm(string ppmString);
 
 		public void Run()
 		{
@@ -28,9 +26,30 @@ namespace RayTracerRunner
 			// write and time the ppm file disk I/O
 			stopwatch = new Stopwatch();
 			stopwatch.Start();
-			WritePpm(ppmString);
+			WritePpm(ppmString, GetType().Name + ".ppm");
 			stopwatch.Stop();
 			Console.WriteLine($"{GetType().Name} {nameof(WritePpm)} elapsed seconds: {stopwatch.Elapsed.TotalSeconds}");
+		}
+
+		private void WritePpm(string ppmString, string ppmFileName)
+		{
+			var projectDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+			while (!string.Equals(projectDir?.Name, "bin", StringComparison.OrdinalIgnoreCase))
+			{
+				projectDir = projectDir?.Parent;
+			}
+			var finalDestination = projectDir?.Parent;
+			if (finalDestination is null)
+			{
+				throw new DirectoryNotFoundException("Could not find the project directory");
+			}
+			File.WriteAllText(Path.Combine(finalDestination.FullName, ppmFileName), ppmString);
+		}
+
+		private string BuildPpm(Canvas canvas)
+		{
+			var ppm = canvas.ToPpm();
+			return ppm;
 		}
 	}
 }
