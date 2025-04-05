@@ -4,7 +4,7 @@ namespace RayTracerRunner
 {
     internal static class Program
     {
-	    private static void Main(string[] args)
+		private static void Main()
         {
 	        new Chapter2Demo().Run();
 		}

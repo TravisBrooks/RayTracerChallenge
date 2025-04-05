@@ -172,8 +172,9 @@ namespace RayTracerTest
 			var maybeVorP = m * pt;
 
 			maybeVorP.HandleResult(
-				vector => { Assert.Fail($"Was not expecting a vector result: {vector}"); },
-				point => { Assert.Equal(expected, point); });
+				vector => Assert.Fail($"Was not expecting a vector result: {vector}"),
+				point => Assert.Equal(expected, point)
+			);
 		}
 
 		[Fact]
@@ -191,8 +192,8 @@ namespace RayTracerTest
 			var maybeVorP = m * v;
 
 			maybeVorP.HandleResult(
-				vector => { Assert.Equal(expected, vector); },
-				point => { Assert.Fail($"Was not expecting a point result: {point}"); }
+				vector => Assert.Equal(expected, vector),
+				point => Assert.Fail($"Was not expecting a point result: {point}")
 			);
 		}
 
@@ -218,7 +219,7 @@ namespace RayTracerTest
 			var maybeVectorOrPoint = Matrix.Identity() * p;
 			maybeVectorOrPoint.HandleResult(
 				vector => { Assert.Fail($"Was not expecting a vector result: {vector}"); },
-				point => { Assert.Equal(p, point); }
+				point => Assert.Equal(p, point)
 			);
 		}
 
@@ -228,8 +229,8 @@ namespace RayTracerTest
 			var v = new Vector(1, 2, 3);
 			var maybeVectorOrPoint = Matrix.Identity() * v;
 			maybeVectorOrPoint.HandleResult(
-				vector => { Assert.Equal(v, vector); },
-				point => { Assert.Fail($"Was not expecting a point result: {point}"); }
+				vector => Assert.Equal(v, vector),
+				point => Assert.Fail($"Was not expecting a point result: {point}")
 			);
 		}
 
@@ -412,7 +413,7 @@ namespace RayTracerTest
 			Assert.Equal(-160f / 532, inv[3, 2]);
 			Assert.Equal(105, m.Cofactor(3, 2));
 			Assert.Equal(105f / 532, inv[2, 3]);
-			var expected = new Matrix(new float[,]
+			var expected = new Matrix(new[,]
 			{
 				{ 0.21805f, 0.45113f, 0.24060f, -0.04511f },
 				{ -0.80827f, -1.45677f, -0.44361f, 0.52068f },
@@ -433,7 +434,7 @@ namespace RayTracerTest
 				{ -3, 0, -9, -4 }
 			});
 			var inv = m.Inverse();
-			var expected = new Matrix(new float[,]
+			var expected = new Matrix(new[,]
 			{
 				{ -0.15385f, -0.15385f, -0.28205f, -0.53846f },
 				{ -0.07692f, 0.12308f, 0.02564f, 0.03077f },
@@ -454,7 +455,7 @@ namespace RayTracerTest
 				{ -7, 6, 6, 2 }
 			});
 			var inv = m.Inverse();
-			var expected = new Matrix(new float[,]
+			var expected = new Matrix(new[,]
 			{
 				{ -0.04074f, -0.07778f, 0.14444f, -0.22222f },
 				{ -0.07778f, 0.03333f, 0.36667f, -0.33333f },
