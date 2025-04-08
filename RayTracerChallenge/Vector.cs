@@ -85,5 +85,11 @@
 				X * v.Y - Y * v.X);
 			return cp;
 		}
+
+		public Vector Reflect(Vector normal)
+		{
+			var r = this - normal * 2f * DotProduct(normal);
+			return r;
+		}
 	}
 }

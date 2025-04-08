@@ -28,7 +28,7 @@ namespace RayTracerRunner.Chapter5
 			{
 				for (var y = 0; y < canvasPixels; y++)
 				{
-					var directionVector = new Vector(x * pixelSize + translation, y * pixelSize + translation, wallZ);
+					var directionVector = new Vector(x * pixelSize + translation, y * pixelSize + translation, wallZ).Normalize();
 					var ray = new Ray(cameraPos, directionVector);
 					var hit1 = sphere1.Intersect(ray).Hit();
 					var hit2 = sphere2.Intersect(ray).Hit();

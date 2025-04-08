@@ -5,6 +5,7 @@ namespace RayTracerChallenge
 	public record struct Sphere(Point Origin, float Radius)
 	{
 		public Matrix Transform { get; set; } = Matrix.Identity();
+		public Material Material { get; set; } = Material.Default();
 
 		public static Sphere Unit()
 		{
@@ -38,5 +39,19 @@ namespace RayTracerChallenge
 			return [new Intersection(t1, this), new Intersection(t2, this)];
 		}
 
+		public Vector NormalAt(Point worldPoint)
+		{
+			var objectPoint = (Transform.Inverse() * worldPoint).AssumePoint();
+			var objectNormal = objectPoint - Origin;
+			var worldNormal = Transform.Inverse().Transpose() * objectNormal;
+			Vector normal = default;
+			// The book explains this in chpt 6, it's a hack to get a vector in the point case.
+			// The more correct slower way would be to take a submatrix of the Transform
+			worldNormal.HandleResult(
+				vector => normal = vector,
+				point => normal = new Vector(point.X, point.Y, point.Z)
+			);
+			return normal.Normalize();
+		}
 	}
 }
