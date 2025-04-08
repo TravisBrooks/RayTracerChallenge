@@ -7,7 +7,7 @@ namespace RayTracerTest
 		[Fact]
 		public void IntersectionEncapsulatesTandObject()
 		{
-			var sphere = Sphere.Unit();
+			var sphere = new Sphere();
 			var i = new Intersection(3.5f, sphere);
 			Assert.Equal(3.5f, i.T);
 			Assert.Equal(sphere, i.Object);
@@ -16,7 +16,7 @@ namespace RayTracerTest
 		[Fact]
 		public void AggregatingIntersections()
 		{
-			var sphere = Sphere.Unit();
+			var sphere = new Sphere();
 			var i1 = new Intersection(1f, sphere);
 			var i2 = new Intersection(2f, sphere);
 			var intersections = Intersection.Aggregate(i1, i2);
@@ -28,7 +28,7 @@ namespace RayTracerTest
 		[Fact]
 		public void HitWhenAllIntersectionsPositive()
 		{
-			var sphere = Sphere.Unit();
+			var sphere = new Sphere();
 			var i1 = new Intersection(1f, sphere);
 			var i2 = new Intersection(2f, sphere);
 			var intersections = Intersection.Aggregate(i1, i2);
@@ -39,7 +39,7 @@ namespace RayTracerTest
 		[Fact]
 		public void HitWhenSomeIntersectionsNegative()
 		{
-			var sphere = Sphere.Unit();
+			var sphere = new Sphere();
 			var i1 = new Intersection(-1f, sphere);
 			var i2 = new Intersection(1f, sphere);
 			var intersections = Intersection.Aggregate(i1, i2);
@@ -50,7 +50,7 @@ namespace RayTracerTest
 		[Fact]
 		public void HitWhenAllIntersectionsNegative()
 		{
-			var sphere = Sphere.Unit();
+			var sphere = new Sphere();
 			var i1 = new Intersection(-2f, sphere);
 			var i2 = new Intersection(-1f, sphere);
 			var intersections = Intersection.Aggregate(i1, i2);
@@ -61,7 +61,7 @@ namespace RayTracerTest
 		[Fact]
 		public void HitIsAlwaysLowestNonNegativeIntersection()
 		{
-			var sphere = Sphere.Unit();
+			var sphere = new Sphere();
 			var i1 = new Intersection(5f, sphere);
 			var i2 = new Intersection(7f, sphere);
 			var i3 = new Intersection(-3f, sphere);

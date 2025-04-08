@@ -28,7 +28,7 @@ namespace RayTracerTest
 		public void RayIntersectsSphereAtTwoPoints()
 		{
 			var ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
-			var sphere = Sphere.Unit();
+			var sphere = new Sphere();
 			var intersections = sphere.Intersect(ray);
 			Assert.Equal(2, intersections.Length);
 			Assert.Equal(4f, intersections[0].T);
@@ -39,7 +39,7 @@ namespace RayTracerTest
 		public void RayIntersectsSphereAtTangent()
 		{
 			var ray = new Ray(new Point(0, 1, -5), new Vector(0, 0, 1));
-			var sphere = Sphere.Unit();
+			var sphere = new Sphere();
 			var intersections = sphere.Intersect(ray);
 			Assert.Equal(2, intersections.Length);
 			Assert.Equal(5f, intersections[0].T);
@@ -50,7 +50,7 @@ namespace RayTracerTest
 		public void RayMissesSphere()
 		{
 			var ray = new Ray(new Point(0, 2, -5), new Vector(0, 0, 1));
-			var sphere = Sphere.Unit();
+			var sphere = new Sphere();
 			var intersections = sphere.Intersect(ray);
 			Assert.Empty(intersections);
 		}
@@ -59,7 +59,7 @@ namespace RayTracerTest
 		public void RayOriginatesInsideSphere()
 		{
 			var ray = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
-			var sphere = Sphere.Unit();
+			var sphere = new Sphere();
 			var intersections = sphere.Intersect(ray);
 			Assert.Equal(2, intersections.Length);
 			Assert.Equal(-1f, intersections[0].T);
@@ -70,7 +70,7 @@ namespace RayTracerTest
 		public void SphereIsBehindRay()
 		{
 			var ray = new Ray(new Point(0, 0, 5), new Vector(0, 0, 1));
-			var sphere = Sphere.Unit();
+			var sphere = new Sphere();
 			var intersections = sphere.Intersect(ray);
 			Assert.Equal(2, intersections.Length);
 			Assert.Equal(-6f, intersections[0].T);

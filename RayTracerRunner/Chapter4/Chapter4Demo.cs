@@ -10,7 +10,7 @@ namespace RayTracerRunner.Chapter4
 			var color = Color.FromRgb(100, 149, 237);
 			// negative rotation turns us clockwise in inverted y space
 			var rotate = Transformation.RotationZ(-30f.ToRadians());
-			// we want to rotate around the origin so to start 12 oclock is 400 pixels up
+			// we want to rotate around the origin so to start 12 o'clock is 400 pixels up
 			var twelve = new Point(0, 400, 0);
 			// instead of the center being in the left corner we want it to be in the center of the canvas
 			// this translates twelve to 500 over and 500 up (in inverted y) or (500, 900)

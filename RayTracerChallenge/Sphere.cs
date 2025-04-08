@@ -2,14 +2,13 @@
 
 namespace RayTracerChallenge
 {
-	public record struct Sphere(Point Origin, float Radius)
+	public record struct Sphere(Point Origin, float Radius) : IIntersectable
 	{
 		public Matrix Transform { get; set; } = Matrix.Identity();
 		public Material Material { get; set; } = Material.Default();
 
-		public static Sphere Unit()
+		public Sphere() : this(new Point(0, 0, 0), 1f)
 		{
-			return new Sphere(new Point(0, 0, 0), 1f);
 		}
 
 		public ImmutableArray<Intersection> Intersect(Ray ray)

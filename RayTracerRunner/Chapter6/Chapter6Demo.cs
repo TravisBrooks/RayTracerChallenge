@@ -16,12 +16,13 @@ namespace RayTracerRunner.Chapter6
 			var wallZ = 13.0f;
 			var wallSize = 7.0f;
 			var pixelSize = wallSize / canvasPixels;
-			var sphere = Sphere.Unit();
-			var material = Material.Default() with
+			IIntersectable sphere = new Sphere
 			{
-				Color = new Color(1, 0.2f, 1)
+				Material = Material.Default() with
+				{
+					Color = new Color(1, 0.2f, 1)
+				}
 			};
-			sphere.Material = material;
 
 			var lightPosition = new Point(-10, 10, -10);
 			var lightColor = new Color(1, 1, 1);
@@ -41,9 +42,10 @@ namespace RayTracerRunner.Chapter6
 					{
 						var hit = maybeHit.Value;
 						var point = ray.Position(hit.T);
-						var normal = sphere.NormalAt(point);
+						var obj = hit.Object;
+						var normal = obj.NormalAt(point);
 						var eye = -ray.Direction;
-						var color = sphere.Material.Lighting(light, point, eye, normal);
+						var color = obj.Material.Lighting(light, point, eye, normal);
 						canvas[x, canvasPixels - y] = color;
 					}
 				}

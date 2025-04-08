@@ -18,13 +18,15 @@ namespace RayTracerRunner.Chapter5
 			var wallZ = 13.0f;
 			var wallSize = 7.0f;
 			var pixelSize = wallSize / canvasPixels;
-			var sphere1 = Sphere.Unit();
-			var sphere2 = Sphere.Unit();
-			sphere2.Transform = Transformation.Scaling(0.5f, 1, 1) * Transformation.Shearing(2, 0, 0, 0, 0, 0);
+			IIntersectable sphere1 = new Sphere();
+			IIntersectable sphere2 = new Sphere
+			{
+				Transform = Transformation.Scaling(0.5f, 1, 1) * Transformation.Shearing(2, 0, 0, 0, 0, 0)
+			};
 
 			var translation = -(wallSize * 0.5f);
-			var xrange = Enumerable.Range(0, canvasPixels);
-			Parallel.ForEach(xrange, x =>
+			var xRange = Enumerable.Range(0, canvasPixels);
+			Parallel.ForEach(xRange, x =>
 			{
 				for (var y = 0; y < canvasPixels; y++)
 				{

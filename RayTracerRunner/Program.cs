@@ -9,7 +9,7 @@ namespace RayTracerRunner
     {
 		private static void Main()
         {
-	        //new Chapter2Demo().Run();
+            //new Chapter2Demo().Run();
             //new Chapter4Demo().Run();
             //new Chapter5Demo().Run();
             new Chapter6Demo().Run();

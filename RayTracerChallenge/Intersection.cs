@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Immutable;
 
 namespace RayTracerChallenge
 {
-	public readonly record struct Intersection(float T, object Object)
+	public readonly record struct Intersection(float T, IIntersectable Object)
 	{
 		public static ImmutableArray<Intersection> Aggregate(params Intersection[] intersections)
 		{
