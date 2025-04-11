@@ -8,8 +8,8 @@ namespace RayTracerTest
 		public void CreatingCanvas()
 		{
 			var c = new Canvas(10, 20);
-			Assert.Equal(10, c.Width);
-			Assert.Equal(20, c.Height);
+			Assert.Equal(10u, c.Width);
+			Assert.Equal(20u, c.Height);
 			var blackColor = new Color(0, 0, 0);
 			for (var x = 0; x < c.Width; x++)
 			{

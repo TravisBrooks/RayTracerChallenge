@@ -308,5 +308,55 @@ namespace RayTracerTest
 				point => Assert.Equal(expected, point)
 			);
 		}
+
+		[Fact]
+		public void ViewTransformationForDefaultOrientation()
+		{
+			var from = new Point(0, 0, 0);
+			var to = new Point(0, 0, -1);
+			var up = new Vector(0, 1, 0);
+			var t = Transformation.ViewTransform(from, to, up);
+			var expected = Matrix.Identity();
+			Assert.Equal(expected, t);
+		}
+
+		[Fact]
+		public void ViewTransformationLookingInPositiveZDirection()
+		{
+			var from = new Point(0, 0, 0);
+			var to = new Point(0, 0, 1);
+			var up = new Vector(0, 1, 0);
+			var t = Transformation.ViewTransform(from, to, up);
+			var expected = Transformation.Scaling(-1, 1, -1);
+			Assert.Equal(expected, t);
+		}
+
+		[Fact]
+		public void ViewTransformationMovesTheWorld()
+		{
+			var from = new Point(0, 0, 8);
+			var to = new Point(0, 0, 0);
+			var up = new Vector(0, 1, 0);
+			var t = Transformation.ViewTransform(from, to, up);
+			var expected = Transformation.Translation(0, 0, -8);
+			Assert.Equal(expected, t);
+		}
+
+		[Fact]
+		public void ViewTransformationArbitraryViewTransformation()
+		{
+			var from = new Point(1, 3, 2);
+			var to = new Point(4, -2, 8);
+			var up = new Vector(1, 1, 0);
+			var t = Transformation.ViewTransform(from, to, up);
+			var expected = new Matrix(new[,]
+			{
+				{ -0.50709f, 0.50709f, 0.67612f, -2.36643f },
+				{ 0.76772f, 0.60609f, 0.12122f, -2.82843f },
+				{ -0.35857f, 0.59761f, -0.71714f, 0 },
+				{ 0, 0, 0, 1 }
+			});
+			Assert.Equal(expected, t);
+		}
 	}
 }

@@ -73,5 +73,21 @@
 			});
 			return m;
 		}
+
+		public static Matrix ViewTransform(Point from, Point to, Vector up)
+		{
+			var forward = (to - from).Normalize();
+			var left = forward.CrossProduct(up.Normalize());
+			var trueUp = left.CrossProduct(forward);
+			var orientation = new Matrix(new[,]
+			{
+				{ left.X, left.Y, left.Z, 0 },
+				{ trueUp.X, trueUp.Y, trueUp.Z, 0 },
+				{ -forward.X, -forward.Y, -forward.Z, 0 },
+				{ 0, 0, 0, 1 }
+			});
+			var vt = orientation * Translation(-from.X, -from.Y, -from.Z);
+			return vt;
+		}
 	}
 }

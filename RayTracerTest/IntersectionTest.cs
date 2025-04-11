@@ -70,5 +70,42 @@ namespace RayTracerTest
 			var hit = intersections.Hit();
 			Assert.Equal(i4, hit);
 		}
+
+		[Fact]
+		public void PrecomputingStateOfIntersection()
+		{
+			var ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+			var sphere = new Sphere();
+			var intersection = new Intersection(4f, sphere);
+			var computation = intersection.PrepareComputation(ray);
+			Assert.Equal(intersection.T, computation.T);
+			Assert.Equal(intersection.Object, computation.Object);
+			Assert.Equal(new Point(0, 0, -1), computation.Point);
+			Assert.Equal(new Vector(0, 0, -1), computation.EyeVector);
+			Assert.Equal(new Vector(0, 0, -1), computation.NormalVector);
+		}
+
+		[Fact]
+		public void PrepareComputationHitOnOutside()
+		{
+			var r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+			var shape = new Sphere();
+			var i = new Intersection(4f, shape);
+			var comps = i.PrepareComputation(r);
+			Assert.False(comps.Inside);
+		}
+
+		[Fact]
+		public void PrepareComputationHitOnInside()
+		{
+			var r = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
+			var shape = new Sphere();
+			var i = new Intersection(1f, shape);
+			var comps = i.PrepareComputation(r);
+			Assert.Equal(new Point(0, 0, 1), comps.Point);
+			Assert.Equal(new Vector(0, 0, -1), comps.EyeVector);
+			Assert.Equal(new Vector(0, 0, -1), comps.NormalVector);
+			Assert.True(comps.Inside);
+		}
 	}
 }

@@ -8,5 +8,19 @@ namespace RayTracerChallenge
 		{
 			return [..intersections];
 		}
+
+		public PhongComputation PrepareComputation(Ray ray)
+		{
+			var point = ray.Position(T);
+			var normal = Object.NormalAt(point);
+			var eye = -ray.Direction;
+			var inside = false;
+			if (normal.DotProduct(eye) < 0)
+			{
+				inside = true;
+				normal = -normal;
+			}
+			return new PhongComputation(T, Object, point, eye, normal, inside);
+		}
 	}
 }

@@ -6,7 +6,7 @@ namespace RayTracerRunner.Chapter5
 	{
 		protected override Canvas RunCanvasRender()
 		{
-			var canvasPixels = 500;
+			var canvasPixels = 500u;
 			var canvas = new Canvas(canvasPixels, canvasPixels);
 
 			var backgroundColor = Color.FromRgb(0, 0, 0);
@@ -18,14 +18,14 @@ namespace RayTracerRunner.Chapter5
 			var wallZ = 13.0f;
 			var wallSize = 7.0f;
 			var pixelSize = wallSize / canvasPixels;
-			IIntersectable sphere1 = new Sphere();
-			IIntersectable sphere2 = new Sphere
+			var sphere1 = new Sphere();
+			var sphere2 = new Sphere
 			{
 				Transform = Transformation.Scaling(0.5f, 1, 1) * Transformation.Shearing(2, 0, 0, 0, 0, 0)
 			};
 
 			var translation = -(wallSize * 0.5f);
-			var xRange = Enumerable.Range(0, canvasPixels);
+			var xRange = Enumerable.Range(0, (int)canvasPixels);
 			Parallel.ForEach(xRange, x =>
 			{
 				for (var y = 0; y < canvasPixels; y++)

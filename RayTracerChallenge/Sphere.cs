@@ -4,12 +4,12 @@ namespace RayTracerChallenge
 {
 	public record struct Sphere(Point Origin, float Radius) : IIntersectable
 	{
-		public Matrix Transform { get; set; } = Matrix.Identity();
-		public Material Material { get; set; } = Material.Default();
-
 		public Sphere() : this(new Point(0, 0, 0), 1f)
 		{
 		}
+
+		public Matrix Transform { get; set; } = Matrix.Identity();
+		public Material Material { get; set; } = Material.Default();
 
 		public ImmutableArray<Intersection> Intersect(Ray ray)
 		{
@@ -52,5 +52,21 @@ namespace RayTracerChallenge
 			);
 			return normal.Normalize();
 		}
+
+		#region custom equality for mutable properties
+
+		public readonly bool Equals(Sphere other)
+		{
+			return Transform.Equals(other.Transform) &&
+			       Material.Equals(other.Material) &&
+			       Origin.Equals(other.Origin) &&
+			       Radius.Equals(other.Radius);
+		}
+
+		public readonly override int GetHashCode()
+		{
+			return HashCode.Combine(Transform, Material, Origin, Radius);
+		}
+		#endregion
 	}
 }

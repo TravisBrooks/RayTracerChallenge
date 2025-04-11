@@ -6,7 +6,7 @@ namespace RayTracerRunner.Chapter6
 	{
 		protected override Canvas RunCanvasRender()
 		{
-			var canvasPixels = 500;
+			var canvasPixels = 500u;
 			var canvas = new Canvas(canvasPixels, canvasPixels);
 
 			var backgroundColor = Color.FromRgb(0, 0, 0);
@@ -16,7 +16,7 @@ namespace RayTracerRunner.Chapter6
 			var wallZ = 13.0f;
 			var wallSize = 7.0f;
 			var pixelSize = wallSize / canvasPixels;
-			IIntersectable sphere = new Sphere
+			var sphere = new Sphere
 			{
 				Material = Material.Default() with
 				{
@@ -29,7 +29,7 @@ namespace RayTracerRunner.Chapter6
 			var light = new PointLight(lightPosition, lightColor);
 
 			var translation = -(wallSize * 0.5f);
-			var xRange = Enumerable.Range(0, canvasPixels);
+			var xRange = Enumerable.Range(0, (int)canvasPixels);
 			Parallel.ForEach(xRange, x =>
 			{
 				for (var y = 0; y < canvasPixels; y++)
@@ -42,11 +42,10 @@ namespace RayTracerRunner.Chapter6
 					{
 						var hit = maybeHit.Value;
 						var point = ray.Position(hit.T);
-						var obj = hit.Object;
-						var normal = obj.NormalAt(point);
+						var normal = sphere.NormalAt(point);
 						var eye = -ray.Direction;
-						var color = obj.Material.Lighting(light, point, eye, normal);
-						canvas[x, canvasPixels - y] = color;
+						var color = sphere.Material.Lighting(light, point, eye, normal);
+						canvas[x, (int)canvasPixels - y] = color;
 					}
 				}
 			});

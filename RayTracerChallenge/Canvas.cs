@@ -2,13 +2,13 @@
 
 namespace RayTracerChallenge
 {
-	public class Canvas(int width, int height)
+	public class Canvas(uint width, uint height)
 	{
 		private const char Space = ' ';
 		private readonly Color[,] _pixels = new Color[width, height];
 
-		public int Width { get; } = width;
-		public int Height { get; } = height;
+		public uint Width { get; } = width;
+		public uint Height { get; } = height;
 
 		public Color this[int x, int y]
 		{
