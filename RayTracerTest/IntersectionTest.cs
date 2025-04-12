@@ -1,125 +1,124 @@
 ﻿using RayTracerChallenge;
 
-namespace RayTracerTest
+namespace RayTracerTest;
+
+public class IntersectionTest
 {
-	public class IntersectionTest
+	[Fact]
+	public void IntersectionEncapsulatesTandObject()
 	{
-		[Fact]
-		public void IntersectionEncapsulatesTandObject()
-		{
-			var sphere = new Sphere();
-			var i = new Intersection(3.5, sphere);
-			Assert.Equal(3.5, i.T);
-			Assert.Equal(sphere, i.Object);
-		}
+		var sphere = new Sphere();
+		var i = new Intersection(3.5, sphere);
+		Assert.Equal(3.5, i.T);
+		Assert.Equal(sphere, i.Object);
+	}
 
-		[Fact]
-		public void AggregatingIntersections()
-		{
-			var sphere = new Sphere();
-			var i1 = new Intersection(1, sphere);
-			var i2 = new Intersection(2, sphere);
-			var intersections = Intersection.Aggregate(i1, i2);
-			Assert.Equal(2, intersections.Length);
-			Assert.Equal(i1, intersections[0]);
-			Assert.Equal(i2, intersections[1]);
-		}
+	[Fact]
+	public void AggregatingIntersections()
+	{
+		var sphere = new Sphere();
+		var i1 = new Intersection(1, sphere);
+		var i2 = new Intersection(2, sphere);
+		var intersections = Intersection.Aggregate(i1, i2);
+		Assert.Equal(2, intersections.Length);
+		Assert.Equal(i1, intersections[0]);
+		Assert.Equal(i2, intersections[1]);
+	}
 
-		[Fact]
-		public void HitWhenAllIntersectionsPositive()
-		{
-			var sphere = new Sphere();
-			var i1 = new Intersection(1, sphere);
-			var i2 = new Intersection(2, sphere);
-			var intersections = Intersection.Aggregate(i1, i2);
-			var hit = intersections.Hit();
-			Assert.Equal(i1, hit);
-		}
+	[Fact]
+	public void HitWhenAllIntersectionsPositive()
+	{
+		var sphere = new Sphere();
+		var i1 = new Intersection(1, sphere);
+		var i2 = new Intersection(2, sphere);
+		var intersections = Intersection.Aggregate(i1, i2);
+		var hit = intersections.Hit();
+		Assert.Equal(i1, hit);
+	}
 
-		[Fact]
-		public void HitWhenSomeIntersectionsNegative()
-		{
-			var sphere = new Sphere();
-			var i1 = new Intersection(-1, sphere);
-			var i2 = new Intersection(1, sphere);
-			var intersections = Intersection.Aggregate(i1, i2);
-			var hit = intersections.Hit();
-			Assert.Equal(i2, hit);
-		}
+	[Fact]
+	public void HitWhenSomeIntersectionsNegative()
+	{
+		var sphere = new Sphere();
+		var i1 = new Intersection(-1, sphere);
+		var i2 = new Intersection(1, sphere);
+		var intersections = Intersection.Aggregate(i1, i2);
+		var hit = intersections.Hit();
+		Assert.Equal(i2, hit);
+	}
 
-		[Fact]
-		public void HitWhenAllIntersectionsNegative()
-		{
-			var sphere = new Sphere();
-			var i1 = new Intersection(-2, sphere);
-			var i2 = new Intersection(-1, sphere);
-			var intersections = Intersection.Aggregate(i1, i2);
-			var hit = intersections.Hit();
-			Assert.Null(hit);
-		}
+	[Fact]
+	public void HitWhenAllIntersectionsNegative()
+	{
+		var sphere = new Sphere();
+		var i1 = new Intersection(-2, sphere);
+		var i2 = new Intersection(-1, sphere);
+		var intersections = Intersection.Aggregate(i1, i2);
+		var hit = intersections.Hit();
+		Assert.Null(hit);
+	}
 
-		[Fact]
-		public void HitIsAlwaysLowestNonNegativeIntersection()
-		{
-			var sphere = new Sphere();
-			var i1 = new Intersection(5, sphere);
-			var i2 = new Intersection(7, sphere);
-			var i3 = new Intersection(-3, sphere);
-			var i4 = new Intersection(2, sphere);
-			var intersections = Intersection.Aggregate(i1, i2, i3, i4);
-			var hit = intersections.Hit();
-			Assert.Equal(i4, hit);
-		}
+	[Fact]
+	public void HitIsAlwaysLowestNonNegativeIntersection()
+	{
+		var sphere = new Sphere();
+		var i1 = new Intersection(5, sphere);
+		var i2 = new Intersection(7, sphere);
+		var i3 = new Intersection(-3, sphere);
+		var i4 = new Intersection(2, sphere);
+		var intersections = Intersection.Aggregate(i1, i2, i3, i4);
+		var hit = intersections.Hit();
+		Assert.Equal(i4, hit);
+	}
 
-		[Fact]
-		public void PrecomputingStateOfIntersection()
-		{
-			var ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
-			var sphere = new Sphere();
-			var intersection = new Intersection(4, sphere);
-			var computation = intersection.PrepareComputation(ray);
-			Assert.Equal(intersection.T, computation.T);
-			Assert.Equal(intersection.Object, computation.Object);
-			Assert.Equal(new Point(0, 0, -1), computation.Point);
-			Assert.Equal(new Vector(0, 0, -1), computation.EyeVector);
-			Assert.Equal(new Vector(0, 0, -1), computation.NormalVector);
-		}
+	[Fact]
+	public void PrecomputingStateOfIntersection()
+	{
+		var ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+		var sphere = new Sphere();
+		var intersection = new Intersection(4, sphere);
+		var computation = intersection.PrepareComputation(ray);
+		Assert.Equal(intersection.T, computation.T);
+		Assert.Equal(intersection.Object, computation.Object);
+		Assert.Equal(new Point(0, 0, -1), computation.Point);
+		Assert.Equal(new Vector(0, 0, -1), computation.EyeVector);
+		Assert.Equal(new Vector(0, 0, -1), computation.NormalVector);
+	}
 
-		[Fact]
-		public void PrepareComputationHitOnOutside()
-		{
-			var r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
-			var shape = new Sphere();
-			var i = new Intersection(4, shape);
-			var comps = i.PrepareComputation(r);
-			Assert.False(comps.Inside);
-		}
+	[Fact]
+	public void PrepareComputationHitOnOutside()
+	{
+		var r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+		var shape = new Sphere();
+		var i = new Intersection(4, shape);
+		var comps = i.PrepareComputation(r);
+		Assert.False(comps.Inside);
+	}
 
-		[Fact]
-		public void PrepareComputationHitOnInside()
-		{
-			var r = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
-			var shape = new Sphere();
-			var i = new Intersection(1, shape);
-			var comps = i.PrepareComputation(r);
-			Assert.Equal(new Point(0, 0, 1), comps.Point);
-			Assert.Equal(new Vector(0, 0, -1), comps.EyeVector);
-			Assert.Equal(new Vector(0, 0, -1), comps.NormalVector);
-			Assert.True(comps.Inside);
-		}
+	[Fact]
+	public void PrepareComputationHitOnInside()
+	{
+		var r = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
+		var shape = new Sphere();
+		var i = new Intersection(1, shape);
+		var comps = i.PrepareComputation(r);
+		Assert.Equal(new Point(0, 0, 1), comps.Point);
+		Assert.Equal(new Vector(0, 0, -1), comps.EyeVector);
+		Assert.Equal(new Vector(0, 0, -1), comps.NormalVector);
+		Assert.True(comps.Inside);
+	}
 
-		[Fact]
-		public void TheHitShouldOffsetThePoint()
+	[Fact]
+	public void TheHitShouldOffsetThePoint()
+	{
+		var r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+		var shape = new Sphere
 		{
-			var r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
-			var shape = new Sphere
-			{
-				Transform = Transformation.Translation(0, 0, 1)
-			};
-			var i = new Intersection(5, shape);
-			var comps = i.PrepareComputation(r);
-			Assert.True(comps.OverPoint.Z < -Constants.Epsilon/2);
-			Assert.True(comps.Point.Z > comps.OverPoint.Z);
-		}
+			Transform = Transformation.Translation(0, 0, 1)
+		};
+		var i = new Intersection(5, shape);
+		var comps = i.PrepareComputation(r);
+		Assert.True(comps.OverPoint.Z < -Constants.Epsilon/2);
+		Assert.True(comps.Point.Z > comps.OverPoint.Z);
 	}
 }

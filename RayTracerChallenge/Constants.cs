@@ -1,7 +1,6 @@
-﻿namespace RayTracerChallenge
+﻿namespace RayTracerChallenge;
+
+public static class Constants
 {
-	public static class Constants
-	{
-		public const double Epsilon = 0.0001;
-	}
+	public const double Epsilon = 0.0001;
 }
