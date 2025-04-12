@@ -1,12 +1,11 @@
 ﻿namespace RayTracerChallenge
 {
 	public record struct PhongComputation(
-		float T,
+		double T,
 		IIntersectable Object,
 		Point Point,
 		Vector EyeVector,
 		Vector NormalVector,
-		bool Inside)
-	{
-	}
+		bool Inside,
+		Point OverPoint);
 }

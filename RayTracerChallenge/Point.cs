@@ -1,9 +1,9 @@
 ﻿
 namespace RayTracerChallenge
 {
-	public readonly record struct Point(float X, float Y, float Z) : ITuple3D
+	public readonly record struct Point(double X, double Y, double Z) : ITuple3D
 	{
-		public float W => 1f;
+		public double W => 1.0;
 
 		public bool Equals(Point other)
 		{

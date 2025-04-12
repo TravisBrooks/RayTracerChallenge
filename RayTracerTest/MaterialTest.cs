@@ -9,10 +9,10 @@ namespace RayTracerTest
 		{
 			var m = Material.Default();
 			Assert.Equal(new Color(1, 1, 1), m.Color);
-			Assert.Equal(0.1f, m.Ambient);
-			Assert.Equal(0.9f, m.Diffuse);
-			Assert.Equal(0.9f, m.Specular);
-			Assert.Equal(200.0f, m.Shininess);
+			Assert.Equal(0.1, m.Ambient);
+			Assert.Equal(0.9, m.Diffuse);
+			Assert.Equal(0.9, m.Specular);
+			Assert.Equal(200.0, m.Shininess);
 		}
 
 		[Fact]
@@ -23,8 +23,8 @@ namespace RayTracerTest
 			var eye = new Vector(0, 0, -1);
 			var normal = new Vector(0, 0, -1);
 			var light = new PointLight(new Point(0, 0, -10), new Color(1, 1, 1));
-			var result = m.Lighting(light, position, eye, normal);
-			Assert.Equal(new Color(1.9f, 1.9f, 1.9f), result);
+			var result = m.Lighting(light, position, eye, normal, false);
+			Assert.Equal(new Color(1.9, 1.9, 1.9), result);
 		}
 
 		[Fact]
@@ -32,11 +32,11 @@ namespace RayTracerTest
 		{
 			var m = Material.Default();
 			var position = new Point(0, 0, 0);
-			var eye = new Vector(0, MathF.Sqrt(2) / 2f, -MathF.Sqrt(2) / 2f);
+			var eye = new Vector(0, Math.Sqrt(2) / 2.0, -Math.Sqrt(2) / 2.0);
 			var normal = new Vector(0, 0, -1);
 			var light = new PointLight(new Point(0, 0, -10), new Color(1, 1, 1));
-			var result = m.Lighting(light, position, eye, normal);
-			Assert.Equal(new Color(1f, 1f, 1f), result);
+			var result = m.Lighting(light, position, eye, normal, false);
+			Assert.Equal(new Color(1, 1, 1), result);
 		}
 
 		[Fact]
@@ -47,8 +47,8 @@ namespace RayTracerTest
 			var eye = new Vector(0, 0, -1);
 			var normal = new Vector(0, 0, -1);
 			var light = new PointLight(new Point(0, 10, -10), new Color(1, 1, 1));
-			var result = m.Lighting(light, position, eye, normal);
-			Assert.Equal(new Color(.7364f, .7364f, .7364f), result);
+			var result = m.Lighting(light, position, eye, normal, false);
+			Assert.Equal(new Color(.7364, .7364, .7364), result);
 		}
 
 		[Fact]
@@ -56,11 +56,11 @@ namespace RayTracerTest
 		{
 			var m = Material.Default();
 			var position = new Point(0, 0, 0);
-			var eye = new Vector(0, -MathF.Sqrt(2) / 2f, -MathF.Sqrt(2) / 2f);
+			var eye = new Vector(0, -Math.Sqrt(2) / 2.0, -Math.Sqrt(2) / 2.0);
 			var normal = new Vector(0, 0, -1);
 			var light = new PointLight(new Point(0, 10, -10), new Color(1, 1, 1));
-			var result = m.Lighting(light, position, eye, normal);
-			Assert.Equal(new Color(1.63638f, 1.63638f, 1.63638f), result);
+			var result = m.Lighting(light, position, eye, normal, false);
+			Assert.Equal(new Color(1.63638, 1.63638, 1.63638), result);
 		}
 
 		[Fact]
@@ -71,8 +71,21 @@ namespace RayTracerTest
 			var eye = new Vector(0, 0, -1);
 			var normal = new Vector(0, 0, -1);
 			var light = new PointLight(new Point(0, 0, 10), new Color(1, 1, 1));
-			var result = m.Lighting(light, position, eye, normal);
-			Assert.Equal(new Color(0.1f, 0.1f, 0.1f), result);
+			var result = m.Lighting(light, position, eye, normal, false);
+			Assert.Equal(new Color(0.1, 0.1, 0.1), result);
+		}
+
+		[Fact]
+		public void LightingWithTheSurfaceInShadow()
+		{
+			var m = Material.Default();
+			var position = new Point(0, 0, 0);
+			var eye = new Vector(0, 0, -1);
+			var normal = new Vector(0, 0, -1);
+			var light = new PointLight(new Point(0, 0, -10), new Color(1, 1, 1));
+			var inShadow = true;
+			var result = m.Lighting(light, position, eye, normal, inShadow);
+			Assert.Equal(new Color(.1, .1, .1), result);
 		}
 	}
 }

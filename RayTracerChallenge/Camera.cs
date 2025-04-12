@@ -2,14 +2,14 @@
 {
 	public class Camera
 	{
-		public Camera(uint horizontalSize, uint verticalSize, float fieldOfView)
+		public Camera(uint horizontalSize, uint verticalSize, double fieldOfView)
 		{
 			HorizontalSize = horizontalSize;
 			VerticalSize = verticalSize;
 			FieldOfView = fieldOfView;
 
-			var halfView = MathF.Tan(fieldOfView / 2f);
-			var aspect = horizontalSize / ((float)verticalSize);
+			var halfView = Math.Tan(fieldOfView / 2.0);
+			var aspect = horizontalSize / (double)verticalSize;
 			if (aspect >= 1)
 			{
 				HalfWidth = halfView;
@@ -20,21 +20,21 @@
 				HalfWidth = halfView * aspect;
 				HalfHeight = halfView;
 			}
-			PixelSize = (HalfWidth * 2f) / horizontalSize;
+			PixelSize = (HalfWidth * 2.0) / horizontalSize;
 		}
 
 		public uint HorizontalSize { get; }
 		public uint VerticalSize { get; }
-		public float FieldOfView { get; }
+		public double FieldOfView { get; }
 		public Matrix Transform { get; init; } = Matrix.Identity();
-		public float PixelSize { get; }
-		private float HalfWidth { get; }
-		private float HalfHeight { get; }
+		public double PixelSize { get; }
+		private double HalfWidth { get; }
+		private double HalfHeight { get; }
 
 		public Ray RayForPixel(int x, int y)
 		{
-			var xOffset = (x + 0.5f) * PixelSize;
-			var yOffset = (y + 0.5f) * PixelSize;
+			var xOffset = (x + 0.5) * PixelSize;
+			var yOffset = (y + 0.5) * PixelSize;
 			var worldX = HalfWidth - xOffset;
 			var worldY = HalfHeight - yOffset;
 			var inverse = Transform.Inverse();
@@ -48,20 +48,27 @@
 		{
 			var canvas = new Canvas(HorizontalSize, VerticalSize);
 			var tick = 0;
-			for (var x = 0; x < canvas.Width; x++)
+			var xRange = Enumerable.Range(0, (int)canvas.Width);
+			Parallel.ForEach(
+				xRange,
+				new ParallelOptions
+				{
+					MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 2.0))
+				},
+				x =>
 			{
-				for (var y = 0; y<canvas.Height; y++)
+				for (var y = 0; y < canvas.Height; y++)
 				{
 					var ray = RayForPixel(x, y);
 					var color = world.ColorAt(ray);
 					canvas[x, y] = color;
-					tick++;
-					if (tick % 1000 == 0)
+					var currentTick = Interlocked.Increment(ref tick);
+					if (currentTick % 1000 == 0)
 					{
 						Console.Write(".");
 					}
 				}
-			}
+			});
 			Console.WriteLine();
 			return canvas;
 		}

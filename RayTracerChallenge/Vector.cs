@@ -1,8 +1,8 @@
 ﻿namespace RayTracerChallenge
 {
-	public readonly record struct Vector(float X, float Y, float Z) : ITuple3D
+	public readonly record struct Vector(double X, double Y, double Z) : ITuple3D
 	{
-		public float W => 0f;
+		public double W => 0;
 
 		public bool Equals(Vector other)
 		{
@@ -40,22 +40,22 @@
 			return vr;
 		}
 
-		public static Vector operator *(Vector left, float scalar)
+		public static Vector operator *(Vector left, double scalar)
 		{
 			var v = new Vector(left.X * scalar, left.Y * scalar, left.Z * scalar);
 			return v;
 		}
 
-		public static Vector operator /(Vector left, float scalar)
+		public static Vector operator /(Vector left, double scalar)
 		{
 			var v = new Vector(left.X / scalar, left.Y / scalar, left.Z / scalar);
 			return v;
 		}
 
-		public float Magnitude()
+		public double Magnitude()
 		{
 			var sum = Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2);
-			var mag = (float)Math.Sqrt(sum);
+			var mag = Math.Sqrt(sum);
 			return mag;
 		}
 
@@ -66,7 +66,7 @@
 			return n;
 		}
 
-		public float DotProduct(Vector v)
+		public double DotProduct(Vector v)
 		{
 			var dot = X * v.X + Y * v.Y + Z * v.Z;
 			return dot;
@@ -88,7 +88,7 @@
 
 		public Vector Reflect(Vector normal)
 		{
-			var r = this - normal * 2f * DotProduct(normal);
+			var r = this - normal * 2.0 * DotProduct(normal);
 			return r;
 		}
 	}

@@ -2,10 +2,10 @@
 {
 	public interface ITuple3D
 	{
-		float X { get; }
-		float Y { get; }
-		float Z { get; }
-		float W { get; }
+		double X { get; }
+		double Y { get; }
+		double Z { get; }
+		double W { get; }
 
 		public Matrix AsMatrix()
 		{

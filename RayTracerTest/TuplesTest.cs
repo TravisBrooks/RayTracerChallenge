@@ -17,7 +17,7 @@ namespace RayTracerTest
 		public void ReflectingVectorOffSlantedSurface()
 		{
 			var v = new Vector(0, -1, 0);
-			var n = new Vector(MathF.Sqrt(2) / 2f, MathF.Sqrt(2) / 2f, 0);
+			var n = new Vector(Math.Sqrt(2) / 2.0, Math.Sqrt(2) / 2.0, 0);
 			var r = v.Reflect(n);
 			Assert.Equal(new Vector(1, 0, 0), r);
 		}

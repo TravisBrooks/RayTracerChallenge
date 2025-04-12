@@ -15,16 +15,16 @@ namespace RayTracerRunner.Chapter5
 			canvas.SetAllPixels(backgroundColor);
 
 			var cameraPos = new Point(0, 0, -5);
-			var wallZ = 13.0f;
-			var wallSize = 7.0f;
+			var wallZ = 13.0;
+			var wallSize = 7.0;
 			var pixelSize = wallSize / canvasPixels;
 			var sphere1 = new Sphere();
 			var sphere2 = new Sphere
 			{
-				Transform = Transformation.Scaling(0.5f, 1, 1) * Transformation.Shearing(2, 0, 0, 0, 0, 0)
+				Transform = Transformation.Scaling(0.5, 1, 1) * Transformation.Shearing(2, 0, 0, 0, 0, 0)
 			};
 
-			var translation = -(wallSize * 0.5f);
+			var translation = -(wallSize * 0.5);
 			var xRange = Enumerable.Range(0, (int)canvasPixels);
 			Parallel.ForEach(xRange, x =>
 			{

@@ -1,22 +1,28 @@
 ﻿namespace RayTracerChallenge
 {
-	public readonly record struct Material(Color Color, float Ambient, float Diffuse, float Specular, float Shininess)
+	public readonly record struct Material(Color Color, double Ambient, double Diffuse, double Specular, double Shininess)
 	{
 		public static Material Default()
 		{
 			return new Material(
 				Color: new Color(1, 1, 1),
-				Ambient: 0.1f,
-				Diffuse: 0.9f,
-				Specular:0.9f,
-				Shininess: 200.0f);
+				Ambient: 0.1,
+				Diffuse: 0.9,
+				Specular:0.9,
+				Shininess: 200.0);
 		}
 
-		public Color Lighting(PointLight light, Point point, Vector eyeVector, Vector normalVector)
+		public Color Lighting(PointLight light, Point point, Vector eyeVector, Vector normalVector, bool inShadow)
 		{
 			var effectiveColor = Color * light.Intensity;
 			var lightVector = (light.Position - point).Normalize();
 			var ambient = effectiveColor * Ambient;
+			
+			if (inShadow)
+			{
+				return ambient;
+			}
+
 			var lightDotNormal = lightVector.DotProduct(normalVector);
 			Color diffuse;
 			Color specular;
@@ -44,7 +50,7 @@
 				else
 				{
 					// Reflection is visible
-					var factor = MathF.Pow(reflectDotEye, Shininess);
+					var factor = Math.Pow(reflectDotEye, Shininess);
 					specular = light.Intensity * Specular * factor;
 				}
 			}

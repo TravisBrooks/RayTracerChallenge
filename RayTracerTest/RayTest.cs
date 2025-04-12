@@ -18,10 +18,10 @@ namespace RayTracerTest
 		public void ComputePointFromDistance()
 		{
 			var ray = new Ray(new Point(2, 3, 4), new Vector(1, 0, 0));
-			Assert.Equal(new Point(2, 3, 4), ray.Position(0f));
-			Assert.Equal(new Point(3, 3, 4), ray.Position(1f));
-			Assert.Equal(new Point(1, 3, 4), ray.Position(-1f));
-			Assert.Equal(new Point(4.5f, 3, 4), ray.Position(2.5f));
+			Assert.Equal(new Point(2, 3, 4), ray.Position(0));
+			Assert.Equal(new Point(3, 3, 4), ray.Position(1));
+			Assert.Equal(new Point(1, 3, 4), ray.Position(-1));
+			Assert.Equal(new Point(4.5, 3, 4), ray.Position(2.5));
 		}
 
 		[Fact]
@@ -31,8 +31,8 @@ namespace RayTracerTest
 			var sphere = new Sphere();
 			var intersections = sphere.Intersect(ray);
 			Assert.Equal(2, intersections.Length);
-			Assert.Equal(4f, intersections[0].T);
-			Assert.Equal(6f, intersections[1].T);
+			Assert.Equal(4, intersections[0].T);
+			Assert.Equal(6, intersections[1].T);
 		}
 
 		[Fact]
@@ -42,8 +42,8 @@ namespace RayTracerTest
 			var sphere = new Sphere();
 			var intersections = sphere.Intersect(ray);
 			Assert.Equal(2, intersections.Length);
-			Assert.Equal(5f, intersections[0].T);
-			Assert.Equal(5f, intersections[1].T);
+			Assert.Equal(5, intersections[0].T);
+			Assert.Equal(5, intersections[1].T);
 		}
 
 		[Fact]
@@ -62,8 +62,8 @@ namespace RayTracerTest
 			var sphere = new Sphere();
 			var intersections = sphere.Intersect(ray);
 			Assert.Equal(2, intersections.Length);
-			Assert.Equal(-1f, intersections[0].T);
-			Assert.Equal(1f, intersections[1].T);
+			Assert.Equal(-1, intersections[0].T);
+			Assert.Equal(1, intersections[1].T);
 		}
 
 		[Fact]
@@ -73,8 +73,8 @@ namespace RayTracerTest
 			var sphere = new Sphere();
 			var intersections = sphere.Intersect(ray);
 			Assert.Equal(2, intersections.Length);
-			Assert.Equal(-6f, intersections[0].T);
-			Assert.Equal(-4f, intersections[1].T);
+			Assert.Equal(-6, intersections[0].T);
+			Assert.Equal(-4, intersections[1].T);
 		}
 
 		[Fact]

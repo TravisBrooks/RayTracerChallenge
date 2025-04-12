@@ -13,28 +13,28 @@ namespace RayTracerTest
 				[0, 1] = 2,
 				[0, 2] = 3,
 				[0, 3] = 4,
-				[1, 0] = 5.5f,
-				[1, 1] = 6.5f,
-				[1, 2] = 7.5f,
-				[1, 3] = 8.5f,
+				[1, 0] = 5.5,
+				[1, 1] = 6.5,
+				[1, 2] = 7.5,
+				[1, 3] = 8.5,
 				[2, 0] = 9,
 				[2, 1] = 10,
 				[2, 2] = 11,
 				[2, 3] = 12,
-				[3, 0] = 13.5f,
-				[3, 1] = 14.5f,
-				[3, 2] = 15.5f,
-				[3, 3] = 16.5f
+				[3, 0] = 13.5,
+				[3, 1] = 14.5,
+				[3, 2] = 15.5,
+				[3, 3] = 16.5
 			};
 			Assert.Equal(4, m.Rows);
 			Assert.Equal(4, m.Columns);
 			Assert.Equal(1, m[0, 0]);
 			Assert.Equal(4, m[0, 3]);
-			Assert.Equal(5.5f, m[1, 0]);
-			Assert.Equal(7.5f, m[1, 2]);
+			Assert.Equal(5.5, m[1, 0]);
+			Assert.Equal(7.5, m[1, 2]);
 			Assert.Equal(11, m[2, 2]);
-			Assert.Equal(13.5f, m[3, 0]);
-			Assert.Equal(15.5f, m[3, 2]);
+			Assert.Equal(13.5, m[3, 0]);
+			Assert.Equal(15.5, m[3, 2]);
 		}
 
 		[Fact]
@@ -43,25 +43,25 @@ namespace RayTracerTest
 			var m = new Matrix(new[,]
 			{
 				{ 1, 2, 3, 4 },
-				{ 5.5f, 6.5f, 7.5f, 8.5f },
+				{ 5.5, 6.5, 7.5, 8.5 },
 				{ 9, 10, 11, 12 },
-				{ 13.5f, 14.5f, 15.5f, 16.5f }
+				{ 13.5, 14.5, 15.5, 16.5 }
 			});
 			Assert.Equal(4, m.Rows);
 			Assert.Equal(4, m.Columns);
 			Assert.Equal(1, m[0, 0]);
 			Assert.Equal(4, m[0, 3]);
-			Assert.Equal(5.5f, m[1, 0]);
-			Assert.Equal(7.5f, m[1, 2]);
+			Assert.Equal(5.5, m[1, 0]);
+			Assert.Equal(7.5, m[1, 2]);
 			Assert.Equal(11, m[2, 2]);
-			Assert.Equal(13.5f, m[3, 0]);
-			Assert.Equal(15.5f, m[3, 2]);
+			Assert.Equal(13.5, m[3, 0]);
+			Assert.Equal(15.5, m[3, 2]);
 		}
 
 		[Fact]
 		public void MatrixConstructor2X2()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ -3, 5 },
 				{ 1, -2 },
@@ -77,7 +77,7 @@ namespace RayTracerTest
 		[Fact]
 		public void MatrixConstructor3X3()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ -3, 5, 0 },
 				{ 1, -2, 7 },
@@ -93,14 +93,14 @@ namespace RayTracerTest
 		[Fact]
 		public void MatrixEquality()
 		{
-			var m1 = new Matrix(new float[,]
+			var m1 = new Matrix(new double[,]
 			{
 				{ 1, 2, 3, 4 },
 				{ 5, 6, 7, 8 },
 				{ 9, 8, 7, 6 },
 				{ 5, 4, 3, 2 }
 			});
-			var m2 = new Matrix(new float[,]
+			var m2 = new Matrix(new double[,]
 			{
 				{ 1, 2, 3, 4 },
 				{ 5, 6, 7, 8 },
@@ -113,14 +113,14 @@ namespace RayTracerTest
 		[Fact]
 		public void MatrixNotEqual()
 		{
-			var m1 = new Matrix(new float[,]
+			var m1 = new Matrix(new double[,]
 			{
 				{ 1, 2, 3, 4 },
 				{ 5, 6, 7, 8 },
 				{ 9, 8, 7, 6 },
 				{ 5, 4, 3, 2 }
 			});
-			var m2 = new Matrix(new float[,]
+			var m2 = new Matrix(new double[,]
 			{
 				{ 2, 3, 4, 5 },
 				{ 6, 7, 8, 9 },
@@ -133,21 +133,21 @@ namespace RayTracerTest
 		[Fact]
 		public void MultiplyMatrices()
 		{
-			var m1 = new Matrix(new float[,]
+			var m1 = new Matrix(new double[,]
 			{
 				{ 1, 2, 3, 4 },
 				{ 5, 6, 7, 8 },
 				{ 9, 8, 7, 6 },
 				{ 5, 4, 3, 2 }
 			});
-			var m2 = new Matrix(new float[,]
+			var m2 = new Matrix(new double[,]
 			{
 				{ -2, 1, 2, 3 },
 				{ 3, 2, 1, -1 },
 				{ 4, 3, 6, 5 },
 				{ 1, 2, 7, 8 }
 			});
-			var expected = new Matrix(new float[,]
+			var expected = new Matrix(new double[,]
 			{
 				{ 20, 22, 50, 48 },
 				{ 44, 54, 114, 108 },
@@ -160,7 +160,7 @@ namespace RayTracerTest
 		[Fact]
 		public void MultiplyMatrixByPoint()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 1, 2, 3, 4 },
 				{ 2, 4, 4, 2 },
@@ -180,7 +180,7 @@ namespace RayTracerTest
 		[Fact]
 		public void MultiplyMatrixByVector()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 1, 2, 3, 4 },
 				{ 2, 4, 4, 2 },
@@ -201,7 +201,7 @@ namespace RayTracerTest
 		public void IdentityMultiplyingMatrix()
 		{
 			var id = Matrix.Identity();
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 0, 1, 2, 4 },
 				{ 1, 2, 4, 8 },
@@ -237,14 +237,14 @@ namespace RayTracerTest
 		[Fact]
 		public void TransposeMatrix()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 0, 9, 3, 0 },
 				{ 9, 8, 0, 8 },
 				{ 1, 8, 5, 3 },
 				{ 0, 0, 5, 8 }
 			});
-			var expected = new Matrix(new float[,]
+			var expected = new Matrix(new double[,]
 			{
 				{ 0, 9, 1, 0 },
 				{ 9, 8, 8, 0 },
@@ -264,7 +264,7 @@ namespace RayTracerTest
 		[Fact]
 		public void Determinant2X2()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 1, 5 },
 				{ -3, 2 }
@@ -275,13 +275,13 @@ namespace RayTracerTest
 		[Fact]
 		public void Submatrix3X3()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 1, 5, 0 },
 				{ -3, 2, 7 },
 				{ 0, 6, -3 }
 			});
-			var expected = new Matrix(new float[,]
+			var expected = new Matrix(new double[,]
 			{
 				{ -3, 2 },
 				{ 0, 6 }
@@ -292,14 +292,14 @@ namespace RayTracerTest
 		[Fact]
 		public void Submatrix4X4()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ -6, 1, 1, 6 },
 				{ -8, 5, 8, 6 },
 				{ -1, 0, 8, 2 },
 				{ -7, 1, -1, 1 }
 			});
-			var expected = new Matrix(new float[,]
+			var expected = new Matrix(new double[,]
 			{
 				{ -6, 1, 6 },
 				{ -8, 8, 6 },
@@ -311,7 +311,7 @@ namespace RayTracerTest
 		[Fact]
 		public void Minor3X3()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 3, 5, 0 },
 				{ 2, -1, -7 },
@@ -325,7 +325,7 @@ namespace RayTracerTest
 		[Fact]
 		public void Cofactor3X3()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 3, 5, 0 },
 				{ 2, -1, -7 },
@@ -340,7 +340,7 @@ namespace RayTracerTest
 		[Fact]
 		public void Determinant3X3()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 1, 2, 6 },
 				{ -5, 8, -4 },
@@ -355,7 +355,7 @@ namespace RayTracerTest
 		[Fact]
 		public void Determinant4X4()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ -2, -8, 3, 5 },
 				{ -3, 1, 7, 3 },
@@ -372,7 +372,7 @@ namespace RayTracerTest
 		[Fact]
 		public void InvertibleMatrix()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 6, 4, 4, 4 },
 				{ 5, 5, 7, 6 },
@@ -386,7 +386,7 @@ namespace RayTracerTest
 		[Fact]
 		public void NonInvertibleMatrix()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ -4, 2, -2, -3 },
 				{ 9, 6, 2, 6 },
@@ -400,7 +400,7 @@ namespace RayTracerTest
 		[Fact]
 		public void InverseMatrix()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ -5, 2, 6, -8 },
 				{ 1, -5, 1, 8 },
@@ -410,15 +410,15 @@ namespace RayTracerTest
 			var inv = m.Inverse();
 			Assert.Equal(532, m.Determinant());
 			Assert.Equal(-160, m.Cofactor(2, 3));
-			Assert.Equal(-160f / 532, inv[3, 2]);
+			Assert.Equal(-160.0 / 532.0, inv[3, 2]);
 			Assert.Equal(105, m.Cofactor(3, 2));
-			Assert.Equal(105f / 532, inv[2, 3]);
+			Assert.Equal(105.0 / 532.0, inv[2, 3]);
 			var expected = new Matrix(new[,]
 			{
-				{ 0.21805f, 0.45113f, 0.24060f, -0.04511f },
-				{ -0.80827f, -1.45677f, -0.44361f, 0.52068f },
-				{ -0.07895f, -0.22368f, -0.05263f, 0.19737f },
-				{ -0.52256f, -0.81391f, -0.30075f, 0.30639f }
+				{  0.21805, 0.45113,  0.24060, -0.04511 },
+				{ -0.80827, -1.45677, -0.44361, 0.52068 },
+				{ -0.07895, -0.22368, -0.05263, 0.19737 },
+				{ -0.52256, -0.81391, -0.30075, 0.30639 }
 			});
 			Assert.Equal(expected, inv);
 		}
@@ -426,7 +426,7 @@ namespace RayTracerTest
 		[Fact]
 		public void InverseMatrix2()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 8, -5, 9, 2 },
 				{ 7, 5, 6, 1 },
@@ -436,10 +436,10 @@ namespace RayTracerTest
 			var inv = m.Inverse();
 			var expected = new Matrix(new[,]
 			{
-				{ -0.15385f, -0.15385f, -0.28205f, -0.53846f },
-				{ -0.07692f, 0.12308f, 0.02564f, 0.03077f },
-				{ 0.35897f, 0.35897f, 0.43590f, 0.92308f },
-				{ -0.69231f, -0.69231f, -0.76923f, -1.92308f }
+				{ -0.15385, -0.15385, -0.28205, -0.53846 },
+				{ -0.07692,  0.12308,  0.02564,  0.03077 },
+				{  0.35897,  0.35897,  0.43590,  0.92308 },
+				{ -0.69231, -0.69231, -0.76923, -1.92308 }
 			});
 			Assert.Equal(expected, inv);
 		}
@@ -447,7 +447,7 @@ namespace RayTracerTest
 		[Fact]
 		public void InverseMatrix3()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{ 9, 3, 0, 9 },
 				{ -5, -2, -6, -3 },
@@ -457,10 +457,10 @@ namespace RayTracerTest
 			var inv = m.Inverse();
 			var expected = new Matrix(new[,]
 			{
-				{ -0.04074f, -0.07778f, 0.14444f, -0.22222f },
-				{ -0.07778f, 0.03333f, 0.36667f, -0.33333f },
-				{ -0.02901f, -0.14630f, -0.10926f, 0.12963f },
-				{ 0.17778f, 0.06667f, -0.26667f, 0.33333f }
+				{ -0.04074, -0.07778,  0.14444, -0.22222 },
+				{ -0.07778,  0.03333,  0.36667, -0.33333 },
+				{ -0.02901, -0.14630, -0.10926,  0.12963 },
+				{  0.17778,  0.06667, -0.26667,  0.33333 }
 			});
 			Assert.Equal(expected, inv);
 		}
@@ -468,14 +468,14 @@ namespace RayTracerTest
 		[Fact]
 		public void InverseMatrix4()
 		{
-			var mA = new Matrix(new float[,]
+			var mA = new Matrix(new double[,]
 			{
 				{ 3, -9, 7, 3 },
 				{ 3, -8, 2, -9 },
 				{ -4, 4, 4, 1 },
 				{ -6, 5, -1, 1 }
 			});
-			var mB = new Matrix(new float[,]
+			var mB = new Matrix(new double[,]
 			{
 				{ 8, 2, 2, 2 },
 				{ 3, -1, 7, 0 },

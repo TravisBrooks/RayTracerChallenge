@@ -2,7 +2,7 @@
 {
 	public readonly record struct Ray(Point Origin, Vector Direction)
 	{
-		public Point Position(float t)
+		public Point Position(double t)
 		{
 			var retVal = Origin + Direction * t;
 			return retVal;

@@ -8,11 +8,11 @@ namespace RayTracerTest
 		[Fact]
 		public void PointPropertiesTest()
 		{
-			ITuple3D pt = new Point(4.3f, -4.2f, 3.1f);
-			Assert.Equal(4.3f, pt.X);
-			Assert.Equal(-4.2f, pt.Y);
-			Assert.Equal(3.1f, pt.Z);
-			Assert.Equal(1f, pt.W);
+			ITuple3D pt = new Point(4.3, -4.2, 3.1);
+			Assert.Equal(4.3, pt.X);
+			Assert.Equal(-4.2, pt.Y);
+			Assert.Equal(3.1, pt.Z);
+			Assert.Equal(1, pt.W);
 		}
 
 		[Fact]

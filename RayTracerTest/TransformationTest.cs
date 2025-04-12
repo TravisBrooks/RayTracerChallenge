@@ -101,10 +101,10 @@ namespace RayTracerTest
 		public void RotatingPointAroundXAxis()
 		{
 			var p = new Point(0, 1, 0);
-			var halfQuarter = Transformation.RotationX(45f.ToRadians());
-			var fullQuarter = Transformation.RotationX(90f.ToRadians());
+			var halfQuarter = Transformation.RotationX(45.0.ToRadians());
+			var fullQuarter = Transformation.RotationX(90.0.ToRadians());
 
-			var expectedHalfQuarter = new Point(0, MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2);
+			var expectedHalfQuarter = new Point(0, Math.Sqrt(2) / 2.0, Math.Sqrt(2) / 2.0);
 			var maybeVorPHalfQuarter = halfQuarter * p;
 			maybeVorPHalfQuarter.HandleResult(
 				vector => Assert.Fail($"Was not expecting a vector result: {vector}"),
@@ -123,9 +123,9 @@ namespace RayTracerTest
 		public void InverseOfRotationGoesCounterClockWise()
 		{
 			var p = new Point(0, 1, 0);
-			var halfQuarter = Transformation.RotationX(45f.ToRadians());
+			var halfQuarter = Transformation.RotationX(45.0.ToRadians());
 			var inverse = halfQuarter.Inverse();
-			var expected = new Point(0, MathF.Sqrt(2) / 2, -MathF.Sqrt(2) / 2);
+			var expected = new Point(0, Math.Sqrt(2) / 2.0, -Math.Sqrt(2) / 2.0);
 			var maybeVorP = inverse * p;
 			maybeVorP.HandleResult(
 				vector => Assert.Fail($"Was not expecting a vector result: {vector}"),
@@ -137,10 +137,10 @@ namespace RayTracerTest
 		public void RotatingPointAroundYAxis()
 		{
 			var p = new Point(0, 0, 1);
-			var halfQuarter = Transformation.RotationY(45f.ToRadians());
-			var fullQuarter = Transformation.RotationY(90f.ToRadians());
+			var halfQuarter = Transformation.RotationY(45.0.ToRadians());
+			var fullQuarter = Transformation.RotationY(90.0.ToRadians());
 
-			var expectedHalfQuarter = new Point(MathF.Sqrt(2) / 2, 0, MathF.Sqrt(2) / 2);
+			var expectedHalfQuarter = new Point(Math.Sqrt(2) / 2.0, 0, Math.Sqrt(2) / 2.0);
 			var maybeVorPHalfQuarter = halfQuarter * p;
 			maybeVorPHalfQuarter.HandleResult(
 				vector => Assert.Fail($"Was not expecting a vector result: {vector}"),
@@ -159,10 +159,10 @@ namespace RayTracerTest
 		public void RotatingPointAroundZAxis()
 		{
 			var p = new Point(0, 1, 0);
-			var halfQuarter = Transformation.RotationZ(45f.ToRadians());
-			var fullQuarter = Transformation.RotationZ(90f.ToRadians());
+			var halfQuarter = Transformation.RotationZ(45.0.ToRadians());
+			var fullQuarter = Transformation.RotationZ(90.0.ToRadians());
 
-			var expectedHalfQuarter = new Point(-MathF.Sqrt(2) / 2, MathF.Sqrt(2) / 2, 0);
+			var expectedHalfQuarter = new Point(-Math.Sqrt(2) / 2.0, Math.Sqrt(2) / 2.0, 0);
 			var maybeVorPHalfQuarter = halfQuarter * p;
 			maybeVorPHalfQuarter.HandleResult(
 				vector => Assert.Fail($"Was not expecting a vector result: {vector}"),
@@ -180,7 +180,7 @@ namespace RayTracerTest
 		[Fact]
 		public void ShearingTransformationMovesXinProportionToY()
 		{
-			var transform = Transformation.Shearing(1.0f, 0f, 0f, 0f, 0f, 0f);
+			var transform = Transformation.Shearing(1.0, 0, 0, 0, 0, 0);
 			var p = new Point(2, 3, 4);
 			var expected = new Point(5, 3, 4);
 			var maybeVorP = transform * p;
@@ -193,7 +193,7 @@ namespace RayTracerTest
 		[Fact]
 		public void ShearingTransformationMovesXInProportionToZ()
 		{
-			var transform = Transformation.Shearing(0f, 1.0f, 0f, 0f, 0f, 0f);
+			var transform = Transformation.Shearing(0, 1.0, 0, 0, 0, 0);
 			var p = new Point(2, 3, 4);
 			var expected = new Point(6, 3, 4);
 			var maybeVorP = transform * p;
@@ -206,7 +206,7 @@ namespace RayTracerTest
 		[Fact]
 		public void ShearingTransformationMovesYInProportionToX()
 		{
-			var transform = Transformation.Shearing(0f, 0f, 1.0f, 0f, 0f, 0f);
+			var transform = Transformation.Shearing(0, 0, 1.0, 0, 0, 0);
 			var p = new Point(2, 3, 4);
 			var expected = new Point(2, 5, 4);
 			var maybeVorP = transform * p;
@@ -219,7 +219,7 @@ namespace RayTracerTest
 		[Fact]
 		public void ShearingTransformationMovesYInProportionToZ()
 		{
-			var transform = Transformation.Shearing(0f, 0f, 0f, 1.0f, 0f, 0f);
+			var transform = Transformation.Shearing(0, 0, 0, 1.0, 0, 0);
 			var p = new Point(2, 3, 4);
 			var expected = new Point(2, 7, 4);
 			var maybeVorP = transform * p;
@@ -232,7 +232,7 @@ namespace RayTracerTest
 		[Fact]
 		public void ShearingTransformationMovesZInProportionToX()
 		{
-			var transform = Transformation.Shearing(0f, 0f, 0f, 0f, 1.0f, 0f);
+			var transform = Transformation.Shearing(0, 0, 0, 0, 1.0, 0);
 			var p = new Point(2, 3, 4);
 			var expected = new Point(2, 3, 6);
 			var maybeVorP = transform * p;
@@ -245,7 +245,7 @@ namespace RayTracerTest
 		[Fact]
 		public void ShearingTransformationMovesZInProportionToY()
 		{
-			var transform = Transformation.Shearing(0f, 0f, 0f, 0f, 0f, 1.0f);
+			var transform = Transformation.Shearing(0, 0, 0, 0, 0, 1.0);
 			var p = new Point(2, 3, 4);
 			var expected = new Point(2, 3, 7);
 			var maybeVorP = transform * p;
@@ -259,7 +259,7 @@ namespace RayTracerTest
 		public void IndividualTransformationsAreAppliedInSequence()
 		{
 			var p = new Point(1, 0, 1);
-			var a = Transformation.RotationX(90f.ToRadians());
+			var a = Transformation.RotationX(90.0.ToRadians());
 			var b = Transformation.Scaling(5, 5, 5);
 			var c = Transformation.Translation(10, 5, 7);
 			// rotation first
@@ -297,7 +297,7 @@ namespace RayTracerTest
 		public void ChainedTransformationsAreAppliedInReverseOrder()
 		{
 			var p = new Point(1, 0, 1);
-			var a = Transformation.RotationX(90f.ToRadians());
+			var a = Transformation.RotationX(90.0.ToRadians());
 			var b = Transformation.Scaling(5, 5, 5);
 			var c = Transformation.Translation(10, 5, 7);
 			var t = c * b * a;
@@ -351,10 +351,10 @@ namespace RayTracerTest
 			var t = Transformation.ViewTransform(from, to, up);
 			var expected = new Matrix(new[,]
 			{
-				{ -0.50709f, 0.50709f, 0.67612f, -2.36643f },
-				{ 0.76772f, 0.60609f, 0.12122f, -2.82843f },
-				{ -0.35857f, 0.59761f, -0.71714f, 0 },
-				{ 0, 0, 0, 1 }
+				{ -0.50709, 0.50709,  0.67612, -2.36643 },
+				{  0.76772, 0.60609,  0.12122, -2.82843 },
+				{ -0.35857, 0.59761, -0.71714,  0 },
+				{  0,        0,         0,         1 }
 			});
 			Assert.Equal(expected, t);
 		}

@@ -2,7 +2,7 @@
 
 namespace RayTracerChallenge
 {
-	public readonly record struct Intersection(float T, IIntersectable Object)
+	public readonly record struct Intersection(double T, IIntersectable Object)
 	{
 		public static ImmutableArray<Intersection> Aggregate(params Intersection[] intersections)
 		{
@@ -20,7 +20,8 @@ namespace RayTracerChallenge
 				inside = true;
 				normal = -normal;
 			}
-			return new PhongComputation(T, Object, point, eye, normal, inside);
+			var overPoint = point + normal * Constants.Epsilon;
+			return new PhongComputation(T, Object, point, eye, normal, inside, overPoint);
 		}
 	}
 }

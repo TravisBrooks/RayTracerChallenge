@@ -3,6 +3,7 @@ using RayTracerRunner.Chapter4;
 using RayTracerRunner.Chapter5;
 using RayTracerRunner.Chapter6;
 using RayTracerRunner.Chapter7;
+using RayTracerRunner.Chapter8;
 
 namespace RayTracerRunner
 {
@@ -14,7 +15,8 @@ namespace RayTracerRunner
             //new Chapter4Demo().Run();
             //new Chapter5Demo().Run();
             //new Chapter6Demo().Run();
-            new Chapter7Demo().Run();
+            //new Chapter7Demo().Run();
+            new Chapter8Demo().Run();
 		}
     }
 }

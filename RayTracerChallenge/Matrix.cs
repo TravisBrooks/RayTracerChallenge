@@ -2,16 +2,16 @@
 {
 	public class Matrix : IEquatable<Matrix>
 	{
-		private readonly float[,] _values;
+		private readonly double[,] _values;
 
 		public Matrix(int rows, int cols)
 		{
 			Rows = rows;
 			Columns = cols;
-			_values = new float[Rows, Columns];
+			_values = new double[Rows, Columns];
 		}
 
-		public Matrix(float[,] values) : this(values.GetLength(0), values.GetLength(1))
+		public Matrix(double[,] values) : this(values.GetLength(0), values.GetLength(1))
 		{
 			Array.Copy(values, 0, _values, 0, values.Length);
 		}
@@ -19,7 +19,7 @@
 		public int Columns { get; }
 		public int Rows { get; }
 
-		public float this[int row, int col]
+		public double this[int row, int col]
 		{
 			get => _values[row, col];
 			set => _values[row, col] = value;
@@ -81,7 +81,7 @@
 
 		public static Matrix Identity()
 		{
-			var m = new Matrix(new float[,]
+			var m = new Matrix(new double[,]
 			{
 				{1, 0, 0, 0},
 				{0, 1, 0, 0},
@@ -105,7 +105,7 @@
 			return transpose;
 		}
 
-		public float Determinant()
+		public double Determinant()
 		{
 			if (Rows == 2 && Columns == 2)
 			{
@@ -114,7 +114,7 @@
 				// det = ad - bc
 				return this[0, 0] * this[1, 1] - this[0, 1] * this[1, 0];
 			}
-			float det = 0;
+			var det = 0.0;
 			for (var c = 0; c < Columns; c++)
 			{
 				det += this[0, c] * Cofactor(0, c);
@@ -148,15 +148,15 @@
 			return m;
 		}
 
-		public float Minor(int row, int col)
+		public double Minor(int row, int col)
 		{
 			var sub = Submatrix(row, col);
 			return sub.Determinant();
 		}
 
-		public float Cofactor(int row, int col)
+		public double Cofactor(int row, int col)
 		{
-			var sign = (row + col) % 2 == 0 ? 1f : -1f;
+			var sign = (row + col) % 2 == 0 ? 1.0 : -1.0;
 			return Minor(row, col) * sign;
 		}
 

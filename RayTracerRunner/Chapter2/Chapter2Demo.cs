@@ -6,9 +6,9 @@ namespace RayTracerRunner.Chapter2
 	{
 		protected override Canvas RunCanvasRender()
 		{
-			var velocity = new Vector(1, 1.8f, 0).Normalize() * 11.25f;
-			var gravity = new Vector(0, -0.1f, 0);
-			var wind = new Vector(-0.01f, 0, 0);
+			var velocity = new Vector(1, 1.8, 0).Normalize() * 11.25;
+			var gravity = new Vector(0, -0.1, 0);
+			var wind = new Vector(-0.01, 0, 0);
 			var environment = new Environment(gravity, wind);
 			var canvas = new Canvas(900, 550);
 			canvas.SetAllPixels(new Color(1, 1, 1));

@@ -1,5 +1,4 @@
 ﻿using RayTracerChallenge;
-using Point = RayTracerChallenge.Point;
 
 namespace RayTracerTest
 {
@@ -8,10 +7,10 @@ namespace RayTracerTest
 		[Fact]
 		public void VectorPropertiesTest()
 		{
-			ITuple3D v = new Vector(4.3f, -4.2f, 3.1f);
-			Assert.Equal(4.3f, v.X);
-			Assert.Equal(-4.2f, v.Y);
-			Assert.Equal(3.1f, v.Z);
+			ITuple3D v = new Vector(4.3, -4.2, 3.1);
+			Assert.Equal(4.3, v.X);
+			Assert.Equal(-4.2, v.Y);
+			Assert.Equal(3.1, v.Z);
 			Assert.Equal(0, v.W);
 		}
 
@@ -62,8 +61,8 @@ namespace RayTracerTest
 		public void VectorScalarMultiplication()
 		{
 			var v = new Vector(1, -2, 3);
-			var scalar = .5f;
-			var expected = new Vector(.5f, -1, 1.5f);
+			var scalar = .5;
+			var expected = new Vector(.5, -1, 1.5);
 			var actual = v * scalar;
 			Assert.Equal(expected, actual);
 		}
@@ -72,8 +71,8 @@ namespace RayTracerTest
 		public void VectorScalarDivision()
 		{
 			var v = new Vector(1, -2, 3);
-			var scalar = 2f;
-			var expected = new Vector(.5f, -1, 1.5f);
+			var scalar = 2.0;
+			var expected = new Vector(.5, -1, 1.5);
 			var actual = v / scalar;
 			Assert.Equal(expected, actual);
 		}
@@ -82,7 +81,7 @@ namespace RayTracerTest
 		public void MagnitudeX()
 		{
 			var v = new Vector(1, 0, 0);
-			var expected = 1f;
+			var expected = 1.0;
 			var actual = v.Magnitude();
 			Assert.Equal(expected, actual);
 		}
@@ -91,7 +90,7 @@ namespace RayTracerTest
 		public void MagnitudeY()
 		{
 			var v = new Vector(0, 1, 0);
-			var expected = 1f;
+			var expected = 1.0;
 			var actual = v.Magnitude();
 			Assert.Equal(expected, actual);
 		}
@@ -100,7 +99,7 @@ namespace RayTracerTest
 		public void MagnitudeZ()
 		{
 			var v = new Vector(0, 0, 1);
-			var expected = 1f;
+			var expected = 1.0;
 			var actual = v.Magnitude();
 			Assert.Equal(expected, actual);
 		}
@@ -109,7 +108,7 @@ namespace RayTracerTest
 		public void MagnitudeComplexPositive()
 		{
 			var v = new Vector(1, 2, 3);
-			var expected = (float)Math.Sqrt(14);
+			var expected = Math.Sqrt(14);
 			var actual = v.Magnitude();
 			Assert.Equal(expected, actual);
 		}
@@ -118,7 +117,7 @@ namespace RayTracerTest
 		public void MagnitudeComplexNegative()
 		{
 			var v = new Vector(-1, -2, -3);
-			var expected = (float)Math.Sqrt(14);
+			var expected = Math.Sqrt(14);
 			var actual = v.Magnitude();
 			Assert.Equal(expected, actual);
 		}
@@ -137,7 +136,7 @@ namespace RayTracerTest
 		{
 			var v = new Vector(1, 2, 3);
 			// vector(1/√14,   2/√14,   3/√14)​
-			var expected = new Vector(0.26726124f, 0.5345225f, 0.8017837f);
+			var expected = new Vector(0.26726124, 0.5345225, 0.8017837);
 			var actual = v.Normalize();
 			Assert.Equal(expected, actual);
 		}
@@ -147,7 +146,7 @@ namespace RayTracerTest
 		{
 			var v = new Vector(1, 2, 3);
 			var norm = v.Normalize();
-			var expected = 1f;
+			var expected = 1.0;
 			var actual = norm.Magnitude();
 			Assert.Equal(expected, actual, precision:6);
 		}
@@ -157,7 +156,7 @@ namespace RayTracerTest
 		{
 			var v1 = new Vector(1, 2, 3);
 			var v2 = new Vector(2, 3, 4);
-			var expected = 20f;
+			var expected = 20.0;
 			var actual = v1.DotProduct(v2);
 			Assert.Equal(expected, actual);
 		}

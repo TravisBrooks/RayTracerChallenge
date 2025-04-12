@@ -4,30 +4,41 @@ namespace RayTracerChallenge
 {
 	public class World
 	{
-		public IList<Sphere> Spheres { get; } = new List<Sphere>();
-		public PointLight? Light { get; set; }
-
-		public static World Default()
+		public World()
 		{
-			var world = new World();
-			var light = new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1));
-			world.Light = light;
-			var sphere1 = new Sphere();
-			sphere1.Material = sphere1.Material with
+			Light = new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1));
+			var sphere1 = new Sphere
 			{
-				Color = new Color(.8f, 1, .6f),
-				Diffuse = .7f,
-				Specular = .2f,
+				Material = Material.Default() with
+				{
+					Color = new Color(.8, 1, .6),
+					Diffuse = .7,
+					Specular = .2,
 
+				}
 			};
 			var sphere2 = new Sphere
 			{
-				Transform = Transformation.Scaling(0.5f, 0.5f, 0.5f)
+				Transform = Transformation.Scaling(0.5, 0.5, 0.5)
 			};
-			world.Spheres.Add(sphere1);
-			world.Spheres.Add(sphere2);
-			return world;
+			Spheres.Add(sphere1);
+			Spheres.Add(sphere2);
 		}
+
+		public World(PointLight light, IEnumerable<Sphere> spheres)
+		{
+			Light = light;
+			Spheres = spheres.ToList();
+		}
+
+		public World(params Sphere[] spheres)
+		{
+			Light = new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1));
+			Spheres = spheres.ToList();
+		}
+
+		public IList<Sphere> Spheres { get; } = new List<Sphere>();
+		public PointLight? Light { get; init; }
 
 		public ImmutableArray<Intersection> Intersect(Ray ray)
 		{
@@ -48,9 +59,10 @@ namespace RayTracerChallenge
 			}
 			var c = comps.Object.Material.Lighting(
 				Light.Value,
-				comps.Point,
+				comps.OverPoint,
 				comps.EyeVector,
-				comps.NormalVector
+				comps.NormalVector,
+				IsShadowed(comps.OverPoint)
 			);
 			return c;
 		}
@@ -65,6 +77,21 @@ namespace RayTracerChallenge
 			}
 			var comps = hit.Value.PrepareComputation(ray);
 			return ShadeHit(comps);
+		}
+
+		public bool IsShadowed(Point point)
+		{
+			if (!Light.HasValue)
+			{
+				return true;
+			}
+			var v = Light.Value.Position - point;
+			var distance = v.Magnitude();
+			var direction = v.Normalize();
+			var ray = new Ray(point, direction);
+			var intersections = Intersect(ray);
+			var hit = intersections.Hit();
+			return hit.HasValue && hit.Value.T < distance;
 		}
 	}
 }

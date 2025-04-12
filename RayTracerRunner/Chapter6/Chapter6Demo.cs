@@ -13,14 +13,14 @@ namespace RayTracerRunner.Chapter6
 			canvas.SetAllPixels(backgroundColor);
 
 			var cameraPos = new Point(0, 0, -5);
-			var wallZ = 13.0f;
-			var wallSize = 7.0f;
+			var wallZ = 13.0;
+			var wallSize = 7.0;
 			var pixelSize = wallSize / canvasPixels;
 			var sphere = new Sphere
 			{
 				Material = Material.Default() with
 				{
-					Color = new Color(1, 0.2f, 1)
+					Color = new Color(1, 0.2, 1)
 				}
 			};
 
@@ -28,7 +28,7 @@ namespace RayTracerRunner.Chapter6
 			var lightColor = new Color(1, 1, 1);
 			var light = new PointLight(lightPosition, lightColor);
 
-			var translation = -(wallSize * 0.5f);
+			var translation = -(wallSize * 0.5);
 			var xRange = Enumerable.Range(0, (int)canvasPixels);
 			Parallel.ForEach(xRange, x =>
 			{
@@ -44,7 +44,7 @@ namespace RayTracerRunner.Chapter6
 						var point = ray.Position(hit.T);
 						var normal = sphere.NormalAt(point);
 						var eye = -ray.Direction;
-						var color = sphere.Material.Lighting(light, point, eye, normal);
+						var color = sphere.Material.Lighting(light, point, eye, normal, false);
 						canvas[x, (int)canvasPixels - y] = color;
 					}
 				}

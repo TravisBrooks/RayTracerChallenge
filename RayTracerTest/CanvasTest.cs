@@ -44,9 +44,9 @@ namespace RayTracerTest
 		public void ConstructingPpmPixelData()
 		{
 			var c = new Canvas(5, 3);
-			var c1 = new Color(1.5f, 0, 0);
-			var c2 = new Color(0, 0.5f, 0);
-			var c3 = new Color(-0.5f, 0, 1);
+			var c1 = new Color(1.5, 0, 0);
+			var c2 = new Color(0, 0.5, 0);
+			var c3 = new Color(-0.5, 0, 1);
 			c[0, 0] = c1;
 			c[2, 1] = c2;
 			c[4, 2] = c3;
@@ -61,7 +61,7 @@ namespace RayTracerTest
 		public void PpmSplitsLongLines()
 		{
 			var c = new Canvas(10, 2);
-			var color = new Color(1, 0.8f, 0.6f);
+			var color = new Color(1, 0.8, 0.6);
 			for (var x = 0; x < c.Width; x++)
 			{
 				for (var y = 0; y < c.Height; y++)

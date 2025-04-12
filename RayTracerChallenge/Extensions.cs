@@ -1,17 +1,13 @@
 ﻿namespace RayTracerChallenge
 {
-	internal static class InternalExtensions
-	{
-		public static bool AboutEqual(this float lhs, float rhs)
-		{
-			const float tolerance = 0.00001f;
-			var aboutEqual = Math.Abs(lhs - rhs) < tolerance;
-			return aboutEqual;
-		}
-	}
-
 	public static class PublicExtensions
 	{
+		public static bool AboutEqual(this double lhs, double rhs)
+		{
+			var aboutEqual = Math.Abs(lhs - rhs) < Constants.Epsilon;
+			return aboutEqual;
+		}
+
 		/// <summary>
 		/// Splits a string based on newlines, removing empty entries.
 		/// </summary>
@@ -22,8 +18,8 @@
 			return str.Split(["\r\n", "\n"], StringSplitOptions.RemoveEmptyEntries);
 		}
 
-		private const float ToRadiansConversion = (float)Math.PI / 180f;
-		public static float ToRadians(this float degrees)
+		private const double ToRadiansConversion = Math.PI / 180.0;
+		public static double ToRadians(this double degrees)
 		{
 			return ToRadiansConversion * degrees;
 		}

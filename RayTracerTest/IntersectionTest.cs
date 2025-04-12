@@ -8,8 +8,8 @@ namespace RayTracerTest
 		public void IntersectionEncapsulatesTandObject()
 		{
 			var sphere = new Sphere();
-			var i = new Intersection(3.5f, sphere);
-			Assert.Equal(3.5f, i.T);
+			var i = new Intersection(3.5, sphere);
+			Assert.Equal(3.5, i.T);
 			Assert.Equal(sphere, i.Object);
 		}
 
@@ -17,8 +17,8 @@ namespace RayTracerTest
 		public void AggregatingIntersections()
 		{
 			var sphere = new Sphere();
-			var i1 = new Intersection(1f, sphere);
-			var i2 = new Intersection(2f, sphere);
+			var i1 = new Intersection(1, sphere);
+			var i2 = new Intersection(2, sphere);
 			var intersections = Intersection.Aggregate(i1, i2);
 			Assert.Equal(2, intersections.Length);
 			Assert.Equal(i1, intersections[0]);
@@ -29,8 +29,8 @@ namespace RayTracerTest
 		public void HitWhenAllIntersectionsPositive()
 		{
 			var sphere = new Sphere();
-			var i1 = new Intersection(1f, sphere);
-			var i2 = new Intersection(2f, sphere);
+			var i1 = new Intersection(1, sphere);
+			var i2 = new Intersection(2, sphere);
 			var intersections = Intersection.Aggregate(i1, i2);
 			var hit = intersections.Hit();
 			Assert.Equal(i1, hit);
@@ -40,8 +40,8 @@ namespace RayTracerTest
 		public void HitWhenSomeIntersectionsNegative()
 		{
 			var sphere = new Sphere();
-			var i1 = new Intersection(-1f, sphere);
-			var i2 = new Intersection(1f, sphere);
+			var i1 = new Intersection(-1, sphere);
+			var i2 = new Intersection(1, sphere);
 			var intersections = Intersection.Aggregate(i1, i2);
 			var hit = intersections.Hit();
 			Assert.Equal(i2, hit);
@@ -51,8 +51,8 @@ namespace RayTracerTest
 		public void HitWhenAllIntersectionsNegative()
 		{
 			var sphere = new Sphere();
-			var i1 = new Intersection(-2f, sphere);
-			var i2 = new Intersection(-1f, sphere);
+			var i1 = new Intersection(-2, sphere);
+			var i2 = new Intersection(-1, sphere);
 			var intersections = Intersection.Aggregate(i1, i2);
 			var hit = intersections.Hit();
 			Assert.Null(hit);
@@ -62,10 +62,10 @@ namespace RayTracerTest
 		public void HitIsAlwaysLowestNonNegativeIntersection()
 		{
 			var sphere = new Sphere();
-			var i1 = new Intersection(5f, sphere);
-			var i2 = new Intersection(7f, sphere);
-			var i3 = new Intersection(-3f, sphere);
-			var i4 = new Intersection(2f, sphere);
+			var i1 = new Intersection(5, sphere);
+			var i2 = new Intersection(7, sphere);
+			var i3 = new Intersection(-3, sphere);
+			var i4 = new Intersection(2, sphere);
 			var intersections = Intersection.Aggregate(i1, i2, i3, i4);
 			var hit = intersections.Hit();
 			Assert.Equal(i4, hit);
@@ -76,7 +76,7 @@ namespace RayTracerTest
 		{
 			var ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
 			var sphere = new Sphere();
-			var intersection = new Intersection(4f, sphere);
+			var intersection = new Intersection(4, sphere);
 			var computation = intersection.PrepareComputation(ray);
 			Assert.Equal(intersection.T, computation.T);
 			Assert.Equal(intersection.Object, computation.Object);
@@ -90,7 +90,7 @@ namespace RayTracerTest
 		{
 			var r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
 			var shape = new Sphere();
-			var i = new Intersection(4f, shape);
+			var i = new Intersection(4, shape);
 			var comps = i.PrepareComputation(r);
 			Assert.False(comps.Inside);
 		}
@@ -100,12 +100,26 @@ namespace RayTracerTest
 		{
 			var r = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
 			var shape = new Sphere();
-			var i = new Intersection(1f, shape);
+			var i = new Intersection(1, shape);
 			var comps = i.PrepareComputation(r);
 			Assert.Equal(new Point(0, 0, 1), comps.Point);
 			Assert.Equal(new Vector(0, 0, -1), comps.EyeVector);
 			Assert.Equal(new Vector(0, 0, -1), comps.NormalVector);
 			Assert.True(comps.Inside);
+		}
+
+		[Fact]
+		public void TheHitShouldOffsetThePoint()
+		{
+			var r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
+			var shape = new Sphere
+			{
+				Transform = Transformation.Translation(0, 0, 1)
+			};
+			var i = new Intersection(5, shape);
+			var comps = i.PrepareComputation(r);
+			Assert.True(comps.OverPoint.Z < -Constants.Epsilon/2);
+			Assert.True(comps.Point.Z > comps.OverPoint.Z);
 		}
 	}
 }

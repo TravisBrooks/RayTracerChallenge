@@ -2,7 +2,7 @@
 {
 	public static class Transformation
 	{
-		public static Matrix Translation(float x, float y, float z)
+		public static Matrix Translation(double x, double y, double z)
 		{
 			var m = new Matrix(new[,]
 			{
@@ -14,7 +14,7 @@
 			return m;
 		}
 
-		public static Matrix Scaling(float x, float y, float z)
+		public static Matrix Scaling(double x, double y, double z)
 		{
 			var m = new Matrix(new[,]
 			{
@@ -26,43 +26,43 @@
 			return m;
 		}
 
-		public static Matrix RotationX(float degreesInRadians)
+		public static Matrix RotationX(double degreesInRadians)
 		{
 			var m = new Matrix(new[,]
 			{
 				{ 1, 0, 0, 0 },
-				{ 0, MathF.Cos(degreesInRadians), -MathF.Sin(degreesInRadians), 0 },
-				{ 0, MathF.Sin(degreesInRadians), MathF.Cos(degreesInRadians), 0 },
+				{ 0, Math.Cos(degreesInRadians), -Math.Sin(degreesInRadians), 0 },
+				{ 0, Math.Sin(degreesInRadians), Math.Cos(degreesInRadians), 0 },
 				{ 0, 0, 0, 1 }
 			});
 			return m;
 		}
 
-		public static Matrix RotationY(float degreesInRadians)
+		public static Matrix RotationY(double degreesInRadians)
 		{
 			var m = new Matrix(new[,]
 			{
-				{ MathF.Cos(degreesInRadians), 0, MathF.Sin(degreesInRadians), 0 },
+				{ Math.Cos(degreesInRadians), 0, Math.Sin(degreesInRadians), 0 },
 				{ 0, 1, 0, 0 },
-				{ -MathF.Sin(degreesInRadians), 0, MathF.Cos(degreesInRadians), 0 },
+				{ -Math.Sin(degreesInRadians), 0, Math.Cos(degreesInRadians), 0 },
 				{ 0, 0, 0, 1 }
 			});
 			return m;
 		}
 
-		public static Matrix RotationZ(float degreesInRadians)
+		public static Matrix RotationZ(double degreesInRadians)
 		{
 			var m = new Matrix(new[,]
 			{
-				{ MathF.Cos(degreesInRadians), -MathF.Sin(degreesInRadians), 0, 0 },
-				{ MathF.Sin(degreesInRadians), MathF.Cos(degreesInRadians), 0, 0 },
+				{ Math.Cos(degreesInRadians), -Math.Sin(degreesInRadians), 0, 0 },
+				{ Math.Sin(degreesInRadians), Math.Cos(degreesInRadians), 0, 0 },
 				{ 0, 0, 1, 0 },
 				{ 0, 0, 0, 1 }
 			});
 			return m;
 		}
 
-		public static Matrix Shearing(float xy, float xz, float yx, float yz, float zx, float zy)
+		public static Matrix Shearing(double xy, double xz, double yx, double yz, double zx, double zy)
 		{
 			var m = new Matrix(new[,]
 			{
