@@ -1,4 +1,5 @@
 ﻿using RayTracerChallenge;
+using RayTracerChallenge.Patterns;
 
 namespace RayTracerTest;
 

@@ -1,4 +1,4 @@
-﻿namespace RayTracerChallenge
+﻿namespace RayTracerChallenge.Patterns
 {
 	public class RingPattern(Color a, Color b) : BasePattern
 	{

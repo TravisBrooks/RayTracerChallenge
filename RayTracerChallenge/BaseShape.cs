@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using RayTracerChallenge.Patterns;
+using System.Collections.Immutable;
 
 namespace RayTracerChallenge;
 

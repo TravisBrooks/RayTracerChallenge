@@ -1,4 +1,6 @@
-﻿namespace RayTracerChallenge;
+﻿using RayTracerChallenge.Patterns;
+
+namespace RayTracerChallenge;
 
 public readonly record struct Material(Color Color, double Ambient, double Diffuse, double Specular, double Shininess, BasePattern? Pattern)
 {
@@ -15,7 +17,19 @@ public readonly record struct Material(Color Color, double Ambient, double Diffu
 
 	public Color Lighting(BaseShape obj, PointLight light, Point point, Vector eyeVector, Vector normalVector, bool inShadow)
 	{
-		var color = Pattern?.PatternAt(obj, point) ?? Color;
+		Color color;
+		if (obj.Pattern is not null)
+		{
+			color = obj.Pattern.PatternAt(obj, point);
+		}
+		else if (Pattern is not null)
+		{
+			color = Pattern.PatternAt(obj, point);
+		}
+		else
+		{
+			color = Color;
+		}
 		var effectiveColor = color * light.Intensity;
 		var lightVector = (light.Position - point).Normalize();
 		var ambient = effectiveColor * Ambient;

@@ -1,4 +1,4 @@
-﻿namespace RayTracerChallenge
+﻿namespace RayTracerChallenge.Patterns
 {
 	public abstract class BasePattern
 	{
