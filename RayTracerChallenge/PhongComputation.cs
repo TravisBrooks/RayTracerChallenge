@@ -2,7 +2,7 @@
 
 public record struct PhongComputation(
 	double T,
-	IIntersectable Object,
+	BaseShape Object,
 	Point Point,
 	Vector EyeVector,
 	Vector NormalVector,

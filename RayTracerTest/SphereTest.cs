@@ -138,4 +138,11 @@ public class SphereTest
 		};
 		Assert.Equal(Material.Default() with {Ambient = 1}, s.Material);
 	}
+
+	[Fact]
+	public void SphereIsBaseShape()
+	{
+		var s = new Sphere();
+		Assert.True(s is BaseShape);
+	}
 }

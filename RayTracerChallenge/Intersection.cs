@@ -2,7 +2,7 @@
 
 namespace RayTracerChallenge;
 
-public readonly record struct Intersection(double T, IIntersectable Object)
+public readonly record struct Intersection(double T, BaseShape Object)
 {
 	public static ImmutableArray<Intersection> Aggregate(params Intersection[] intersections)
 	{

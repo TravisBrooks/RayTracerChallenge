@@ -2,6 +2,9 @@
 
 public readonly record struct Color(double Red, double Green, double Blue)
 {
+	public static Color Black => new Color(0, 0, 0);
+	public static Color White => new Color(1, 1, 1);
+
 	public bool Equals(Color other)
 	{
 		return Red.AboutEqual(other.Red) &&

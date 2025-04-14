@@ -53,7 +53,9 @@ public class Camera
 			xRange,
 			new ParallelOptions
 			{
-				MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 2.0))
+				// Playing around with diff values, this seemed like a pretty good setting for my oldish laptop but
+				// results will vary by hardware and how many other things you have running on your computer.
+				MaxDegreeOfParallelism = (int)Math.Ceiling(Environment.ProcessorCount * 0.75 * 2.0)
 			},
 			x =>
 			{
@@ -68,9 +70,9 @@ public class Camera
 						Console.Write(".");
 					}
 				}
-			});
+			}
+		);
 		Console.WriteLine();
 		return canvas;
 	}
-		
 }

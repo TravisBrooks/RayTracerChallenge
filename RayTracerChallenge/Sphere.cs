@@ -2,21 +2,16 @@
 
 namespace RayTracerChallenge;
 
-public record struct Sphere(Point Origin, double Radius) : IIntersectable
+public class Sphere : BaseShape, IEquatable<Sphere>
 {
-	public Sphere() : this(new Point(0, 0, 0), 1.0)
-	{
-	}
+	public Point Origin { get; init; } = new(0, 0, 0);
+	public double Radius { get; init; } = 1.0;
 
-	public Matrix Transform { get; init; } = Matrix.Identity();
-	public Material Material { get; set; } = Material.Default();
-
-	public ImmutableArray<Intersection> Intersect(Ray ray)
+	public override ImmutableArray<Intersection> LocalIntersect(Ray rayInTransformedSpace)
 	{
-		var transRay = ray.Transform(Transform.Inverse());
-		var sphereToRay = transRay.Origin - Origin;
-		var a = transRay.Direction.DotProduct(transRay.Direction);
-		var b = 2.0 * transRay.Direction.DotProduct(sphereToRay);
+		var sphereToRay = rayInTransformedSpace.Origin - Origin;
+		var a = rayInTransformedSpace.Direction.DotProduct(rayInTransformedSpace.Direction);
+		var b = 2.0 * rayInTransformedSpace.Direction.DotProduct(sphereToRay);
 		var c = sphereToRay.DotProduct(sphereToRay) - 1;
 		var discriminant = b * b - 4.0 * a * c;
 
@@ -38,10 +33,10 @@ public record struct Sphere(Point Origin, double Radius) : IIntersectable
 		return [new Intersection(t1, this), new Intersection(t2, this)];
 	}
 
-	public Vector NormalAt(Point worldPoint)
+	public Vector NormalAtFoo(Point worldPoint)
 	{
-		var objectPoint = (Transform.Inverse() * worldPoint).AssumePoint();
-		var objectNormal = objectPoint - Origin;
+		var localPoint = (Transform.Inverse() * worldPoint).AssumePoint();
+		var objectNormal = localPoint - Origin;
 		var worldNormal = Transform.Inverse().Transpose() * objectNormal;
 		Vector normal = default;
 		// The book explains this in chpt 6, it's a hack to get a vector in the point case.
@@ -53,19 +48,64 @@ public record struct Sphere(Point Origin, double Radius) : IIntersectable
 		return normal.Normalize();
 	}
 
-	#region custom equality for mutable properties
-
-	public readonly bool Equals(Sphere other)
+	public override Vector LocalNormalAt(Point localPoint)
 	{
-		return Transform.Equals(other.Transform) &&
-		       Material.Equals(other.Material) &&
-		       Origin.Equals(other.Origin) &&
-		       Radius.Equals(other.Radius);
+		var objectNormal = localPoint - Origin;
+		//var worldNormal = Transform.Inverse().Transpose() * objectNormal;
+		return objectNormal;
 	}
 
-	public readonly override int GetHashCode()
+	#region equality stuff
+
+	public bool Equals(Sphere? other)
 	{
-		return HashCode.Combine(Transform, Material, Origin, Radius);
+		if (other is null)
+		{
+			return false;
+		}
+
+		if (ReferenceEquals(this, other))
+		{
+			return true;
+		}
+
+		return Origin.Equals(other.Origin) && Radius.Equals(other.Radius) && Transform.Equals(other.Transform) && Material.Equals(other.Material);
 	}
+
+	public override bool Equals(object? obj)
+	{
+		if (obj is null)
+		{
+			return false;
+		}
+
+		if (ReferenceEquals(this, obj))
+		{
+			return true;
+		}
+
+		if (obj.GetType() != GetType())
+		{
+			return false;
+		}
+
+		return Equals((Sphere)obj);
+	}
+
+	public override int GetHashCode()
+	{
+		return HashCode.Combine(Origin, Radius, Transform, Material);
+	}
+
+	public static bool operator ==(Sphere? left, Sphere? right)
+	{
+		return Equals(left, right);
+	}
+
+	public static bool operator !=(Sphere? left, Sphere? right)
+	{
+		return !Equals(left, right);
+	}
+
 	#endregion
 }

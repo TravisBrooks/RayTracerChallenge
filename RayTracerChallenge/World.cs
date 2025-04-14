@@ -14,7 +14,6 @@ public class World
 				Color = new Color(.8, 1, .6),
 				Diffuse = .7,
 				Specular = .2,
-
 			}
 		};
 		var sphere2 = new Sphere
@@ -25,10 +24,23 @@ public class World
 		Spheres.Add(sphere2);
 	}
 
-	public World(PointLight light, IEnumerable<Sphere> spheres)
+	public World(PointLight light, IEnumerable<Sphere> spheres, IEnumerable<Plane> planes)
 	{
 		Light = light;
 		Spheres = spheres.ToList();
+		Planes = planes.ToList();
+	}
+
+	public World(IEnumerable<Sphere> spheres, IEnumerable<Plane> planes) : this(new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1)), spheres, planes)
+	{
+	}
+
+	public World(PointLight light, IEnumerable<Sphere> spheres) : this(light, spheres, new List<Plane>())
+	{
+	}
+
+	public World(PointLight light, IEnumerable<Plane> planes) : this(light, new List<Sphere>(), planes)
+	{
 	}
 
 	public World(params Sphere[] spheres)
@@ -37,13 +49,25 @@ public class World
 		Spheres = spheres.ToList();
 	}
 
-	public IList<Sphere> Spheres { get; } = new List<Sphere>();
 	public PointLight? Light { get; init; }
+	public IList<Sphere> Spheres { get; init; } = new List<Sphere>();
+	public IList<Plane> Planes { get; init; } = new List<Plane>();
+	
+	public IList<BaseShape> AllShapes
+	{
+		get
+		{
+			var shapes = new List<BaseShape>();
+			shapes.AddRange(Spheres);
+			shapes.AddRange(Planes);
+			return shapes;
+		}
+	}
 
 	public ImmutableArray<Intersection> Intersect(Ray ray)
 	{
 		var intersections = new List<Intersection>();
-		foreach (var s in Spheres)
+		foreach (var s in AllShapes)
 		{
 			intersections.AddRange(s.Intersect(ray));
 		}
@@ -58,6 +82,7 @@ public class World
 			return Color.FromRgb(0, 0, 0);
 		}
 		var c = comps.Object.Material.Lighting(
+			comps.Object,
 			Light.Value,
 			comps.OverPoint,
 			comps.EyeVector,

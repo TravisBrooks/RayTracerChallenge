@@ -89,23 +89,31 @@ public class WorldTest
 	[Fact]
 	public void ColorAtWhenIntersectionBehindRay()
 	{
-		var w = new World();
-		var outer = w.Spheres[0];
-		outer.Material = outer.Material with
+		// doing a bunch of stuff on the default world so World can have init set properties
+		var defaultWorld = new World();
+		var light = defaultWorld.Light.Value;
+		var outer = new Sphere()
 		{
-			Ambient = 1
+			Transform = defaultWorld.Spheres[0].Transform,
+			Material = defaultWorld.Spheres[0].Material with
+			{
+				Ambient = 1
+			}
 		};
-		var inner = w.Spheres[1];
-		inner.Material = inner.Material with
+		var inner = new Sphere()
 		{
-			Ambient = 1
+			Transform = defaultWorld.Spheres[1].Transform,
+			Material = defaultWorld.Spheres[1].Material with
+			{
+				Ambient = 1
+			}
 		};
+
+		var w = new World(light, [outer, inner]);
 		var r = new Ray(new Point(0, 0, 0.75), new Vector(0, 0, -1));
 		var c = w.ColorAt(r);
-		// NOTE: the "* 0.1" I added, the book errata lists a bug with this test because author was using
-		// code that had a shadow calculation that's covered in a later chapter (test is from chapter 7) in
-		// the book.
-		Assert.Equal(inner.Material.Color * 0.1, c);
+
+		Assert.Equal(inner.Material.Color, c);
 	}
 
 	[Fact]

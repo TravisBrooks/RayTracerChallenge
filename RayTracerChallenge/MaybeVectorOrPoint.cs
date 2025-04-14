@@ -41,6 +41,17 @@ public class MaybeVectorOrPoint
 		}
 	}
 
+	public T HandleResult<T>(
+		Func<Vector, T> vectorHandler,
+		Func<Point, T> pointHandler)
+	{
+		if (_isVector)
+		{
+			return vectorHandler((Vector)_tuple);
+		}
+		return pointHandler((Point)_tuple);
+	}
+
 	public Point AssumePoint()
 	{
 		if (_isVector)

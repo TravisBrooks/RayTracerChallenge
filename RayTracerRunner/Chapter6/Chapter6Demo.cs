@@ -30,6 +30,7 @@ internal class Chapter6Demo : DemoRun
 
 		var translation = -(wallSize * 0.5);
 		var xRange = Enumerable.Range(0, (int)canvasPixels);
+		var placeholderObj = new Sphere();
 		Parallel.ForEach(xRange, x =>
 		{
 			for (var y = 0; y < canvasPixels; y++)
@@ -44,7 +45,7 @@ internal class Chapter6Demo : DemoRun
 					var point = ray.Position(hit.T);
 					var normal = sphere.NormalAt(point);
 					var eye = -ray.Direction;
-					var color = sphere.Material.Lighting(light, point, eye, normal, false);
+					var color = sphere.Material.Lighting(placeholderObj, light, point, eye, normal, false);
 					canvas[x, (int)canvasPixels - y] = color;
 				}
 			}
