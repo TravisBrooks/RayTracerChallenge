@@ -145,4 +145,13 @@ public class SphereTest
 		var s = new Sphere();
 		Assert.True(s is BaseShape);
 	}
+
+	[Fact]
+	public void SphereWithGlassyMaterial()
+	{
+		var s = Sphere.GlassySphere();
+		Assert.Equal(Matrix.Identity(), s.Transform);
+		Assert.Equal(1.0, s.Material.Transparency);
+		Assert.Equal(1.5, s.Material.RefractiveIndex);
+	}
 }

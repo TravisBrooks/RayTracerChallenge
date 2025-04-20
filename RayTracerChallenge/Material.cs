@@ -2,29 +2,38 @@
 
 namespace RayTracerChallenge;
 
-public readonly record struct Material(Color Color, double Ambient, double Diffuse, double Specular, double Shininess, BasePattern? Pattern)
+public readonly record struct Material(
+	Color Color,
+	double Ambient = 0.1,
+	double Diffuse = 0.9,
+	double Specular = 0.9,
+	double Shininess = 200.0,
+	BasePattern? Pattern = null,
+	double Reflectivity = 0.0,
+	double Transparency = 0.0,
+	double RefractiveIndex = 1.0)
 {
 	public static Material Default()
 	{
-		return new Material(
-			Color: new Color(1, 1, 1),
-			Ambient: 0.1,
-			Diffuse: 0.9,
-			Specular:0.9,
-			Shininess: 200.0,
-			Pattern: null);
+		return new Material(Color: new Color(1, 1, 1));
 	}
 
-	public Color Lighting(BaseShape obj, PointLight light, Point point, Vector eyeVector, Vector normalVector, bool inShadow)
+	public Color Lighting(
+		BaseShape shape,
+		PointLight light,
+		Point point,
+		Vector eyeVector,
+		Vector normalVector,
+		bool inShadow)
 	{
 		Color color;
-		if (obj.Pattern is not null)
+		if (shape.Pattern is not null)
 		{
-			color = obj.Pattern.PatternAt(obj, point);
+			color = shape.Pattern.PatternAt(shape, point);
 		}
 		else if (Pattern is not null)
 		{
-			color = Pattern.PatternAt(obj, point);
+			color = Pattern.PatternAt(shape, point);
 		}
 		else
 		{
@@ -73,6 +82,4 @@ public readonly record struct Material(Color Color, double Ambient, double Diffu
 
 		return ambient + diffuse + specular;
 	}
-
-
 }

@@ -107,4 +107,19 @@ public class MaterialTest
 		Assert.Equal(Color.White, c1);
 		Assert.Equal(Color.Black, c2);
 	}
+
+	[Fact]
+	public void ReflectivityForDefaultMaterial()
+	{
+		var m = Material.Default();
+		Assert.Equal(0.0, m.Reflectivity);
+	}
+
+	[Fact]
+	public void TransparencyAndRefractiveIndexForDefaultMaterial()
+	{
+		var m = Material.Default();
+		Assert.Equal(0.0, m.Transparency);
+		Assert.Equal(1.0, m.RefractiveIndex);
+	}
 }

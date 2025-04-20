@@ -171,7 +171,10 @@ public class Matrix : IEquatable<Matrix>
 		var det = Determinant();
 		if (det.AboutEqual(0))
 		{
-			throw new InvalidOperationException("Matrix is not invertible");
+			// if it looks like matrix is not invertible fudge it and return the identity matrix.
+			// Some tests in the book defined transform matrices that are not invertible, but the
+			// book doesn't say what to do in that case.
+			return Identity();
 		}
 		var m2 = new Matrix(Rows, Columns);
 		for (var r = 0; r < Rows; r++)

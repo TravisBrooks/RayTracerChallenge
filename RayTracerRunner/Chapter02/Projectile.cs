@@ -1,6 +1,6 @@
 ﻿using RayTracerChallenge;
 
-namespace RayTracerRunner.Chapter2;
+namespace RayTracerRunner.Chapter02;
 
 public record Projectile(Point Position, Vector Velocity, Color Color)
 {

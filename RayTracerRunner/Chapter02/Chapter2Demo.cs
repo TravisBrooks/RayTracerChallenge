@@ -1,6 +1,7 @@
 ﻿using RayTracerChallenge;
+using Environment = RayTracerRunner.Chapter02.Environment;
 
-namespace RayTracerRunner.Chapter2;
+namespace RayTracerRunner.Chapter02;
 
 public class Chapter2Demo : DemoRun
 {

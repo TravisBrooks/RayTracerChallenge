@@ -1,6 +1,6 @@
 ﻿using RayTracerChallenge;
 
-namespace RayTracerRunner.Chapter5;
+namespace RayTracerRunner.Chapter05;
 
 public class Chapter5Demo : DemoRun
 {

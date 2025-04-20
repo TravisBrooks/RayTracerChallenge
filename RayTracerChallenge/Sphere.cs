@@ -33,26 +33,24 @@ public class Sphere : BaseShape, IEquatable<Sphere>
 		return [new Intersection(t1, this), new Intersection(t2, this)];
 	}
 
-	public Vector NormalAtFoo(Point worldPoint)
-	{
-		var localPoint = (Transform.Inverse() * worldPoint).AssumePoint();
-		var objectNormal = localPoint - Origin;
-		var worldNormal = Transform.Inverse().Transpose() * objectNormal;
-		Vector normal = default;
-		// The book explains this in chpt 6, it's a hack to get a vector in the point case.
-		// The more correct slower way would be to take a submatrix of the Transform
-		worldNormal.HandleResult(
-			vector => normal = vector,
-			point => normal = new Vector(point.X, point.Y, point.Z)
-		);
-		return normal.Normalize();
-	}
-
 	public override Vector LocalNormalAt(Point localPoint)
 	{
 		var objectNormal = localPoint - Origin;
-		//var worldNormal = Transform.Inverse().Transpose() * objectNormal;
 		return objectNormal;
+	}
+
+	public static Sphere GlassySphere(double? refractiveIndex = null, Matrix? transform = null)
+	{
+		var sphere = new Sphere
+		{
+			Material = Material.Default() with
+			{
+				Transparency = 1.0,
+				RefractiveIndex = refractiveIndex ?? 1.5,
+			},
+			Transform = transform ?? Matrix.Identity()
+		};
+		return sphere;
 	}
 
 	#region equality stuff
