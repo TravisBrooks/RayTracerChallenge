@@ -182,7 +182,7 @@ public class WorldTest
 				Ambient = 1
 			}
 		};
-		var w = new World([shape], []);
+		var w = new World([shape], [], []);
 		var r = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
 		var i = new Intersection(1, shape);
 		var comps = i.PrepareComputation(r);
@@ -201,7 +201,7 @@ public class WorldTest
 				Reflectivity = 0.5
 			}
 		};
-		var w = new World(new World().Spheres, [shape]);
+		var w = new World(new World().Spheres, [shape], []);
 		var r = new Ray(new Point(0, 0, -3), new Vector(0, -Math.Sqrt(2)/2.0, Math.Sqrt(2) / 2.0));
 		var i = new Intersection(Math.Sqrt(2), shape);
 		var comps = i.PrepareComputation(r);
@@ -220,7 +220,7 @@ public class WorldTest
 				Reflectivity = 0.5
 			}
 		};
-		var w = new World(new World().Spheres, [shape]);
+		var w = new World(new World().Spheres, [shape], []);
 		var r = new Ray(new Point(0, 0, -3), new Vector(0, -Math.Sqrt(2) / 2.0, Math.Sqrt(2) / 2.0));
 		var i = new Intersection(Math.Sqrt(2), shape);
 		var comps = i.PrepareComputation(r);
@@ -265,7 +265,7 @@ public class WorldTest
 				Reflectivity = 0.5
 			}
 		};
-		var w = new World(new World().Spheres, [shape]);
+		var w = new World(new World().Spheres, [shape], []);
 		var r = new Ray(new Point(0, 0, -3), new Vector(0, -Math.Sqrt(2) / 2.0, Math.Sqrt(2) / 2.0));
 		var i = new Intersection(Math.Sqrt(2), shape);
 		var comps = i.PrepareComputation(r);
@@ -297,7 +297,7 @@ public class WorldTest
 				RefractiveIndex = 1.5
 			}
 		};
-		var w = new World([sphere], new List<Plane>());
+		var w = new World([sphere], new List<Plane>(), []);
 		var r = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
 		var i1 = new Intersection(4, sphere);
 		var i2 = new Intersection(6, sphere);
@@ -317,7 +317,7 @@ public class WorldTest
 				RefractiveIndex = 1.5
 			}
 		};
-		var w = new World([sphere], new List<Plane>());
+		var w = new World([sphere], new List<Plane>(), []);
 		var r = new Ray(new Point(0, 0, Math.Sqrt(2)/2), new Vector(0, 1, 0));
 		var i1 = new Intersection(-Math.Sqrt(2)/2.0, sphere);
 		var i2 = new Intersection(Math.Sqrt(2)/2.0, sphere);
@@ -349,7 +349,7 @@ public class WorldTest
 				RefractiveIndex = 1.5
 			}
 		};
-		var w = new World([sphere1, sphere2], new List<Plane>());
+		var w = new World([sphere1, sphere2], new List<Plane>(), []);
 		var r = new Ray(new Point(0, 0, 0.1), new Vector(0, 1, 0));
 		var i1 = new Intersection(-0.9899, sphere1);
 		var i2 = new Intersection(-0.4899, sphere2);

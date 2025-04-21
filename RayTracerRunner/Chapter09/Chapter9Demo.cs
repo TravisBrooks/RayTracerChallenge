@@ -50,7 +50,7 @@ public class Chapter9Demo : DemoRun
 			}
 		};
 
-		var world = new World([middle, left, right], [floor]);
+		var world = new World([middle, left, right], [floor], []);
 		var camera = new Camera(1000, 500, Math.PI / 3.0)
 		{
 			Transform = Transformation.ViewTransform(new Point(0, 1.5, -5), new Point(0, 1, 0), new Vector(0, 1, 0))

@@ -9,15 +9,17 @@ public class World
 	public World(
 		PointLight light,
 		IEnumerable<Sphere> spheres,
-		IEnumerable<Plane> planes)
+		IEnumerable<Plane> planes,
+		IEnumerable<Cube> cubes)
 	{
 		Light = light;
 		Spheres = spheres.ToList();
 		Planes = planes.ToList();
+		Cubes = cubes.ToList();
 	}
 
-	public World(IEnumerable<Sphere> spheres, IEnumerable<Plane> planes)
-		: this(new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1)), spheres, planes)
+	public World(IEnumerable<Sphere> spheres, IEnumerable<Plane> planes, IEnumerable<Cube> cubes)
+		: this(new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1)), spheres, planes, cubes)
 	{
 	}
 
@@ -38,23 +40,25 @@ public class World
 				Transform = Transformation.Scaling(0.5, 0.5, 0.5)
 			}
 		},
-		new List<Plane>())
+		new List<Plane>(),
+		new List<Cube>())
 	{
 	}
 
 	public World(PointLight light, IEnumerable<Sphere> spheres) 
-		: this(light, spheres, new List<Plane>())
+		: this(light, spheres, new List<Plane>(), new List<Cube>())
 	{
 	}
 
 	public World(PointLight light, IEnumerable<Plane> planes) 
-		: this(light, new List<Sphere>(), planes)
+		: this(light, new List<Sphere>(), planes, new List<Cube>())
 	{
 	}
 
 	public PointLight? Light { get; init; }
 	public IList<Sphere> Spheres { get; init; }
 	public IList<Plane> Planes { get; init; }
+	public IList<Cube> Cubes { get; init; }
 	
 	public IList<BaseShape> AllShapes
 	{
@@ -63,6 +67,7 @@ public class World
 			var shapes = new List<BaseShape>();
 			shapes.AddRange(Spheres);
 			shapes.AddRange(Planes);
+			shapes.AddRange(Cubes);
 			return shapes;
 		}
 	}

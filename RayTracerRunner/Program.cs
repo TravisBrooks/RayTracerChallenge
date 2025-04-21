@@ -1,6 +1,4 @@
-﻿using RayTracerRunner.Chapter10;
-using RayTracerRunner.Chapter11;
-using RayTracerRunner.Chapter4;
+﻿using RayTracerRunner.Chapter12;
 
 namespace RayTracerRunner;
 
@@ -16,6 +14,7 @@ internal static class Program
 		//new Chapter8Demo().Run();
 		//new Chapter9Demo().Run();
 		//new Chapter10Demo().Run();
-		new Chapter11Demo().Run();
+		//new Chapter11Demo().Run();
+		new Chapter12Demo().Run();
 	}
 }
